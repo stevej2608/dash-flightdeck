@@ -20,3 +20,15 @@ app = Dash(__name__,
         plugins=[dl.plugins.pages],
         external_stylesheets=external_stylesheets,
         external_scripts=external_scripts, server=server)
+
+
+# Allow pages to access the dash app instance, eg:
+#
+#  from flask import current_app
+#
+#  app = current_app.get_dash()
+
+def get_dash():
+    return app
+
+server.get_dash = get_dash

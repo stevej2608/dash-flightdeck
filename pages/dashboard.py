@@ -1,10 +1,11 @@
 from dash import html, register_page
 import dash_bootstrap_components as dbc
+from flask import current_app
 
 register_page(__name__, path="/")
 
 def layout():
-    from app import app
+    app = current_app.get_dash()
     return html.Div([
         html.Header([
             html.Img(src=app.get_asset_url("logo.svg"), className="App-logo", alt="logo"),
