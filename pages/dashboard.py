@@ -18,31 +18,13 @@ def layout():
                 dcc.Input(className='form-control form-control-dark', type='text', placeholder='Search')
             ], className='col-12 col-md-4 col-lg-2'),
             html.Div([
-                html.Div([
-                    html.A('Star', className='github-button',
-                        href='https://github.com/themesberg/simple-bootstrap-5-dashboard',
-                        ** {
-                            'data-color-scheme' : 'no-preference: dark; light: light; dark: light;',
-                            'data-icon' : 'octicon-star',
-                            'data-size': 'large',
-                            'data-show-count': 'true',
-                            'aria-label': 'Star /themesberg/simple-bootstrap-5-dashboard'
-                        })
-                ], className='mr-3 mt-1'),
-                html.Div([
-                    html.Button('Hello, John Doe', className='btn btn-secondary dropdown-toggle', type='button', id='dropdownMenuButton', tabIndex='dropdown'),
-                    html.Ul([
-                        html.Li([
-                            html.A('Settings', className='dropdown-item', href='#')
-                        ]),
-                        html.Li([
-                            html.A('Messages', className='dropdown-item', href='#')
-                        ]),
-                        html.Li([
-                            html.A('Sign out', className='dropdown-item', href='#')
-                        ])
-                    ], className='dropdown-menu')
-                ], className='dropdown')
+                dbc.DropdownMenu(
+                    label="Hello, John Doe",
+                    children=[
+                        dbc.DropdownMenuItem(html.A('Settings', className='dropdown-item', href='#')),
+                        dbc.DropdownMenuItem(html.A('Messages', className='dropdown-item', href='#')),
+                        dbc.DropdownMenuItem(html.A('Sign out', className='dropdown-item', href='#')),
+                    ], color="secondary")
             ], className='col-12 col-md-5 col-lg-8 d-flex align-items-center justify-content-md-end mt-3 mt-md-0')
         ], className='navbar navbar-light bg-light p-3'),
         html.Div([
@@ -113,6 +95,7 @@ def layout():
                     html.H1('Dashboard', className='h2'),
                     html.P('This is the homepage of a simple admin interface which is part of a tutorial written on Themesberg'),
                     html.Div([
+
                         html.Div([
                             html.Div([
                                 html.H5('Customers', className='card-header'),
@@ -122,7 +105,8 @@ def layout():
                                     html.P('18.2% increase since last month', className='card-text text-success')
                                 ], className='card-body')
                             ], className='card')
-                        ], className='col-12 col-md-6 col-lg-3 mb-4 mb-lg-0'),
+                        ], className='col-12 col-md-6 mb-4 mb-lg-0 col-lg-3'),
+
                         html.Div([
                             html.Div([
                                 html.H5('Revenue', className='card-header'),
@@ -133,6 +117,8 @@ def layout():
                                 ], className='card-body')
                             ], className='card')
                         ], className='col-12 col-md-6 mb-4 mb-lg-0 col-lg-3'),
+
+
                         html.Div([
                             html.Div([
                                 html.H5('Purchases', className='card-header'),
@@ -143,6 +129,8 @@ def layout():
                                 ], className='card-body')
                             ], className='card')
                         ], className='col-12 col-md-6 mb-4 mb-lg-0 col-lg-3'),
+
+
                         html.Div([
                             html.Div([
                                 html.H5('Traffic', className='card-header'),
@@ -153,6 +141,9 @@ def layout():
                                 ], className='card-body')
                             ], className='card')
                         ], className='col-12 col-md-6 mb-4 mb-lg-0 col-lg-3')
+
+
+
                     ], className='row my-4'),
                     html.Div([
                         html.Div([
@@ -250,7 +241,7 @@ def layout():
                     ], className='row'),
                     html.Footer([
                         html.Span([
-                            'Copyright © 2019-2020',
+                            'Copyright © 2019-2020 ',
                             html.A('Themesberg', href='https://themesberg.com')
                         ]),
                         html.Ul([
