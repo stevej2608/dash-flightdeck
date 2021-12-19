@@ -4,6 +4,15 @@ from flask import current_app
 
 register_page(__name__, path="/")
 
+def Card(content, title):
+    return html.Div([
+        html.Div([
+            html.H5(title, className='card-header'),
+            html.Div(content, className='card-body')
+        ], className='card')
+    ], className='col-12 col-md-6 mb-4 mb-lg-0 col-lg-3')
+
+
 def layout():
     app = current_app.get_dash()
     return html.Div([
@@ -95,54 +104,27 @@ def layout():
                     html.H1('Dashboard', className='h2'),
                     html.P('This is the homepage of a simple admin interface which is part of a tutorial written on Themesberg'),
                     html.Div([
+                        Card([
+                            html.H5('345k', className='card-title'),
+                            html.P('Feb 1 - Apr 1, United States', className='card-text'),
+                            html.P('18.2% increase since last month', className='card-text text-success')
+                        ], 'Customers'),
+                        Card([
+                            html.H5('$2.4k', className='card-title'),
+                            html.P('Feb 1 - Apr 1, United States', className='card-text'),
+                            html.P('4.6% increase since last month', className='card-text text-success')
+                        ], 'Revenue'),
+                        Card([
+                            html.H5('43', className='card-title'),
+                            html.P('Feb 1 - Apr 1, United States', className='card-text'),
+                            html.P('2.6% decrease since last month', className='card-text text-danger')
+                        ], 'Purchases'),
 
-                        html.Div([
-                            html.Div([
-                                html.H5('Customers', className='card-header'),
-                                html.Div([
-                                    html.H5('345k', className='card-title'),
-                                    html.P('Feb 1 - Apr 1, United States', className='card-text'),
-                                    html.P('18.2% increase since last month', className='card-text text-success')
-                                ], className='card-body')
-                            ], className='card')
-                        ], className='col-12 col-md-6 mb-4 mb-lg-0 col-lg-3'),
-
-                        html.Div([
-                            html.Div([
-                                html.H5('Revenue', className='card-header'),
-                                html.Div([
-                                    html.H5('$2.4k', className='card-title'),
-                                    html.P('Feb 1 - Apr 1, United States', className='card-text'),
-                                    html.P('4.6% increase since last month', className='card-text text-success')
-                                ], className='card-body')
-                            ], className='card')
-                        ], className='col-12 col-md-6 mb-4 mb-lg-0 col-lg-3'),
-
-
-                        html.Div([
-                            html.Div([
-                                html.H5('Purchases', className='card-header'),
-                                html.Div([
-                                    html.H5('43', className='card-title'),
-                                    html.P('Feb 1 - Apr 1, United States', className='card-text'),
-                                    html.P('2.6% decrease since last month', className='card-text text-danger')
-                                ], className='card-body')
-                            ], className='card')
-                        ], className='col-12 col-md-6 mb-4 mb-lg-0 col-lg-3'),
-
-
-                        html.Div([
-                            html.Div([
-                                html.H5('Traffic', className='card-header'),
-                                html.Div([
-                                    html.H5('64k', className='card-title'),
-                                    html.P('Feb 1 - Apr 1, United States', className='card-text'),
-                                    html.P('2.5% increase since last month', className='card-text text-success')
-                                ], className='card-body')
-                            ], className='card')
-                        ], className='col-12 col-md-6 mb-4 mb-lg-0 col-lg-3')
-
-
+                        Card([
+                            html.H5('64k', className='card-title'),
+                            html.P('Feb 1 - Apr 1, United States', className='card-text'),
+                            html.P('2.5% increase since last month', className='card-text text-success')
+                        ], 'Traffic'),
 
                     ], className='row my-4'),
                     html.Div([
@@ -230,6 +212,8 @@ def layout():
                                 ], className='card-body')
                             ], className='card')
                         ], className='col-12 col-xl-8 mb-4 mb-lg-0'),
+
+
                         html.Div([
                             html.Div([
                                 html.H5('Traffic last 6 months', className='card-header'),
@@ -239,6 +223,8 @@ def layout():
                             ], className='card')
                         ], className='col-12 col-xl-4')
                     ], className='row'),
+
+
                     html.Footer([
                         html.Span([
                             'Copyright © 2019-2020 ',
