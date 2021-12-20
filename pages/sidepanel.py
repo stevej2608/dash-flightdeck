@@ -37,8 +37,8 @@ def SidePanel():
                 SideLink('Reports', icon="feather-bar-chart-2.svg", alt="bar-chart-2"),
                 SideLink('Integrations', icon="feather-layers.svg", alt="layers"),
                 SideIconButton('Read tutorial', icon="bi_book.svg", alt="book", href='https://themesberg.com/blog/bootstrap/simple-bootstrap-5-dashboard-tutorial'),
-                SideButton('Volt Dashboard', btn_style='btn-warning', href='https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard'),
-                SideButton('By Themesberg', btn_style='btn-primary', href='https://themesberg.com')
+                SideButton(' ⚡︎ Volt Dashboard', btn_style='btn-warning', href='https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard'),
+                SideButton('By Themesberg ❤️', btn_style='btn-primary', href='https://themesberg.com')
             ], className='nav flex-column')
         ], className='position-sticky')
     ], id='sidebar', className='col-md-3 col-lg-2 d-md-block bg-light sidebar collapse')
