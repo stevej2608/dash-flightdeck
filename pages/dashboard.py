@@ -13,6 +13,85 @@ def Card(content, title):
     ], className='col-12 col-md-6 mb-4 mb-lg-0 col-lg-3')
 
 
+def OrdersTable():
+    return html.Div([
+        html.Table([
+            html.Thead([
+                html.Tr([
+                    html.Th('Order', scope='col'),
+                    html.Th('Product', scope='col'),
+                    html.Th('Customer', scope='col'),
+                    html.Th('Total', scope='col'),
+                    html.Th('Date', scope='col'),
+                    html.Th(scope='col')
+                ])
+            ]),
+            html.Tbody([
+                html.Tr([
+                    html.Th('17371705', scope='row'),
+                    html.Td('Volt Premium Bootstrap 5 Dashboard'),
+                    html.Td('johndoe@gmail.com'),
+                    html.Td('€61.11'),
+                    html.Td('Aug 31 2020'),
+                    html.Td([
+                        html.A('View', href='#', className='btn btn-sm btn-primary')
+                    ])
+                ]),
+                html.Tr([
+                    html.Th('17370540', scope='row'),
+                    html.Td('Pixel Pro Premium Bootstrap UI Kit'),
+                    html.Td('jacob.monroe@company.com'),
+                    html.Td('$153.11'),
+                    html.Td('Aug 28 2020'),
+                    html.Td([
+                        html.A('View', href='#', className='btn btn-sm btn-primary')
+                    ])
+                ]),
+                html.Tr([
+                    html.Th('17371705', scope='row'),
+                    html.Td('Volt Premium Bootstrap 5 Dashboard'),
+                    html.Td('johndoe@gmail.com'),
+                    html.Td('€61.11'),
+                    html.Td('Aug 31 2020'),
+                    html.Td([
+                        html.A('View', href='#', className='btn btn-sm btn-primary')
+                    ])
+                ]),
+                html.Tr([
+                    html.Th('17370540', scope='row'),
+                    html.Td('Pixel Pro Premium Bootstrap UI Kit'),
+                    html.Td('jacob.monroe@company.com'),
+                    html.Td('$153.11'),
+                    html.Td('Aug 28 2020'),
+                    html.Td([
+                        html.A('View', href='#', className='btn btn-sm btn-primary')
+                    ])
+                ]),
+                html.Tr([
+                    html.Th('17371705', scope='row'),
+                    html.Td('Volt Premium Bootstrap 5 Dashboard'),
+                    html.Td('johndoe@gmail.com'),
+                    html.Td('€61.11'),
+                    html.Td('Aug 31 2020'),
+                    html.Td([
+                        html.A('View', href='#', className='btn btn-sm btn-primary')
+                    ])
+                ]),
+                html.Tr([
+                    html.Th('17370540', scope='row'),
+                    html.Td('Pixel Pro Premium Bootstrap UI Kit'),
+                    html.Td('jacob.monroe@company.com'),
+                    html.Td('$153.11'),
+                    html.Td('Aug 28 2020'),
+                    html.Td([
+                        html.A('View', href='#', className='btn btn-sm btn-primary')
+                    ])
+                ])
+            ])
+        ], className='table')
+    ], className='table-responsive')
+
+
 def layout():
     app = current_app.get_dash()
     return html.Div([
@@ -128,91 +207,16 @@ def layout():
 
                     ], className='row my-4'),
                     html.Div([
+
                         html.Div([
                             html.Div([
                                 html.H5('Latest transactions', className='card-header'),
                                 html.Div([
-                                    html.Div([
-                                        html.Table([
-                                            html.Thead([
-                                                html.Tr([
-                                                    html.Th('Order', scope='col'),
-                                                    html.Th('Product', scope='col'),
-                                                    html.Th('Customer', scope='col'),
-                                                    html.Th('Total', scope='col'),
-                                                    html.Th('Date', scope='col'),
-                                                    html.Th(scope='col')
-                                                ])
-                                            ]),
-                                            html.Tbody([
-                                                html.Tr([
-                                                    html.Th('17371705', scope='row'),
-                                                    html.Td('Volt Premium Bootstrap 5 Dashboard'),
-                                                    html.Td('johndoe@gmail.com'),
-                                                    html.Td('€61.11'),
-                                                    html.Td('Aug 31 2020'),
-                                                    html.Td([
-                                                        html.A('View', href='#', className='btn btn-sm btn-primary')
-                                                    ])
-                                                ]),
-                                                html.Tr([
-                                                    html.Th('17370540', scope='row'),
-                                                    html.Td('Pixel Pro Premium Bootstrap UI Kit'),
-                                                    html.Td('jacob.monroe@company.com'),
-                                                    html.Td('$153.11'),
-                                                    html.Td('Aug 28 2020'),
-                                                    html.Td([
-                                                        html.A('View', href='#', className='btn btn-sm btn-primary')
-                                                    ])
-                                                ]),
-                                                html.Tr([
-                                                    html.Th('17371705', scope='row'),
-                                                    html.Td('Volt Premium Bootstrap 5 Dashboard'),
-                                                    html.Td('johndoe@gmail.com'),
-                                                    html.Td('€61.11'),
-                                                    html.Td('Aug 31 2020'),
-                                                    html.Td([
-                                                        html.A('View', href='#', className='btn btn-sm btn-primary')
-                                                    ])
-                                                ]),
-                                                html.Tr([
-                                                    html.Th('17370540', scope='row'),
-                                                    html.Td('Pixel Pro Premium Bootstrap UI Kit'),
-                                                    html.Td('jacob.monroe@company.com'),
-                                                    html.Td('$153.11'),
-                                                    html.Td('Aug 28 2020'),
-                                                    html.Td([
-                                                        html.A('View', href='#', className='btn btn-sm btn-primary')
-                                                    ])
-                                                ]),
-                                                html.Tr([
-                                                    html.Th('17371705', scope='row'),
-                                                    html.Td('Volt Premium Bootstrap 5 Dashboard'),
-                                                    html.Td('johndoe@gmail.com'),
-                                                    html.Td('€61.11'),
-                                                    html.Td('Aug 31 2020'),
-                                                    html.Td([
-                                                        html.A('View', href='#', className='btn btn-sm btn-primary')
-                                                    ])
-                                                ]),
-                                                html.Tr([
-                                                    html.Th('17370540', scope='row'),
-                                                    html.Td('Pixel Pro Premium Bootstrap UI Kit'),
-                                                    html.Td('jacob.monroe@company.com'),
-                                                    html.Td('$153.11'),
-                                                    html.Td('Aug 28 2020'),
-                                                    html.Td([
-                                                        html.A('View', href='#', className='btn btn-sm btn-primary')
-                                                    ])
-                                                ])
-                                            ])
-                                        ], className='table')
-                                    ], className='table-responsive'),
+                                    OrdersTable(),
                                     html.A('View all', href='#', className='btn btn-block btn-light')
                                 ], className='card-body')
                             ], className='card')
                         ], className='col-12 col-xl-8 mb-4 mb-lg-0'),
-
 
                         html.Div([
                             html.Div([
@@ -222,6 +226,8 @@ def layout():
                                 ], className='card-body')
                             ], className='card')
                         ], className='col-12 col-xl-4')
+
+
                     ], className='row'),
 
 
