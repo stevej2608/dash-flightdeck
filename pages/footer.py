@@ -1,7 +1,7 @@
 from dash import html
 
 def Footer():
-    return html.Footer([
+    return [
         html.Span([
             'Copyright © 2019-2020 ',
             html.A('Themesberg', href='https://themesberg.com')
@@ -17,5 +17,4 @@ def Footer():
                 html.A('Contact', className='nav-link text-secondary', href='#')
             ], className='nav-item')
         ], className='nav m-0')
-    ], className='pt-5 d-flex justify-content-between')
-
+    ]

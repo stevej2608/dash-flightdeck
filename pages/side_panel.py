@@ -27,8 +27,7 @@ def SideIconButton(title, icon=None, alt=None, href="#", btn_style="btn-secondar
 
 
 def SidePanel():
-    return  html.Nav([
-        html.Div([
+    return  html.Div([
             html.Ul([
                 SideLink('Dashboard', icon="feather-home.svg", alt="home", active=True),
                 SideLink('Orders', icon="feather-file.svg", alt="file"),
@@ -41,4 +40,3 @@ def SidePanel():
                 SideButton('By Themesberg ❤️', btn_style='btn-primary', href='https://themesberg.com')
             ], className='nav flex-column')
         ], className='position-sticky')
-    ], id='sidebar', className='col-md-3 col-lg-2 d-md-block bg-light sidebar collapse')

@@ -23,7 +23,7 @@ def BreadCrumb():
 
 
 def MainPanel():
-    return html.Main([
+    return [
         BreadCrumb(),
 
         html.H1('Dashboard', className='h2'),
@@ -62,4 +62,4 @@ def MainPanel():
                 html.Div(id='traffic-chart')
             ], title='Traffic last 6 months', className='col-12 col-xl-4'),
         ], className='row')
-    ])
+    ]
