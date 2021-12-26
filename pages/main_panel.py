@@ -1,6 +1,7 @@
 from dash import  html
 import dash_bootstrap_components as dbc
 
+from .navbar import Navbar
 from .orders_table import OrdersTable
 
 def Card(content, title, className='col-12 col-md-6 mb-4 mb-lg-0 col-lg-3'):
@@ -24,8 +25,7 @@ def BreadCrumb():
 
 def MainPanel():
     return [
-        BreadCrumb(),
-
+        html.Nav(Navbar(), className='navbar'),
         html.H1('Dashboard', className='h2'),
         html.P('This is the homepage of a simple admin interface which is part of a tutorial written on Themesberg'),
 

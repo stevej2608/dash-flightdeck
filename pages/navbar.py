@@ -1,14 +1,6 @@
 from dash import  dcc, html
 import dash_bootstrap_components as dbc
 
-def Brand():
-    return html.Div([
-        html.A('Simple Dashboard', className='navbar-brand', href='#'),
-        html.Button([
-            html.Span(className='navbar-toggler-icon')
-        ], className='navbar-toggler d-md-none collapsed mb-3', type='button', tabIndex='collapse')
-    ], className='d-flex col-12 col-md-3 col-lg-2 mb-2 mb-lg-0 flex-wrap flex-md-nowrap justify-content-between')
-
 def Search():
     return  html.Div([
         dcc.Input(className='form-control form-control-dark', type='text', placeholder='Search')
@@ -27,7 +19,6 @@ def UserMenu():
 
 def Navbar():
     return [
-        Brand(),
         Search(),
         UserMenu()
     ]

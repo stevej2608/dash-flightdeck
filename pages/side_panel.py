@@ -1,6 +1,17 @@
 from dash import  html
 from flask import current_app
 
+from components import SubListAIO
+
+def Brand():
+    return html.Div([
+        html.A(' ⚡︎ Simple Dashboard', className='navbar-brand', href='#'),
+        html.Button([
+            html.Span(className='navbar-toggler-icon')
+        ], className='navbar-toggler d-md-none collapsed mb-3', type='button', tabIndex='collapse')
+    ], className='d-flex col-12 col-md-3 col-lg-2 mb-2 mb-lg-0 flex-wrap flex-md-nowrap justify-content-between')
+
+
 def SideLink(title, icon=None, alt=None, active=False, href="#"):
     app = current_app.get_dash()
     active = " active" if active else ""
@@ -25,10 +36,24 @@ def SideIconButton(title, icon=None, alt=None, href="#", btn_style="btn-secondar
         ], className=f'btn btn-sm {btn_style} ml-3 mt-2', href=href)
     ], className='nav-item')
 
+def SideGroup(heading, icon, children):
+    return html.Div([
+        html.Li([heading, html.I(className=icon)], className="navList__heading"),
+        html.Div(children)
+    ])
+
 
 def SidePanel():
     return  html.Div([
             html.Ul([
+                Brand(),
+
+                SideGroup("Documents", "far fa-file-alt", [
+                    SubListAIO("insurance",["medical","vision","dental"], icon="fas fa-briefcase-medical"),
+                    SubListAIO("travel",["domestic","foreign","misc"], icon="fas fa-plane-departure"),
+                    SubListAIO("taxes",["current","archives"], icon="far fa-angry"),
+                ]),
+
                 SideLink('Dashboard', icon="feather-home.svg", alt="home", active=True),
                 SideLink('Orders', icon="feather-file.svg", alt="file"),
                 SideLink('Products', icon="feather-shopping-cart.svg", alt="shopping-cart"),

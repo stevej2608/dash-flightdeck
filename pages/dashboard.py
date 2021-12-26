@@ -1,11 +1,10 @@
 from dash import html, register_page
 
-from .navbar import Navbar
 from .side_panel import SidePanel
 from .main_panel import MainPanel
 from .footer import Footer
 
-register_page(__name__, path="/")
+register_page(__name__, path="/", title="Dash Flightdeck")
 
 # https://getbootstrap.com/docs/5.1/layout/grid/
 # https://www.freecodecamp.org/news/semantic-html5-elements/
@@ -13,7 +12,6 @@ register_page(__name__, path="/")
 
 def layout():
     return html.Div([
-        html.Nav(Navbar(), className='navbar navbar-light bg-light p-3'),
         html.Div([
             html.Div([
                 html.Nav(SidePanel(), className='col-md-3 col-lg-2 d-md-block bg-light sidebar collapse'),
