@@ -1,0 +1,342 @@
+/*
+  Minimum scss that supports volt\pages\dashboard\dashboard-tiny.html
+
+  This file generates only Volt theme changes that override the basic
+  Bootstrap 5 CSS. The standard bootstrap CSS needs to be loaded from a
+  suitable CDN. The resulting css file is tiny when compared to the full
+  volt/bootstrap css making the implementation ideal for bandwidth
+  constrained servers.
+
+  https://www.tutorialspoint.com/css/css_syntax.htm
+
+*/
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+:root {
+  --bs-secondary-rgb: 240, 188, 116;
+  --bs-font-sans-serif: Inter, sans-serif;
+  --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+  --bs-body-color: #374151;
+  --bs-body-bg: #F2F4F6;
+  --bs-gray-800-rgb: 31, 41, 55;
+}
+
+.form-control {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: #6B7280;
+  border: 0.0625rem solid #D1D5DB;
+  border-radius: 0.5rem;
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.07);
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.07);
+}
+
+.input-group-text {
+  padding: 0.5rem 0.625rem;
+  font-size: 0.875rem;
+  color: #6B7280;
+  background-color: #ffffff;
+  border: 0.0625rem solid #D1D5DB;
+  border-radius: 0.5rem;
+}
+
+.btn {
+  font-weight: 500;
+  color: #374151;
+  border: 0.0625rem solid transparent;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+}
+
+/*
+  Bootstrap Buttons. Only the secondary button is required
+*/
+.btn-secondary {
+  color: #1F2937;
+  background-color: #f0bc74;
+  border-color: #f0bc74;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(17, 24, 39, 0.075);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(17, 24, 39, 0.075);
+}
+
+.btn-secondary:hover {
+  color: #1F2937;
+  background-color: #f2c689;
+  border-color: #f2c382;
+}
+
+.btn-check:focus + .btn-secondary, .btn-secondary:focus {
+  color: #1F2937;
+  background-color: #f2c689;
+  border-color: #f2c382;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(17, 24, 39, 0.075), 0 0 0 0.18rem rgba(209, 166, 107, 0.5);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(17, 24, 39, 0.075), 0 0 0 0.18rem rgba(209, 166, 107, 0.5);
+}
+
+.btn-check:checked + .btn-secondary,
+.btn-check:active + .btn-secondary, .btn-secondary:active, .btn-secondary.active,
+.show > .btn-secondary.dropdown-toggle {
+  color: #1F2937;
+  background-color: #f3c990;
+  border-color: #f2c382;
+}
+
+.btn-check:checked + .btn-secondary:focus,
+.btn-check:active + .btn-secondary:focus, .btn-secondary:active:focus, .btn-secondary.active:focus,
+.show > .btn-secondary.dropdown-toggle:focus {
+  -webkit-box-shadow: inset 0 3px 5px rgba(17, 24, 39, 0.125), 0 0 0 0.18rem rgba(209, 166, 107, 0.5);
+          box-shadow: inset 0 3px 5px rgba(17, 24, 39, 0.125), 0 0 0 0.18rem rgba(209, 166, 107, 0.5);
+}
+
+.btn-secondary:disabled, .btn-secondary.disabled {
+  color: #1F2937;
+  background-color: #f0bc74;
+  border-color: #f0bc74;
+}
+
+.navbar {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.badge {
+  padding: 0.2rem 0.4rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+}
+
+.badge a {
+  color: #ffffff;
+}
+
+.badge-sm {
+  padding: 0.2rem 0.6rem;
+}
+
+.shadow {
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+}
+
+.text-gray-800 {
+  --bs-text-opacity: 1;
+  color: rgba(var(--bs-gray-800-rgb), var(--bs-text-opacity)) !important;
+}
+
+.bg-gray-800 {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-gray-800-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.rounded {
+  border-radius: 0.5rem !important;
+}
+
+.navbar-brand {
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.navbar-brand img {
+  height: 40px;
+}
+
+.navbar-dark .navbar-brand {
+  color: #ffffff;
+}
+
+.navbar-dark > .nav-item:hover > .nav-link {
+  color: #1F2937;
+}
+
+.navbar-dashboard {
+  border-radius: 0.5rem;
+}
+
+.navbar-theme-primary:not(.headroom) {
+  background-color: #1F2937;
+}
+
+/*
+ * Footer ./volt/layout/_footer.scss
+*/
+.footer ul {
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer ul li {
+  display: inline-block;
+}
+
+.footer ul li a {
+  text-decoration: none;
+  position: relative;
+  display: block;
+  color: #374151;
+}
+
+.footer ul li a:hover {
+  color: #1F2937;
+}
+
+.footer ul li .btn {
+  margin: 0;
+}
+
+.footer .copyright {
+  font-size: 0.875rem;
+}
+
+/*
+ * Sidebar ./volt/layout/_sidenav.scss
+*/
+.sidebar {
+  display: block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  max-height: 100%;
+  overflow-y: auto;
+  width: 100%;
+  -webkit-transition: max-width 0.1s;
+  transition: max-width 0.1s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar {
+    -webkit-transition: none;
+    transition: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    width: 100%;
+    max-width: 260px;
+  }
+}
+
+.sidebar .nav {
+  white-space: nowrap;
+}
+
+.sidebar .nav-item {
+  margin-bottom: 0.2rem;
+}
+
+.sidebar .nav-item.active > .nav-link {
+  color: #F2F4F6;
+  background-color: #374151;
+}
+
+.sidebar .nav-item .nav-link {
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.sidebar .nav-item .nav-link:hover {
+  color: #F2F4F6;
+  background-color: #374151;
+}
+
+.sidebar .nav-link + .multi-level {
+  margin-top: 0.2rem;
+}
+
+.sidebar .nav-link {
+  font-size: 1rem;
+  vertical-align: middle;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.sidebar .nav-link .sidebar-icon {
+  margin-right: 0.5rem;
+  color: #9CA3AF;
+}
+
+.sidebar .nav-link .link-arrow {
+  font-size: 0.875rem;
+}
+
+.sidebar .nav-link[data-bs-toggle="collapse"][aria-expanded="true"] .link-arrow {
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.sidebar .nav-link.active {
+  color: #F2F4F6;
+}
+
+.sidebar .multi-level .nav-link {
+  padding-left: 53px;
+}
+
+.sidebar .sidebar-text,
+.sidebar .link-arrow,
+.sidebar .badge {
+  opacity: 1;
+}
+
+.sidebar-inner {
+  position: relative;
+  overflow-y: hidden;
+}
+
+.content {
+  overflow: hidden;
+  padding: 0 1rem 0 1rem;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content {
+    -webkit-transition: none;
+    transition: none;
+  }
+}
+
+@media (min-width: 992px) {
+  .content {
+    margin-left: 260px;
+  }
+}
+
+.btn-upgrade-pro {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  width: 190px;
+}
+
+@media (min-width: 768px) {
+  .btn-upgrade-pro {
+    left: 35px;
+  }
+}
+
+ul li {
+  line-height: 1.6;
+}
+
+.search-bar .form-control {
+  width: 280px;
+  -webkit-transition: width 0.2s ease-in-out;
+  transition: width 0.2s ease-in-out;
+}
+
+@media (max-width: 575.98px) {
+  .search-bar .form-control {
+    width: 120px;
+  }
+  .search-bar .form-control:focus {
+    width: 150px;
+  }
+}
