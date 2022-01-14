@@ -36,8 +36,8 @@ def layout():
             ], className='col-12 col-xl-4')
         ], className='row'),
 
-        settingsPopupPanel(),
-        settingsPopupButton(),
+        # settingsPopupPanel(),
+        # settingsPopupButton(),
         footer()
     ], className='content')
 ])

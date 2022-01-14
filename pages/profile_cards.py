@@ -1,10 +1,14 @@
 from dash import html, dcc
 from dash_svg import Svg, Path
 
+def background_img(url):
+    return {"background": f'rgba(0, 0, 0, 0) url("{url}") repeat scroll 0% 0%'}
+
+
 def card1():
     return html.Div([
         html.Div([
-            html.Div(className='profile-cover rounded-top', **{"data-background": "../assets/img/profile-cover.jpg"}),
+            html.Div(className='profile-cover rounded-top', style=background_img("/assets/img/profile-cover.jpg")),
             html.Div([
                 html.Img(src='../assets/img/team/profile-picture-1.jpg', className='avatar-xl rounded-circle mx-auto mt-n7 mb-4', alt='Neil Portrait'),
                 html.H4("Neil Sims", className='h3'),
