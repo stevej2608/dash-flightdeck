@@ -74,7 +74,7 @@ layout = html.Div([
                         html.Span([
                             html.Span([
                                 Svg([
-                                    Path(fillRule='evenodd', d='M12 1.586l-4 4v12.828l4-4V1.586zM3.707 3.293A1 1 0 002 4v10a1 1 0 00.293.707L6 18.414V5.586L3.707 3.293zM17.707 5.293L14 1.586v12.828l2.293 2.293A1 1 0 0018 16V6a1 1 0 00-.293-.707z', clipRule='evenodd')
+                                    Path(fillRule='evenodd', d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z", clipRule='evenodd')
                                 ], className='icon icon-xs me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
                             ], className='sidebar-icon'),
                             html.Span("Calendar", className='sidebar-text')
