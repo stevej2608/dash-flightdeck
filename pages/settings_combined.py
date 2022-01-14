@@ -1,5 +1,4 @@
 from dash import html, dcc, register_page
-import dash_bootstrap_components as dbc
 from dash_svg import Svg, Path
 
 register_page(__name__, path="/volt", title="Volt Clone")
@@ -169,7 +168,7 @@ layout = html.Div([
                                         Path(fillRule='evenodd', d='M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z', clipRule='evenodd')
                                     ], className='icon icon-xs', xmlns='http://www.w3.org/2000/svg', viewBox='0 0 20 20', fill='currentColor', **{"aria-hidden": "true"})
                                 ], className='input-group-text', id='topbar-addon'),
-                                dbc.Input(type='text', className='form-control', id='topbarInputIconLeft', placeholder='Search')
+                                dcc.Input(type='text', className='form-control', id='topbarInputIconLeft', placeholder='Search')
                             ], className='input-group input-group-merge search-bar')
                         ], className='navbar-search form-inline', id='navbar-search-main'),
                         # / Search form
@@ -217,7 +216,7 @@ layout = html.Div([
                 ], className='dropdown')
             ]),
             html.Div([
-                dbc.Button([
+                html.Button([
                     Svg([
                         Path(fillRule='evenodd', d='M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z', clipRule='evenodd')
                     ], className='icon icon-xs', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
@@ -278,13 +277,13 @@ layout = html.Div([
                             html.Div([
                                 html.Div([
                                     html.Label("First Name", htmlFor='first_name'),
-                                    dbc.Input(className='form-control', id='first_name', type='text', placeholder='Enter your first name', required='')
+                                    dcc.Input(className='form-control', id='first_name', type='text', placeholder='Enter your first name', required='')
                                 ])
                             ], className='col-md-6 mb-3'),
                             html.Div([
                                 html.Div([
                                     html.Label("Last Name", htmlFor='last_name'),
-                                    dbc.Input(className='form-control', id='last_name', type='text', placeholder='Also your last name', required='')
+                                    dcc.Input(className='form-control', id='last_name', type='text', placeholder='Also your last name', required='')
                                 ])
                             ], className='col-md-6 mb-3')
                         ], className='row'),
@@ -297,7 +296,7 @@ layout = html.Div([
                                             Path(fillRule='evenodd', d='M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z', clipRule='evenodd')
                                         ], className='icon icon-xs', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
                                     ], className='input-group-text'),
-                                    dbc.Input(className='form-control', id='birthday', type='text', placeholder='dd/mm/yyyy', required='')
+                                    dcc.Input(className='form-control', id='birthday', type='text', placeholder='dd/mm/yyyy', required='')
                                 ], className='input-group')
                             ], className='col-md-6 mb-3'),
                             html.Div([
@@ -313,13 +312,13 @@ layout = html.Div([
                             html.Div([
                                 html.Div([
                                     html.Label("Email", htmlFor='email'),
-                                    dbc.Input(className='form-control', id='email', type='email', placeholder='name@company.com', required='')
+                                    dcc.Input(className='form-control', id='email', type='email', placeholder='name@company.com', required='')
                                 ], className='form-group')
                             ], className='col-md-6 mb-3'),
                             html.Div([
                                 html.Div([
                                     html.Label("Phone", htmlFor='phone'),
-                                    dbc.Input(className='form-control', id='phone', type='number', placeholder='+12-345 678 910', required='')
+                                    dcc.Input(className='form-control', id='phone', type='number', placeholder='+12-345 678 910', required='')
                                 ], className='form-group')
                             ], className='col-md-6 mb-3')
                         ], className='row'),
@@ -328,13 +327,13 @@ layout = html.Div([
                             html.Div([
                                 html.Div([
                                     html.Label("Address", htmlFor='address'),
-                                    dbc.Input(className='form-control', id='address', type='text', placeholder='Enter your home address', required='')
+                                    dcc.Input(className='form-control', id='address', type='text', placeholder='Enter your home address', required='')
                                 ], className='form-group')
                             ], className='col-sm-9 mb-3'),
                             html.Div([
                                 html.Div([
                                     html.Label("Number", htmlFor='number'),
-                                    dbc.Input(className='form-control', id='number', type='number', placeholder='No.', required='')
+                                    dcc.Input(className='form-control', id='number', type='number', placeholder='No.', required='')
                                 ], className='form-group')
                             ], className='col-sm-3 mb-3')
                         ], className='row'),
@@ -342,7 +341,7 @@ layout = html.Div([
                             html.Div([
                                 html.Div([
                                     html.Label("City", htmlFor='city'),
-                                    dbc.Input(className='form-control', id='city', type='text', placeholder='City', required='')
+                                    dcc.Input(className='form-control', id='city', type='text', placeholder='City', required='')
                                 ], className='form-group')
                             ], className='col-sm-4 mb-3'),
                             html.Div([
@@ -405,12 +404,12 @@ layout = html.Div([
                             html.Div([
                                 html.Div([
                                     html.Label("ZIP", htmlFor='zip'),
-                                    dbc.Input(className='form-control', id='zip', type='tel', placeholder='ZIP', required='')
+                                    dcc.Input(className='form-control', id='zip', type='tel', placeholder='ZIP', required='')
                                 ], className='form-group')
                             ], className='col-sm-4')
                         ], className='row'),
                         html.Div([
-                            dbc.Button("Save all", className='btn btn-gray-800 mt-2 animate-up-2', type='submit')
+                            html.Button("Save all", className='btn btn-gray-800 mt-2 animate-up-2', type='submit')
                         ], className='mt-3')
                     ])
                 ], className='card card-body border-0 shadow mb-4'),
@@ -424,7 +423,7 @@ layout = html.Div([
                             ]),
                             html.Div([
                                 html.Div([
-                                    dbc.Input(className='form-check-input', type='checkbox', id='user-notification-1'),
+                                    dcc.Input(className='form-check-input', type='checkbox', id='user-notification-1'),
                                     html.Label(className='form-check-label', htmlFor='user-notification-1')
                                 ], className='form-check form-switch')
                             ])
@@ -436,7 +435,7 @@ layout = html.Div([
                             ]),
                             html.Div([
                                 html.Div([
-                                    dbc.Checkbox(className='form-check-input', id='user-notification-2', value=False),
+                                    dcc.Input(className='form-check-input', type='checkbox', id='user-notification-2', value=False),
                                     html.Label(className='form-check-label', htmlFor='user-notification-2')
                                 ], className='form-check form-switch')
                             ])
@@ -448,7 +447,7 @@ layout = html.Div([
                             ]),
                             html.Div([
                                 html.Div([
-                                    dbc.Checkbox(className='form-check-input', id='user-notification-3', value=False),
+                                    dcc.Input(className='form-check-input', type='checkbox', id='user-notification-3', value=False),
                                     html.Label(className='form-check-label', htmlFor='user-notification-3')
                                 ], className='form-check form-switch')
                             ])
@@ -490,7 +489,7 @@ layout = html.Div([
                                             Svg([
                                                 Path(fillRule='evenodd', d='M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z', clipRule='evenodd')
                                             ], className='icon text-gray-500 me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg'),
-                                            dbc.Input(type='file'),
+                                            dcc.Input(type='file'),
                                             html.Div([
                                                 html.Div("Choose Image", className='fw-normal text-dark mb-1'),
                                                 html.Div("JPG, GIF or PNG. Max size of 800K", className='text-gray small')
@@ -515,7 +514,7 @@ layout = html.Div([
                                             Svg([
                                                 Path(fillRule='evenodd', d='M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z', clipRule='evenodd')
                                             ], className='icon text-gray-500 me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg'),
-                                            dbc.Input(type='file'),
+                                            dcc.Input(type='file'),
                                             html.Div([
                                                 html.Div("Choose Image", className='fw-normal text-dark mb-1'),
                                                 html.Div("JPG, GIF or PNG. Max size of 800K", className='text-gray small')
@@ -531,7 +530,7 @@ layout = html.Div([
         ], className='row'),
         html.Div([
             html.Div([
-                dbc.Button(type='button', className='btn-close theme-settings-close', href='#theme-settings'),
+                html.Button(type='button', className='btn-close theme-settings-close'),
                 html.Div([
                     html.P([
                         "Open source",
@@ -594,6 +593,5 @@ layout = html.Div([
                 ], className='col-12 col-md-8 col-xl-6 text-center text-lg-start')
             ], className='row')
         ], className='bg-white rounded shadow p-5 mb-4 mt-4')
-    ], className='content'),
-    html.Script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js')
+    ], className='content')
 ])

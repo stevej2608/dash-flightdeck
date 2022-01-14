@@ -2,15 +2,13 @@ import flask
 from dash import Dash
 import dash_labs as dl
 
-import dash_bootstrap_components as dbc
-
-
 external_stylesheets = [
     "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css",
     "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css",
     ]
 
 external_scripts = [
+    "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"
     ]
 
 # Server definition
