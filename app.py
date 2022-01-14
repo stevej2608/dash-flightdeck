@@ -4,18 +4,13 @@ import dash_labs as dl
 
 import dash_bootstrap_components as dbc
 
-external_stylesheets = [
-    "https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css",
-    "https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css",
 
-    "https://use.fontawesome.com/releases/v5.4.1/css/all.css",
-    "https://fonts.googleapis.com/css?family=Open+Sans:300,400"
+external_stylesheets = [
+    "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css",
+    "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css",
     ]
 
 external_scripts = [
-    "https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js",
-    "https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js",
-    {'src': "https://buttons.github.io/buttons.js",'async': 'true', 'defer': 'true' }
     ]
 
 # Server definition

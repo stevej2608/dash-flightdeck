@@ -23,6 +23,6 @@ def serve_app(app, path="", debug=False):
     hostname = os.environ.get("HOSTNAME", "localhost")
     hostport = os.environ.get("HOSTPORT", "5000")
 
-    print(f' * Visit http://{hostname}:{hostport}{path}')
+    print(f' * Visit http://{hostname}:{hostport}{path}/volt')
 
     app.run_server(debug=debug, host='0.0.0.0', port=port, threaded=False)
