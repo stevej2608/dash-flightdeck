@@ -1,0 +1,127 @@
+<!--
+
+  Minimal version with maximally tiny volt-tiny.css
+
+  Everything works but app is slightly different to the full volt
+  dashboard. Many classes in the html are are not defined in the css.
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>settings-cards-only</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="title" content="settings-cards-only">
+
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon/favicon-16x16.png">
+  <link rel="mask-icon" href="../assets/img/favicon/safari-pinned-tab.svg" color="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+
+  <!-- Volt CSS -->
+  <link type="text/css" href="../css/buttons.css" rel="stylesheet">
+  <link type="text/css" href="../css/sidebar.css" rel="stylesheet">
+  <link type="text/css" href="../css/alerts.css" rel="stylesheet">
+  <link type="text/css" href="../css/form.css" rel="stylesheet">
+  <link type="text/css" href="../css/cards.css" rel="stylesheet">
+
+  <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
+
+</head>
+
+<body>
+  <main class="content">
+    <div class="row">
+      <div class="col-12 col-xl-4">
+        <div class="row">
+          <div class="col-12 mb-4">
+            <div class="card shadow border-0 text-center p-0">
+              <div class="profile-cover rounded-top" data-background="../assets/img/profile-cover.jpg"></div>
+              <div class="card-body pb-5">
+                <img src="../assets/img/team/profile-picture-1.jpg" class="avatar-xl rounded-circle mx-auto mt-n7 mb-4"
+                  alt="Neil Portrait">
+                <h4 class="h3">Neil Sims</h4>
+                <h5 class="fw-normal">Senior Software Engineer</h5>
+                <p class="text-gray mb-4">New York, USA</p>
+                <a class="btn btn-sm btn-gray-800 d-inline-flex align-items-center me-2" href="#">
+                  <svg class="icon icon-xs me-1" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z">
+                    </path>
+                  </svg>
+                  Connect
+                </a>
+                <a class="btn btn-sm btn-secondary" href="#">Send Message</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card card-body border-0 shadow mb-4">
+              <h2 class="h5 mb-4">Select profile photo</h2>
+              <div class="d-flex align-items-center">
+                <div class="me-3">
+                  <!-- Avatar -->
+                  <img class="rounded avatar-xl" src="../assets/img/team/profile-picture-3.jpg" alt="change avatar">
+                </div>
+                <div class="file-field">
+                  <div class="d-flex justify-content-xl-center ms-xl-3">
+                    <div class="d-flex">
+                      <svg class="icon text-gray-500 me-2" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                          d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                      <input type="file">
+                      <div class="d-md-block text-left">
+                        <div class="fw-normal text-dark mb-1">Choose Image</div>
+                        <div class="text-gray small">JPG, GIF or PNG. Max size of 800K</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card card-body border-0 shadow">
+              <h2 class="h5 mb-4">Select cover photo</h2>
+              <div class="d-flex align-items-center">
+                <div class="me-3">
+                  <!-- Avatar -->
+                  <img class="rounded avatar-xl" src="../assets/img/profile-cover.jpg" alt="change cover">
+                </div>
+                <div class="file-field">
+                  <div class="d-flex justify-content-xl-center ms-xl-3">
+                    <div class="d-flex">
+                      <svg class="icon text-gray-500 me-2" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                          d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                      <input type="file">
+                      <div class="d-md-block text-left">
+                        <div class="fw-normal text-dark mb-1">Choose Image</div>
+                        <div class="text-gray small">JPG, GIF or PNG. Max size of 800K</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

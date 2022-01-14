@@ -1,0 +1,87 @@
+<!--
+
+  Minimal version with maximally tiny volt-tiny.css
+
+  Everything works but app is slightly different to the full volt
+  dashboard. Many classes in the html are are not defined in the css.
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>settings-alerts-only</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="title" content="settings-alerts-only">
+
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon/favicon-16x16.png">
+  <link rel="mask-icon" href="../assets/img/favicon/safari-pinned-tab.svg" color="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+
+  <!-- Volt CSS -->
+  <link type="text/css" href="../css/buttons.css" rel="stylesheet">
+  <link type="text/css" href="../css/sidebar.css" rel="stylesheet">
+  <link type="text/css" href="../css/alerts.css" rel="stylesheet">
+
+  <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
+
+</head>
+<body>
+  <main class="content">
+    <div class="row">
+      <div class="col-12 col-xl-8">
+        <div class="card card-body border-0 shadow mb-4 mb-xl-0">
+          <h2 class="h5 mb-4">Alerts & Notifications</h2>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex align-items-center justify-content-between px-0 border-bottom">
+              <div>
+                <h3 class="h6 mb-1">Company News</h3>
+                <p class="small pe-4">Get Rocket news, announcements, and product updates</p>
+              </div>
+              <div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="user-notification-1">
+                  <label class="form-check-label" for="user-notification-1"></label>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item d-flex align-items-center justify-content-between px-0 border-bottom">
+              <div>
+                <h3 class="h6 mb-1">Account Activity</h3>
+                <p class="small pe-4">Get important notifications about you or activity you've missed</p>
+              </div>
+              <div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="user-notification-2" checked>
+                  <label class="form-check-label" for="user-notification-2"></label>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item d-flex align-items-center justify-content-between px-0">
+              <div>
+                <h3 class="h6 mb-1">Meetups Near You</h3>
+                <p class="small pe-4">Get an email when a Dribbble Meetup is posted close to my location</p>
+              </div>
+              <div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="user-notification-3" checked>
+                  <label class="form-check-label" for="user-notification-3"></label>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

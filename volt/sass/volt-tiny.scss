@@ -1,0 +1,319 @@
+/*
+  Minimum scss that supports volt\pages\dashboard\dashboard-tiny.html
+
+  This file generates only Volt theme changes that override the basic
+  Bootstrap 5 CSS. The standard bootstrap CSS needs to be loaded from a
+  suitable CDN. The resulting css file is tiny when compared to the full
+  volt/bootstrap css making the implementation ideal for bandwidth
+  constrained servers.
+
+  https://www.tutorialspoint.com/css/css_syntax.htm
+
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+@import "bootstrap/scss/functions";
+@import "volt/variables";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "volt/mixins";
+
+:root {
+  --bs-secondary-rgb: #{to-rgb($secondary)};
+  --bs-font-sans-serif: #{$font-family-sans-serif};
+  --bs-font-monospace: #{$font-family-monospace};
+  --bs-body-color: #{$gray-700};
+  --bs-body-bg: #{$gray-100};
+  --bs-gray-800-rgb: #{to-rgb($gray-800)};
+}
+
+// Override bootstrap properties
+.form-control {
+  padding: $input-padding-y $input-padding-x;
+  font-size: $input-font-size;
+  font-weight: $input-font-weight;
+  color: $input-color;
+  border: $input-border-width solid $input-border-color;
+  border-radius: $input-border-radius;
+  box-shadow: $input-box-shadow;
+}
+
+// Override bootstrap properties
+.input-group-text {
+  padding: $input-group-addon-padding-y $input-group-addon-padding-x;
+  font-size: $input-font-size;
+  color: $input-group-addon-color;
+  background-color: $input-group-addon-bg;
+  border: $input-border-width solid $input-group-addon-border-color;
+  border-radius: $input-border-radius;
+}
+
+// Override bootstrap properties
+.btn {
+  font-weight: $btn-font-weight;
+  color: $body-color;
+  border: $btn-border-width solid transparent;
+  @include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $btn-border-radius);
+}
+
+/*
+  Bootstrap Buttons. Only the secondary button is required
+*/
+
+$theme-colors: (
+  "secondary": $secondary,
+);
+
+@each $color, $value in $theme-colors {
+  .btn-#{$color} {
+    @include button-variant($value, $value);
+  }
+}
+
+// Override bootstrap properties
+.navbar {
+  padding-top: $navbar-padding-y;
+  padding-bottom: $navbar-padding-y;
+}
+
+// ./volt/components/_badge.scss
+.badge {
+  padding: $badge-padding-y $badge-padding-x;
+  font-weight: $badge-font-weight;
+  @include border-radius($badge-border-radius);
+
+  a {
+    color: $white;
+  }
+}
+
+// ./volt/components/_badge.scss
+.badge-sm {
+  padding: 0.2rem 0.6rem;
+}
+
+// Override bootstrap properties
+.shadow {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+}
+
+.text-gray-800 {
+  --bs-text-opacity: 1;
+  color: rgba(var(--bs-gray-800-rgb), var(--bs-text-opacity)) !important;
+}
+
+// Override bootstrap properties
+.bg-secondary {
+  background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.bg-gray-800 {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-gray-800-rgb), var(--bs-bg-opacity)) !important;
+}
+
+// Override bootstrap properties
+.rounded {
+  border-radius: 0.5rem !important;
+}
+
+// ./volt/layout/_navbar.scss
+.navbar-brand {
+  @include font-size($navbar-brand-font-size);
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
+
+  img {
+    height: 40px;
+  }
+}
+
+// ./volt/layout/_navbar.scss
+.navbar-dark {
+
+  .navbar-brand {
+    color: $white;
+  }
+
+  & > .nav-item:hover > .nav-link {
+    color: $primary;
+  }
+
+}
+
+.navbar-dashboard {
+  border-radius: $border-radius;
+}
+
+// ./volt/layout/_navbar.scss
+.navbar-theme-primary:not(.headroom) {
+  background-color: $gray-800;
+}
+
+/*
+ * Footer ./volt/layout/_footer.scss
+*/
+.footer {
+  ul {
+    margin-bottom: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: inline-block;
+
+      a {
+        text-decoration: none;
+        position: relative;
+        display: block;
+        color: $gray-700;
+
+        &:hover {
+          color: $primary;
+        }
+      }
+
+      .btn {
+        margin: 0;
+      }
+    }
+  }
+
+  .copyright {
+    font-size: 0.875rem;
+  }
+
+}
+
+/*
+ * Sidebar ./volt/layout/_sidenav.scss
+*/
+.sidebar {
+  display: block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  max-height: 100%;
+  overflow-y: auto;
+  width: 100%;
+  @include transition(max-width 0.1s);
+
+  @include media-breakpoint-up(md) {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .nav {
+    white-space: nowrap;
+  }
+
+  .nav-item {
+    &.active {
+      & > .nav-link {
+        color: $gray-100;
+        background-color: $gray-700;
+      }
+    }
+    .nav-link {
+      color: $white;
+      cursor: pointer;
+      &:hover {
+        color: $gray-100;
+        background-color: $gray-700;
+      }
+    }
+    margin-bottom: 0.2rem;
+  }
+
+  .nav-link + .multi-level {
+    margin-top: 0.2rem;
+  }
+
+  .nav-link {
+    font-size: $font-size-base;
+    vertical-align: middle;
+    padding: 0.55rem 0.75rem;
+    @include border-radius($border-radius);
+
+    .sidebar-icon {
+      margin-right: 0.5rem;
+      color: $gray-400;
+    }
+
+    .link-arrow {
+      font-size: $font-size-sm;
+    }
+
+    &[data-bs-toggle="collapse"][aria-expanded="true"] .link-arrow {
+      @include transform(rotate(90deg));
+      transition: $transition-base;
+    }
+  }
+  .nav-link.active {
+    color: $gray-100;
+  }
+
+  .multi-level {
+    .nav-link {
+      padding-left: 53px;
+    }
+  }
+
+  .sidebar-text,
+  .link-arrow,
+  .badge {
+    opacity: 1;
+  }
+}
+
+.sidebar-inner {
+  position: relative;
+  overflow-y: hidden;
+}
+
+// Content  ./volt/layout/_sidenav.scss
+.content {
+  overflow: hidden;
+  padding: 0 $spacer 0 $spacer;
+  @include transition(all 0.3s);
+
+  @include media-breakpoint-up(lg) {
+    margin-left: 260px;
+  }
+}
+
+// volt/components/_buttons.scss
+.btn-upgrade-pro {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  width: 190px;
+
+  @include media-breakpoint-up(md) {
+      left: 35px;
+  }
+}
+
+// Override bootstrap properties
+ul li {
+  line-height: $paragraph-line-height;
+}
+
+// ./volt/forms/_form-control.scss
+.search-bar {
+  .form-control {
+    width: 280px;
+    transition: width 0.2s ease-in-out;
+
+    @include media-breakpoint-down(sm) {
+      width: 120px;
+
+      &:focus {
+        width: 150px;
+      }
+    }
+  }
+}
