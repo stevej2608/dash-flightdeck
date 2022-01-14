@@ -15,9 +15,14 @@ layout = html.Div([
             ], className='navbar-toggler d-lg-none collapsed', type='button', **{"data-bs-toggle": "collapse", "data-bs-target": "#sidebarMenu", "aria-controls": "sidebarMenu", "aria-expanded": "false", "aria-label": "Toggle navigation"})
         ], className='d-flex align-items-center')
     ], className='navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none'),
+
+    # The sidebar
+
     html.Nav([
         html.Div([
+
             # Mobile Menu Header
+
             html.Div([
                 html.Div([
                     html.Div([
@@ -37,8 +42,13 @@ layout = html.Div([
                     ], href='#sidebarMenu', **{"data-bs-toggle": "collapse", "data-bs-target": "#sidebarMenu", "aria-controls": "sidebarMenu", "aria-expanded": "true", "aria-label": "Toggle navigation"})
                 ], className='collapse-close d-md-none')
             ], className='user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4'),
-            # Sidebar Brand
+
+            # Sidebar List of entries
+
             html.Ul([
+
+                # Overview
+
                 html.Li([
                     html.A([
                         html.Span([
@@ -48,6 +58,9 @@ layout = html.Div([
                     ], href='../pages/dashboard/dashboard-ref.html', className='nav-link d-flex align-items-center')
                 ], className='nav-item'),
                 # Sidebar & Mobile - menu links
+
+                # Dashboard
+
                 html.Li([
                     html.A([
                         html.Span([
@@ -59,6 +72,9 @@ layout = html.Div([
                         html.Span("Dashboard", className='sidebar-text')
                     ], href='../pages/dashboard/dashboard-ref.html', className='nav-link')
                 ], className='nav-item active'),
+
+                # Settings
+
                 html.Li([
                     html.A([
                         html.Span([
@@ -69,6 +85,9 @@ layout = html.Div([
                         html.Span("Settings", className='sidebar-text')
                     ], href='../pages/settings-combined.html', className='nav-link')
                 ], className='nav-item'),
+
+                # Calendar
+
                 html.Li([
                     html.A([
                         html.Span([
@@ -84,6 +103,9 @@ layout = html.Div([
                         ])
                     ], href='https://demo.themesberg.com/volt-pro/pages/calendar.html', target='_blank', className='nav-link d-flex justify-content-between')
                 ], className='nav-item'),
+
+                # Page examples
+
                 html.Li([
                     html.Span([
                         html.Span([
@@ -141,7 +163,9 @@ layout = html.Div([
                         ], className='flex-column nav')
                     ], className='multi-level collapse', role='list', id='submenu-pages', **{"aria-expanded": "false"})
                 ], className='nav-item'),
+
                 # Bottom Item
+
                 html.Li([
                     html.A([
                         html.Span([
@@ -153,8 +177,12 @@ layout = html.Div([
                     ], href='../pages/upgrade-to-pro.html', className='btn btn-secondary d-flex align-items-center justify-content-center btn-upgrade-pro')
                 ], className='nav-item')
             ], className='nav flex-column pt-3 pt-md-0')
+
+
         ], className='sidebar-inner px-4 pt-3')
     ], id='sidebarMenu', className='sidebar d-lg-block bg-gray-800 text-white collapse', **{"data-simplebar": ""}),
+
+
     html.Main([
         html.Nav([
             html.Div([
