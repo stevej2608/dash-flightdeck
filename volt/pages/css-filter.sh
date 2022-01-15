@@ -15,7 +15,7 @@
 # previously processed files.
 
 
-CSS_BASE=../css/volt.css
+VOLT_BASE=../css/volt.css
 CSS_FILTER_INPUTS="../css/bootstrap.css"
 for VAR in "settings-buttons" "settings-sidebar" "settings-alerts" "settings-form" "settings-cards"
 do
@@ -24,16 +24,17 @@ do
 
   # Get the CSS needed to support $HTML_FILE
 
-	purgecss -v -keyframes -font -css $CSS_BASE --content $HTML_FILE --output temp
+	purgecss -v -keyframes -font -css $VOLT_BASE --content $HTML_FILE --output temp
   #mv ./temp/volt.css ./temp/$VAR-purged.css
 
-  # Filter the purged CSS
+  # Filter the purged volt CSS by removing rules & attributes that are allready
+  # contained in bootstrap.css and newly created css files.
 
   csstools filter --skip_comments $CSS_FILTER_INPUTS ./temp/volt.css -o ../css/$VAR.css
 
   # Convert multipul blank lines into one
 
-  sed -i ':a; /^\n*$/{ s/\n//; N;  ba};' ./temp/$VAR.css
+  sed -i ':a; /^\n*$/{ s/\n//; N;  ba};' ../css/$VAR.css
 
   rm ./temp/volt.css
 
@@ -47,12 +48,12 @@ done
 # Do the combine CSS for comparison
 
 VAR=combined
-HTML_FILE=$HTML_FOLDER/settings-$VAR.html
+HTML_FILE=settings-$VAR.html
 echo "Processing $HTML_FILE"
 
 purgecss -v -keyframes -font -css $CSS_BASE --content $HTML_FILE --output temp
-csstools filter --skip_comments ./volt/css/bootstrap.css ./temp/volt.css -o ./temp/$VAR.css
-sed -i ':a; /^\n*$/{ s/\n//; N;  ba};' ./temp/$VAR.css
+csstools filter --skip_comments ../css/bootstrap.css ./temp/volt.css -o ../css/$VAR.css
+sed -i ':a; /^\n*$/{ s/\n//; N;  ba};' ../css/$VAR.css
 
 rm ./temp/volt.css
 
