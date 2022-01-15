@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+:root {
+  --bs-success-rgb: 16, 185, 129;
+}
+
+code {
+  font-size: 1em;
+}
+
+.fw-bolder {
+  font-weight: 600 !important;
+}
+
+.fw-extrabold {
+  font-weight: 700 !important;
+}
+
+.text-gray-800 {
+  color: rgba(var(--bs-gray-800-rgb), var(--bs-text-opacity)) !important;
+}
+
+.btn-secondary:hover {
+  background-color: #eeb15d;
+  border-color: #eeb15d;
+}
+
+.icon.icon-xxs {
+  height: 1rem;
+}
+
+.icon-shape {
+  width: 4rem;
+  height: 4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon-shape svg {
+  height: 2rem;
+}
+.icon-shape.icon-xxs {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.icon-shape.icon-xxs svg {
+  height: 1rem;
+}
+.icon-shape.icon-xs {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.icon-shape.icon-xs svg {
+  height: 1.25rem;
+}
+
+.icon-shape-primary {
+  color: #1F2937;
+  background-color: rgba(31, 41, 55, 0.3);
+}
+
+.icon-shape-secondary {
+  color: #f0bc74;
+  background-color: rgba(240, 188, 116, 0.3);
+}
+
+.icon-shape-tertiary {
+  color: #31316A;
+  background-color: rgba(49, 49, 106, 0.3);
+}
+
+.text-success, .text-success:hover {
+  color: #10B981 !important;
+}
+.text-success a:not(.btn), .text-success h2, .text-success h3, .text-success h5, .text-success h6, .text-success .h2, .text-success .h3, .text-success .h5, .text-success .h6 {
+  color: #10B981;
+}
+
+.text-danger, .text-danger:hover {
+  color: #E11D48 !important;
+}
+
+.text-white, .text-white:hover {
+  color: #ffffff !important;
+}
+
+.text-gray-400, .text-gray-400:hover {
+  color: #9CA3AF !important;
+}
+
+.text-gray-500, .text-gray-500:hover {
+  color: #6B7280 !important;
+}
+

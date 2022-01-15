@@ -14,10 +14,18 @@
 # standard boostrap.css or in the rules defined by the
 # previously processed files.
 
+function print_css() {
+  for CSS in $@
+  do
+    echo "<link type=\"text/css\" href=\"$CSS\" rel=\"stylesheet\">"
+  done
+}
+
 
 VOLT_BASE=../css/volt.css
-CSS_FILTER_INPUTS="../css/bootstrap.css"
-for VAR in "settings-buttons" "settings-sidebar" "settings-alerts" "settings-form" "settings-cards"
+CSS_FILTER_INPUTS="../css/bootstrap.css ../css/volt-tiny.css"
+
+for VAR in "settings-buttons" "settings-sidebar" "settings-alerts" "settings-form" "settings-cards" "settings-combined"
 do
   HTML_FILE=$VAR.html
   echo "Processing $HTML_FILE"
@@ -42,21 +50,37 @@ do
 
   CSS_FILTER_INPUTS="$CSS_FILTER_INPUTS ../css/$VAR.css "
 
+  print_css $CSS_FILTER_INPUTS
   echo ""
 done
 
-# Do the combine CSS for comparison
+# Process dashboard files
 
-VAR=combined
-HTML_FILE=settings-$VAR.html
-echo "Processing $HTML_FILE"
+for VAR in "dashboard-cards-only" "dashboard-chart-only" "dashboard-table-only" "dashboard-team-only"
+do
+  HTML_FILE=dashboard/$VAR.html
+  echo "Processing $HTML_FILE"
 
-purgecss -v -keyframes -font -css $CSS_BASE --content $HTML_FILE --output temp
-csstools filter --skip_comments ../css/bootstrap.css ./temp/volt.css -o ../css/$VAR.css
-sed -i ':a; /^\n*$/{ s/\n//; N;  ba};' ../css/$VAR.css
+  # Get the CSS needed to support $HTML_FILE
 
-rm ./temp/volt.css
+	purgecss -v -keyframes -font -css $VOLT_BASE --content $HTML_FILE --output temp
+  #mv ./temp/volt.css ./temp/$VAR-purged.css
 
-# Add the filtered css file to the input list on the next pass
+  # Filter the purged volt CSS by removing rules & attributes that are allready
+  # contained in bootstrap.css and newly created css files.
 
-CSS_FILTER_INPUTS="$CSS_FILTER_INPUTS ./temp/$VAR.css "
+  csstools filter --skip_comments $CSS_FILTER_INPUTS ./temp/volt.css -o ../css/$VAR.css
+
+  # Convert multipul blank lines into one
+
+  sed -i ':a; /^\n*$/{ s/\n//; N;  ba};' ../css/$VAR.css
+
+  rm ./temp/volt.css
+
+  # Add the filtered css file to the input list on the next pass
+
+  CSS_FILTER_INPUTS="$CSS_FILTER_INPUTS ../css/$VAR.css "
+
+  print_css $CSS_FILTER_INPUTS
+  echo ""
+done

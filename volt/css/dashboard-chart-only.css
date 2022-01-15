@@ -1,0 +1,70 @@
+@charset "UTF-8";
+
+.ct-double-octave {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+.ct-double-octave:before {
+  display: block;
+  float: left;
+  content: "";
+  width: 0;
+  height: 0;
+  padding-bottom: 25%;
+}
+.ct-double-octave:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.ct-double-octave > svg {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+:root {
+  --bs-yellow-100-rgb: 255, 238, 214;
+}
+
+code {
+  font-size: 0.875em;
+}
+
+.btn-secondary:hover {
+  background-color: #f2c689;
+  border-color: #f2c382;
+}
+
+.card-header {
+  padding: 1.25rem 1.5rem;
+  background-color: rgba(17, 24, 39, 0.03);
+  border-bottom: 0.0625rem solid rgba(17, 24, 39, 0.125);
+}
+.card-header:first-child {
+  border-radius: 0.4375rem 0.4375rem 0 0;
+}
+
+.text-success {
+  color: rgba(var(--bs-success-rgb), var(--bs-text-opacity)) !important;
+}
+
+.text-white {
+  color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
+}
+
+.bg-yellow-100 {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-yellow-100-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.card .card-header {
+  background: transparent;
+}
+
+.text-gray-800, .text-gray-800:hover {
+  color: #1F2937 !important;
+}
+
