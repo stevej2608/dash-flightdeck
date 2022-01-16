@@ -5,7 +5,7 @@ SAFE_LIST="ct-bar chartist-tooltip ct-area ct-chart-line ct-end ct-grid ct-grid 
 
 echo "purging css ..."
 
-purgecss -v -keyframes -font --safelist $SAFE_LIST -css $VOLT_CSS --content **/*.html --output temp
+purgecss -v -keyframes -font --safelist $SAFE_LIST -css $VOLT_CSS --content settings-min.html dashboard/dashboard-min.html --output temp
 
 echo "pilter css ..."
 
