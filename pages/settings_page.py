@@ -4,7 +4,7 @@ from .components import sideBar, mobileNavBar, topNavBar, buttonBar, footer
 from .settings import card1, card2, card3, generalForm, alertsNotifications
 
 
-register_page(__name__, path="/volt", title="Volt Clone")
+register_page(__name__, path="/settings", title="Dash/Flightdeck - Settings")
 
 def layout():
     return  html.Div([
