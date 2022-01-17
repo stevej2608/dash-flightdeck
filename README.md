@@ -36,6 +36,13 @@ Building volt.css from sass source
 
     sass --no-source-map volt-tiny.scss ../css/volt-tiny.css
 
+## css2sass
+
+Converted from volt-min.css using [css2sass](https://css2sass.herokuapp.com/)
+
+I need to find a way to programmatically extract colours from the css and assign the to
+variables
+
 
 ### Links
 

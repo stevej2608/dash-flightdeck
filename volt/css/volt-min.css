@@ -169,7 +169,6 @@ a:hover {
   text-decoration: none;
 }
 
-
 code {
   font-size: 1em;
   direction: ltr ;
@@ -198,9 +197,6 @@ button:not(:disabled),
   outline-offset: -2px;
   -webkit-appearance: textfield;
 }
-
-
-
 
 .container-fluid {
   padding-right: var(--bs-gutter-x, 1rem);
@@ -642,12 +638,6 @@ button:not(:disabled),
   box-shadow: 0 0 0 0.18rem rgba(31, 41, 55, 0.25);
 }
 
-
-
-
-
-
-
 .shadow {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
 }
@@ -671,10 +661,6 @@ button:not(:disabled),
 .fw-extrabold {
   font-weight: 700 !important;
 }
-
-
-
-
 
 .text-gray-300 {
   --bs-text-opacity: 1;
@@ -720,7 +706,6 @@ button:not(:disabled),
   border-top-right-radius: 0.5rem !important;
 }
 
-
 .navbar-brand {
   font-size: 0.875rem;
   font-weight: 500;
@@ -750,9 +735,6 @@ button:not(:disabled),
   background-color: #1F2937;
 }
 
-
-
-
 .footer ul {
   margin-bottom: 0;
   padding: 0;
@@ -776,8 +758,6 @@ button:not(:disabled),
 .footer .copyright {
   font-size: 0.875rem;
 }
-
-
 
 .sidebar {
   display: block;
@@ -886,7 +866,6 @@ button:not(:disabled),
   }
 }
 
-
 main {
   display: block;
   margin: 0;
@@ -909,10 +888,6 @@ label {
   margin-bottom: 0.5rem;
 }
 
-
-
-
-
 .animate-up-2 {
   transition: all 0.2s ease;
 }
@@ -928,8 +903,6 @@ label {
 [class*=shadow] {
   transition: all 0.2s ease;
 }
-
-
 
 .avatar {
   width: 2rem;
@@ -951,7 +924,6 @@ label {
   }
 }
 
-
 .badge {
   font-weight: 600;
 }
@@ -962,8 +934,6 @@ label {
 .badge-sm {
   padding: 0.2rem 0.6rem;
 }
-
-
 
 .btn-upgrade-pro {
   position: fixed;
@@ -991,9 +961,6 @@ label {
   background-color: #161d27;
   border-color: #161d27;
 }
-
-
-
 
 .card .card-header {
   background: transparent;
@@ -1050,9 +1017,6 @@ label {
   cursor: pointer;
 }
 
-
-
-
 .close {
   transition: all 0.2s ease;
 }
@@ -1075,8 +1039,6 @@ label {
 .close:hover span:not(.sr-only), .close:focus span:not(.sr-only) {
   background-color: transparent;
 }
-
-
 
 .ct-bar {
   stroke-linecap: round;
@@ -1102,7 +1064,6 @@ label {
   color: #1F2937;
 }
 
-
 .dropdown-menu .dropdown-item {
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
@@ -1120,7 +1081,6 @@ label {
 .dropdown-toggle:after {
   display: none;
 }
-
 
 .icon {
   height: 2rem;
@@ -1205,16 +1165,12 @@ label {
   background-color: rgba(124, 58, 237, 0.3);
 }
 
-
-
 .image-xs {
   height: 1.5rem;
 }
 .image-xs img {
   height: 1.5rem;
 }
-
-
 
 .list-group-item {
   border: 0;
@@ -1224,9 +1180,6 @@ label {
   background-color: #1F2937;
   border-color: #1F2937;
 }
-
-
-
 
 .nav-link {
   color: #1F2937;
@@ -1241,11 +1194,6 @@ label {
 .nav-link span {
   position: relative;
 }
-
-
-
-
-
 
 .progress-wrapper {
   position: relative;
@@ -1311,12 +1259,6 @@ label {
   border-top-color: #1F2937;
 }
 
-
-
-
-
-
-
 .table thead th {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -1373,7 +1315,6 @@ label {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
-
 
  h2, h3, h4, h5, h6, .h2, .h3, .h4, .h5, .h6 {
   font-family: "Inter", sans-serif;
@@ -1458,8 +1399,6 @@ a:hover {
   color: #111827;
 }
 
-
-
 .chartist-tooltip {
   position: absolute;
   display: inline-block;
@@ -1501,8 +1440,6 @@ a:hover {
   align-content: flex-start;
   align-items: flex-start;
 }
-
-
 
 .search-bar .form-control {
   width: 280px;
