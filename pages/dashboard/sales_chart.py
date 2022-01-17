@@ -2,16 +2,27 @@ from dash import html
 from dash_chartist import DashChartist
 
 data = {
-    "labels": ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8', 'W9', 'W10'],
-    "series": [ [1, 2, 4, 8, 6, -2, -1, -4, -6, -2] ]
+    "labels": ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    "series": [ [0, 10, 30, 40, 80, 60, 100] ]
 }
 
 options = {
-    "high": 10,
-    "low": -10,
-}
+    'low': 0,
+    'showArea': True,
+    'fullWidth': True,
+    'axisX': {
+        # On the x-axis start means top and end means bottom
+        'position': 'end',
+        'showGrid': True
+        },
+    'axisY': {
+        # On the y-axis start means left and end means right
+        'showGrid': False,
+        'showLabel': False,
+        }
+    }
 
-chartType = 'Bar'
+chartType = 'Line'
 
 
 def salesChart():
@@ -33,7 +44,7 @@ def salesChart():
                 ], className='d-flex ms-auto')
             ], className='card-header d-sm-flex flex-row align-items-center flex-0'),
             html.Div([
-                DashChartist(className='ct-chart-sales-value ct-double-octave', type=chartType, options=options, data=data)
+                DashChartist(className='ct-chart-sales-value ct-double-octave ct-series-g', type=chartType, options=options, data=data)
             ], className='card-body p-2')
         ], className='card bg-yellow-100 border-0 shadow')
     ], className='col-12 mb-4')

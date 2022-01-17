@@ -1,5 +1,31 @@
 from dash import html
 from dash_svg import Svg, Path
+from dash_chartist import DashChartist
+
+data = {
+    "labels": ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    "series": [ [1, 5, 2, 5, 4, 3],
+                [2, 3, 4, 8, 1, 2],
+              ]
+    }
+
+options = {
+    'low': 0,
+    'showArea': True,
+    'fullWidth': True,
+    'axisX': {
+        # On the x-axis start means top and end means bottom
+        'position': 'end'
+        },
+    'axisY': {
+        # On the y-axis start means left and end means right
+        'showGrid': False,
+        'showLabel': False,
+        'offset': 0
+        }
+    }
+
+chartType = 'Bar'
 
 def totalOrders():
     return html.Div([
@@ -25,7 +51,7 @@ def totalOrders():
                 ], className='d-block ms-auto')
             ], className='card-header d-flex flex-row align-items-center flex-0 border-bottom'),
             html.Div([
-                html.Div(className='ct-chart-ranking ct-golden-section ct-series-a')
+                DashChartist(className='ct-chart-ranking ct-golden-section ct-series-a', type=chartType, options=options, data=data)
             ], className='card-body p-2')
         ], className='card border-0 shadow')
     ], className='col-12 px-0 mb-4')
