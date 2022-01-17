@@ -1,14 +1,8 @@
 from dash import html, register_page
 
-from .sidebar import sideBar
-from .mobile_nav import mobileNavBar
-from .top_navbar import topNavBar
-from .button_bar import buttonBar
-from .profile_cards import card1, card2, card3
-from .general_form import generalForm
-from .alerts_notifications import alertsNotifications
-from .settings_popup import settingsPopupButton, settingsPopupPanel
-from .footer import footer
+from .components import sideBar, mobileNavBar, topNavBar, buttonBar, footer
+from .settings import card1, card2, card3, generalForm, alertsNotifications
+
 
 register_page(__name__, path="/volt", title="Volt Clone")
 
