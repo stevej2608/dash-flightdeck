@@ -5,7 +5,7 @@ def sideBar():
     return html.Nav([
         html.Div([
 
-            # Mobile Menu Header
+            # Mobile Menu Header, visibility controlled by CSS media rules
 
             html.Div([
                 html.Div([
@@ -39,11 +39,11 @@ def sideBar():
                             html.Img(src='../assets/img/brand/light.svg', height='20', width='20', alt='Volt Logo')
                         ], className='sidebar-icon'),
                         html.Span("Volt Overview", className='mt-1 ms-1 sidebar-text')
-                    ], href='../pages/dashboard/dashboard-ref.html', className='nav-link d-flex align-items-center')
+                    ], href='https://demo.themesberg.com/volt/pages/dashboard/dashboard.html', className='nav-link d-flex align-items-center')
                 ], className='nav-item'),
                 # Sidebar & Mobile - menu links
 
-                # Dashboard
+                # Dashboard Link
 
                 html.Li([
                     html.A([
@@ -57,7 +57,7 @@ def sideBar():
                     ], href='../pages/dashboard/dashboard-ref.html', className='nav-link')
                 ], className='nav-item active'),
 
-                # Settings
+                # Settings Link
 
                 html.Li([
                     html.A([
@@ -70,7 +70,7 @@ def sideBar():
                     ], href='../pages/settings-combined.html', className='nav-link')
                 ], className='nav-item'),
 
-                # Calendar
+                # Calendar Link
 
                 html.Li([
                     html.A([
@@ -88,9 +88,12 @@ def sideBar():
                     ], href='https://demo.themesberg.com/volt-pro/pages/calendar.html', target='_blank', className='nav-link d-flex justify-content-between')
                 ], className='nav-item'),
 
-                # Page examples
+                # Page examples drop down
 
                 html.Li([
+
+                    # Dropdown button
+
                     html.Span([
                         html.Span([
                             html.Span([
@@ -107,6 +110,9 @@ def sideBar():
                             ], className='icon icon-sm', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
                         ], className='link-arrow')
                     ], className='nav-link collapsed d-flex justify-content-between align-items-center', **{"data-bs-toggle": "collapse", "data-bs-target": "#submenu-pages"}),
+
+                    # Drop down content - example page links
+
                     html.Div([
                         html.Ul([
                             html.Li([
@@ -146,6 +152,7 @@ def sideBar():
                             ], className='nav-item')
                         ], className='flex-column nav')
                     ], className='multi-level collapse', role='list', id='submenu-pages', **{"aria-expanded": "false"})
+
                 ], className='nav-item'),
 
                 # Bottom Item
@@ -160,6 +167,7 @@ def sideBar():
                         html.Span("Upgrade to Pro")
                     ], href='../pages/upgrade-to-pro.html', className='btn btn-secondary d-flex align-items-center justify-content-center btn-upgrade-pro')
                 ], className='nav-item')
+
             ], className='nav flex-column pt-3 pt-md-0')
 
 

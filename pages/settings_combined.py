@@ -1,5 +1,4 @@
-from dash import html, dcc, register_page
-from dash_svg import Svg, Path
+from dash import html, register_page
 
 from .sidebar import sideBar
 from .mobile_nav import mobileNavBar
