@@ -1,143 +1,18 @@
 from dash import html, dcc, register_page
 from dash_svg import Svg, Path
 
+from .components import sideBar, mobileNavBar, topNavBar, buttonBar, footer
+
 register_page(__name__, path="/dashboard", title="Dash/Flightdeck - Dashboard")
 
 layout = html.Div([
-    # Mobile only navbar - Volt logo & burger button
-    html.Nav([
-        html.A([
-            html.Img(src='../../assets/img/brand/light.svg', alt='Volt logo')
-        ], className='navbar-brand me-lg-5', href='../../index.html'),
-        html.Div([
-            html.Button([
-                html.Span(className='navbar-toggler-icon')
-            ], className='navbar-toggler d-lg-none collapsed', type='button', **{"data-bs-toggle": "collapse", "data-bs-target": "#sidebarMenu", "aria-controls": "sidebarMenu", "aria-expanded": "false", "aria-label": "Toggle navigation"})
-        ], className='d-flex align-items-center')
-    ], className='navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none'),
-    html.Nav([
-        html.Div([
-            # Mobile Menu Header
-            html.Div([
-                html.Div([
-                    html.Div([
-                        html.A([
-                            html.Img(className='icon icon-sm', src='../../assets/img/icons/sign_out.svg', height='20', width='20', alt='upgrade'),
-                            "Sign Out"
-                        ], href='../../pages/examples/sign-in.html', className='btn btn-secondary btn-sm d-inline-flex align-items-center')
-                    ], className='d-block')
-                ], className='d-flex align-items-center'),
-                html.Div([
-                    html.A([
-                        html.Img(src='../../assets/img/icons/cross.svg')
-                    ], href='#sidebarMenu', **{"data-bs-toggle": "collapse", "data-bs-target": "#sidebarMenu", "aria-controls": "sidebarMenu", "aria-expanded": "true", "aria-label": "Toggle navigation"})
-                ], className='collapse-close d-md-none')
-            ], className='user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4'),
-            # Sidebar Brand
-            html.Ul([
-                html.Li([
-                    html.A([
-                        html.Span([
-                            html.Img(src='../../assets/img/brand/light.svg', height='20', width='20', alt='Volt Logo')
-                        ], className='sidebar-icon'),
-                        html.Span("Volt Overview", className='mt-1 ms-1 sidebar-text')
-                    ], href='./dashboard.html', className='nav-link d-flex align-items-center')
-                ], className='nav-item'),
-                # Sidebar & Mobile - menu links
-                html.Li([
-                    html.A([
-                        html.Span([
-                            html.Img(src='../../assets/img/icons/dashboard.svg', className='icon icon-xs me-2', height='20', width='20', alt='Dashboard')
-                        ], className='sidebar-icon'),
-                        html.Span("Dashboard", className='sidebar-text')
-                    ], href='../../pages/dashboard/dashboard.html', className='nav-link')
-                ], className='nav-item active'),
-                html.Li([
-                    html.A([
-                        html.Span([
-                            html.Img(src='../../assets/img/icons/settings.svg', className='icon icon-xs me-2', height='20', width='20', alt='Dashboard')
-                        ], className='sidebar-icon'),
-                        html.Span("Settings", className='sidebar-text')
-                    ], href='../../pages/settings-min.html', className='nav-link')
-                ], className='nav-item'),
-                html.Li([
-                    html.A([
-                        html.Span([
-                            html.Span([
-                                html.Img(src='../../assets/img/icons/calender.svg', className='icon icon-xs me-2', height='20', width='20', alt='Calender')
-                            ], className='sidebar-icon'),
-                            html.Span("Calendar", className='sidebar-text')
-                        ]),
-                        html.Span([
-                            html.Span("Pro", className='badge badge-sm bg-secondary ms-1 text-gray-800')
-                        ])
-                    ], href='https://demo.themesberg.com/volt-pro/pages/calendar.html', target='_blank', className='nav-link d-flex justify-content-between')
-                ], className='nav-item'),
-                html.Li([
-                    html.Span([
-                        html.Span([
-                            html.Span([
-                                html.Img(src='../../assets/img/icons/pages.svg', className='icon icon-xs me-2', height='20', width='20', alt='Calender')
-                            ], className='sidebar-icon'),
-                            html.Span("Page examples", className='sidebar-text')
-                        ]),
-                        html.Span([
-                            html.Img(src='../../assets/img/icons/link_arrow.svg', height='24', width='24', alt='arrow')
-                        ], className='link-arrow')
-                    ], className='nav-link collapsed d-flex justify-content-between align-items-center', **{"data-bs-toggle": "collapse", "data-bs-target": "#submenu-pages"}),
-                    html.Div([
-                        html.Ul([
-                            html.Li([
-                                html.A([
-                                    html.Span("Sign In", className='sidebar-text')
-                                ], className='nav-link', href='../../pages/examples/sign-in.html')
-                            ], className='nav-item'),
-                            html.Li([
-                                html.A([
-                                    html.Span("Sign Up", className='sidebar-text')
-                                ], className='nav-link', href='../../pages/examples/sign-up.html')
-                            ], className='nav-item'),
-                            html.Li([
-                                html.A([
-                                    html.Span("Forgot password", className='sidebar-text')
-                                ], className='nav-link', href='../../pages/examples/forgot-password.html')
-                            ], className='nav-item'),
-                            html.Li([
-                                html.A([
-                                    html.Span("Reset password", className='sidebar-text')
-                                ], className='nav-link', href='../../pages/examples/reset-password.html')
-                            ], className='nav-item'),
-                            html.Li([
-                                html.A([
-                                    html.Span("Lock", className='sidebar-text')
-                                ], className='nav-link', href='../../pages/examples/lock.html')
-                            ], className='nav-item'),
-                            html.Li([
-                                html.A([
-                                    html.Span("404 Not Found", className='sidebar-text')
-                                ], className='nav-link', href='../../pages/examples/404.html')
-                            ], className='nav-item'),
-                            html.Li([
-                                html.A([
-                                    html.Span("500 Not Found", className='sidebar-text')
-                                ], className='nav-link', href='../../pages/examples/500.html')
-                            ], className='nav-item')
-                        ], className='flex-column nav')
-                    ], className='multi-level collapse', role='list', id='submenu-pages', **{"aria-expanded": "false"})
-                ], className='nav-item'),
-                # Bottom Item
-                html.Li([
-                    html.A([
-                        html.Span([
-                            html.Img(className='icon icon-xs me-2', src='../../assets/img/icons/upgrade.svg', height='20', width='20', alt='upgrade')
-                        ], className='sidebar-icon d-inline-flex align-items-center justify-content-center'),
-                        html.Span("Upgrade to Pro")
-                    ], href='../../pages/upgrade-to-pro.html', className='btn btn-secondary d-flex align-items-center justify-content-center btn-upgrade-pro')
-                ], className='nav-item')
-            ], className='nav flex-column pt-3 pt-md-0')
-        ], className='sidebar-inner px-4 pt-3')
-    ], id='sidebarMenu', className='sidebar d-lg-block bg-gray-800 text-white collapse', **{"data-simplebar": ""}),
+    mobileNavBar(),
+    sideBar(),
+
     html.Main([
+
+        #
+
         html.Nav([
             html.Div([
                 html.Div([
@@ -158,6 +33,9 @@ layout = html.Div([
                 ], className='d-flex justify-content-between w-100', id='navbarSupportedContent')
             ], className='container-fluid px-0')
         ], className='navbar navbar-top navbar-expand navbar-dashboard navbar-dark ps-0 pe-2 pb-0'),
+
+        #
+
         html.Div([
             html.Div([
                 html.Button([
@@ -202,6 +80,9 @@ layout = html.Div([
                 ], className='dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1')
             ], className='dropdown')
         ], className='py-4'),
+
+        #
+
         html.Div([
             html.Div([
                 html.Div([
@@ -343,6 +224,9 @@ layout = html.Div([
                 ], className='card border-0 shadow')
             ], className='col-12 col-sm-6 col-xl-4 mb-4')
         ], className='row'),
+
+        #
+
         html.Div([
             html.Div([
                 html.Div([
@@ -794,6 +678,9 @@ layout = html.Div([
                 ], className='col-12 px-0')
             ], className='col-12 col-xl-4')
         ], className='row'),
+
+        #
+
         html.Div([
             html.Div([
                 dcc.Input(type='button', className='btn-close theme-settings-close'),
@@ -821,6 +708,9 @@ layout = html.Div([
                 ], className='d-flex justify-content-center')
             ], className='card-body bg-gray-800 text-white pt-4')
         ], className='theme-settings card bg-gray-800 pt-2 collapse', id='theme-settings'),
+
+        #
+
         html.Div([
             html.Div([
                 html.Span([
@@ -831,34 +721,11 @@ layout = html.Div([
                 ], className='fw-bold d-inline-flex align-items-center h6')
             ], className='card-body bg-gray-800 text-white rounded-top p-3 py-2')
         ], className='card theme-settings bg-gray-800 theme-settings-expand', id='theme-settings-expand'),
-        html.Footer([
-            html.Div([
-                html.Div([
-                    html.P([
-                        "© 2019-",
-                        html.Span(className='current-year'),
-                        html.A("Themesberg", className='text-primary fw-normal', href='https://themesberg.com', target='_blank')
-                    ], className='mb-0 text-center text-lg-start')
-                ], className='col-12 col-md-4 col-xl-6 mb-4 mb-md-0'),
-                html.Div([
-                    # List
-                    html.Ul([
-                        html.Li([
-                            html.A("About", href='https://themesberg.com/about')
-                        ], className='list-inline-item px-0 px-sm-2'),
-                        html.Li([
-                            html.A("Themes", href='https://themesberg.com/themes')
-                        ], className='list-inline-item px-0 px-sm-2'),
-                        html.Li([
-                            html.A("Blog", href='https://themesberg.com/blog')
-                        ], className='list-inline-item px-0 px-sm-2'),
-                        html.Li([
-                            html.A("Contact", href='https://themesberg.com/contact')
-                        ], className='list-inline-item px-0 px-sm-2')
-                    ], className='list-inline list-group-flush list-group-borderless text-md-end mb-0')
-                ], className='col-12 col-md-8 col-xl-6 text-center text-lg-start')
-            ], className='row')
-        ], className='bg-white rounded shadow p-5 mb-4 mt-4')
+
+        #
+
+        footer()
+
     ], className='content')
 
 ])

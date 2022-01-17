@@ -98,17 +98,9 @@ def reportsDropdown():
             ], className='dropdown-item d-flex align-items-center', href='#')
         ], className='dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1')
 
-def buttonBar():
+
+def buttonBar(lhs=[], rhs=[]):
     return html.Div([
-        newButton(),
-
-        html.Div([ # container entries are right justified
-            calenderButton(),
-            reportsButton(),
-            reportsDropdown(),
-        ])
-
+        html.Div(lhs),
+        html.Div(rhs)
     ], className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4')
-
-
-

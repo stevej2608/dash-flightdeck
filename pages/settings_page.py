@@ -1,6 +1,7 @@
 from dash import html, register_page
 
-from .components import sideBar, mobileNavBar, topNavBar, buttonBar, footer
+from .components import sideBar, mobileNavBar, topNavBar, footer
+from .components import buttonBar, newButton, calenderButton, reportsButton, reportsDropdown
 from .settings import card1, card2, card3, generalForm, alertsNotifications
 
 
@@ -14,7 +15,14 @@ def layout():
 
     html.Main([
         topNavBar(),
-        buttonBar(),
+        buttonBar(
+            lhs=newButton(),
+            rhs = [
+                calenderButton(),
+                reportsButton(),
+                reportsDropdown(),
+            ]
+        ),
         html.Div([
             html.Div([
                 generalForm(),
