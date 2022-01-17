@@ -54,7 +54,7 @@ def sideBar():
                             ], className='icon icon-xs me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
                         ], className='sidebar-icon'),
                         html.Span("Dashboard", className='sidebar-text')
-                    ], href='../pages/dashboard/dashboard-ref.html', className='nav-link')
+                    ], href='/dashboard', className='nav-link')
                 ], className='nav-item active'),
 
                 # Settings Link
@@ -67,7 +67,7 @@ def sideBar():
                                 ], className='icon icon-xs me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
                         ], className='sidebar-icon'),
                         html.Span("Settings", className='sidebar-text')
-                    ], href='../pages/settings-combined.html', className='nav-link')
+                    ], href='/settings', className='nav-link')
                 ], className='nav-item'),
 
                 # Calendar Link

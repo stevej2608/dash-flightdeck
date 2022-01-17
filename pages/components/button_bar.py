@@ -3,7 +3,6 @@ from dash_svg import Svg, Path
 
 def newTasksButton():
     return html.Div([
-        html.Div([
             html.Button([
                 Svg([
                     Path(strokeLinecap='round', strokeLinejoin='round', strokeWidth='2', d='M12 6v6m0 0v6m0-6h6m-6 0H6')
@@ -45,7 +44,7 @@ def newTasksButton():
                 ], className='dropdown-item d-flex align-items-center', href='#')
             ], className='dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1')
         ], className='dropdown')
-    ], className='py-4')
+
 
 
 def newButton():
@@ -147,7 +146,9 @@ def reportsDropdown():
 
 
 def buttonBar(lhs=[], rhs=[]):
+    lhs = lhs if isinstance(lhs, list) else [lhs]
+    rhs = rhs if isinstance(rhs, list) else [rhs]
     return html.Div([
-        html.Div(lhs),
+        *lhs,
         html.Div(rhs)
     ], className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4')
