@@ -1,5 +1,5 @@
 from .sidebar import sideBar
-from .mobile_nav import mobileNavBar
+from .mobile_nav import mobileNavBar, mobileSidebarHeader
 from .top_navbar import topNavBar
 from .button_bar import buttonBar, newButton, newTasksButton, calenderButton, reportsButton, reportsDropdown
 from .settings_popup import settingsPopupButton, settingsPopupPanel

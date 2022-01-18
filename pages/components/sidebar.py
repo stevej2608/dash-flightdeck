@@ -1,6 +1,8 @@
 from dash import html, dcc
 from dash_svg import Svg, Path
 
+from .mobile_nav import mobileSidebarHeader
+
 def lightening_icon():
     return html.Img(src='../assets/img/brand/light.svg', height='20', width='20', alt='Volt Logo')
 
@@ -107,25 +109,9 @@ def sideBar():
     return html.Nav([
         html.Div([
 
-            # Mobile Menu Header, visibility controlled by CSS media rules
+            mobileSidebarHeader(),
 
-            html.Div([
-                html.Div([
-                    html.Div([
-                        html.A([
-                            signoutIcon(),
-                            "Sign Out"
-                        ], href='../pages/examples/sign-in.html', className='btn btn-secondary btn-sm d-inline-flex align-items-center')
-                    ], className='d-block')
-                ], className='d-flex align-items-center'),
-                html.Div([
-                    html.A([
-                        crossIcon()
-                    ], href='#sidebarMenu', **{"data-bs-toggle": "collapse", "data-bs-target": "#sidebarMenu", "aria-controls": "sidebarMenu", "aria-expanded": "true", "aria-label": "Toggle navigation"})
-                ], className='collapse-close d-md-none')
-            ], className='user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4'),
-
-            # Sidebar List of entries
+         # Sidebar List of entries
 
             html.Ul([
                 sidebarLink("Volt Overview", lightening_icon, 'https://demo.themesberg.com/volt/pages/dashboard/dashboard.html'),

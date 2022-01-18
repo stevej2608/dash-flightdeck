@@ -11,7 +11,6 @@ register_page(__name__, path="/dashboard", title="Dash/Flightdeck - Dashboard")
 layout = html.Div([
     mobileNavBar(),
     sideBar(),
-
     html.Main([
         topNavBar(),
         buttonBar(
