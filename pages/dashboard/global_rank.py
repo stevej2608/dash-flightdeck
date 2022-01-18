@@ -75,7 +75,7 @@ def categoryRankExt(category, categoryIcon, rank, notes, upDownIcon, rankIcon):
     ], className='d-flex align-items-center justify-content-between border-bottom pb-3')
 
 
-def globalRank():
+def rankingPanel():
     return html.Div([
         html.Div([
             html.Div([

@@ -52,7 +52,7 @@ def signoutIcon():
 
 def sidebarLink(text, icon, href, active=""):
     return  html.Li([
-        html.A([
+        dcc.Link([
             html.Span([
                 icon()
             ], className='sidebar-icon'),
