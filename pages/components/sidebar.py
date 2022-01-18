@@ -21,6 +21,17 @@ def calenderIcon():
     ], className='icon icon-xs me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
 
 
+def pageIcon():
+    return Svg([
+        Path(fillRule='evenodd', d='M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z', clipRule='evenodd')
+    ], className='icon icon-xs me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+
+def arrowIcon():
+    return Svg([
+        Path(fillRule='evenodd', d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z', clipRule='evenodd')
+    ], className='icon icon-sm', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+
+
 def sidebarLink(text, icon, href, active=""):
     return  html.Li([
         html.A([
@@ -30,6 +41,39 @@ def sidebarLink(text, icon, href, active=""):
             html.Span(text, className='mt-1 ms-1 sidebar-text')
         ], href=href, className='nav-link d-flex align-items-center')
     ], className=f'nav-item {active}')
+
+
+def sidebarDropdown(text, icon, children):
+    return html.Li([
+
+        # Dropdown button
+
+        html.Span([
+            html.Span([
+                html.Span([
+                    icon()
+                ], className='sidebar-icon'),
+                html.Span(text, className='sidebar-text')
+            ]),
+            html.Span([
+                arrowIcon()
+            ], className='link-arrow')
+        ], className='nav-link collapsed d-flex justify-content-between align-items-center', **{"data-bs-toggle": "collapse", "data-bs-target": "#submenu-pages"}),
+
+        # Drop down content - example page links
+
+        html.Div([
+            html.Ul(children, className='flex-column nav')
+        ], className='multi-level collapse', role='list', id='submenu-pages', **{"aria-expanded": "false"})
+    ], className='nav-item')
+
+
+def dropdownEntry(text, href):
+    return html.Li([
+        html.A([
+            html.Span(text, className='sidebar-text')
+        ], className='nav-link', href=href)
+    ], className='nav-item')
 
 
 def sideBar():
@@ -68,70 +112,15 @@ def sideBar():
 
                 # Page examples drop down
 
-                html.Li([
-
-                    # Dropdown button
-
-                    html.Span([
-                        html.Span([
-                            html.Span([
-                                Svg([
-                                    Path(fillRule='evenodd', d='M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z', clipRule='evenodd')
-                                ], className='icon icon-xs me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
-
-                            ], className='sidebar-icon'),
-                            html.Span("Page examples", className='sidebar-text')
-                        ]),
-                        html.Span([
-                            Svg([
-                                Path(fillRule='evenodd', d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z', clipRule='evenodd')
-                            ], className='icon icon-sm', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
-                        ], className='link-arrow')
-                    ], className='nav-link collapsed d-flex justify-content-between align-items-center', **{"data-bs-toggle": "collapse", "data-bs-target": "#submenu-pages"}),
-
-                    # Drop down content - example page links
-
-                    html.Div([
-                        html.Ul([
-                            html.Li([
-                                html.A([
-                                    html.Span("Sign In", className='sidebar-text')
-                                ], className='nav-link', href='../pages/examples/sign-in.html')
-                            ], className='nav-item'),
-                            html.Li([
-                                html.A([
-                                    html.Span("Sign Up", className='sidebar-text')
-                                ], className='nav-link', href='../pages/examples/sign-up.html')
-                            ], className='nav-item'),
-                            html.Li([
-                                html.A([
-                                    html.Span("Forgot password", className='sidebar-text')
-                                ], className='nav-link', href='../pages/examples/forgot-password.html')
-                            ], className='nav-item'),
-                            html.Li([
-                                html.A([
-                                    html.Span("Reset password", className='sidebar-text')
-                                ], className='nav-link', href='../pages/examples/reset-password.html')
-                            ], className='nav-item'),
-                            html.Li([
-                                html.A([
-                                    html.Span("Lock", className='sidebar-text')
-                                ], className='nav-link', href='../pages/examples/lock.html')
-                            ], className='nav-item'),
-                            html.Li([
-                                html.A([
-                                    html.Span("404 Not Found", className='sidebar-text')
-                                ], className='nav-link', href='../pages/examples/404.html')
-                            ], className='nav-item'),
-                            html.Li([
-                                html.A([
-                                    html.Span("500 Not Found", className='sidebar-text')
-                                ], className='nav-link', href='../pages/examples/500.html')
-                            ], className='nav-item')
-                        ], className='flex-column nav')
-                    ], className='multi-level collapse', role='list', id='submenu-pages', **{"aria-expanded": "false"})
-
-                ], className='nav-item'),
+                sidebarDropdown("Page examples", pageIcon, [
+                    dropdownEntry("Sign In", '../pages/examples/sign-in.html'),
+                    dropdownEntry("Sign Up", '../pages/examples/sign-up.html'),
+                    dropdownEntry("Forgot password", '../pages/examples/forgot-password.html'),
+                    dropdownEntry("Reset password", '../pages/examples/reset-password.html'),
+                    dropdownEntry("Lock", '../pages/examples/lock.html'),
+                    dropdownEntry("404 Not Found", '../pages/examples/404.html'),
+                    dropdownEntry("500 Not Found", '../pages/examples/500.html'),
+                ]),
 
                 # Bottom Item
 
