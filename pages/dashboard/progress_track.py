@@ -1,4 +1,3 @@
-from tokenize import cookie_re
 from dash import html
 from dash_svg import Svg, Path
 import dash_bootstrap_components as dbc
