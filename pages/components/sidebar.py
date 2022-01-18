@@ -1,6 +1,37 @@
 from dash import html, dcc
 from dash_svg import Svg, Path
 
+def lightening_icon():
+    return html.Img(src='../assets/img/brand/light.svg', height='20', width='20', alt='Volt Logo')
+
+def clock_icon():
+    return  Svg([
+        Path(d='M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z'),
+        Path(d='M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z')
+    ], className='icon icon-xs me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+
+def settings_icon():
+    return Svg([
+        Path(d='M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z')
+    ], className='icon icon-xs me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+
+def calenderIcon():
+    return Svg([
+        Path(fillRule='evenodd', d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z", clipRule='evenodd')
+    ], className='icon icon-xs me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+
+
+def sidebarLink(text, icon, href, active=""):
+    return  html.Li([
+        html.A([
+            html.Span([
+                icon()
+            ], className='sidebar-icon'),
+            html.Span(text, className='mt-1 ms-1 sidebar-text')
+        ], href=href, className='nav-link d-flex align-items-center')
+    ], className=f'nav-item {active}')
+
+
 def sideBar():
     return html.Nav([
         html.Div([
@@ -30,63 +61,10 @@ def sideBar():
             # Sidebar List of entries
 
             html.Ul([
-
-                # Overview
-
-                html.Li([
-                    html.A([
-                        html.Span([
-                            html.Img(src='../assets/img/brand/light.svg', height='20', width='20', alt='Volt Logo')
-                        ], className='sidebar-icon'),
-                        html.Span("Volt Overview", className='mt-1 ms-1 sidebar-text')
-                    ], href='https://demo.themesberg.com/volt/pages/dashboard/dashboard.html', className='nav-link d-flex align-items-center')
-                ], className='nav-item'),
-                # Sidebar & Mobile - menu links
-
-                # Dashboard Link
-
-                html.Li([
-                    html.A([
-                        html.Span([
-                            Svg([
-                                Path(d='M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z'),
-                                Path(d='M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z')
-                            ], className='icon icon-xs me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
-                        ], className='sidebar-icon'),
-                        html.Span("Dashboard", className='sidebar-text')
-                    ], href='/dashboard', className='nav-link')
-                ], className='nav-item active'),
-
-                # Settings Link
-
-                html.Li([
-                    html.A([
-                        html.Span([
-                                Svg([
-                                    Path(d='M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z')
-                                ], className='icon icon-xs me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
-                        ], className='sidebar-icon'),
-                        html.Span("Settings", className='sidebar-text')
-                    ], href='/settings', className='nav-link')
-                ], className='nav-item'),
-
-                # Calendar Link
-
-                html.Li([
-                    html.A([
-                        html.Span([
-                            html.Span([
-                                Svg([
-                                    Path(fillRule='evenodd', d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z", clipRule='evenodd')
-                                ], className='icon icon-xs me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
-                            ], className='sidebar-icon'),
-                            html.Span("Calendar", className='sidebar-text')
-                        ]),
-                        html.Span([
-                            html.Span("Pro", className='badge badge-sm bg-secondary ms-1 text-gray-800')
-                        ])
-                    ], href='https://demo.themesberg.com/volt-pro/pages/calendar.html', target='_blank', className='nav-link d-flex justify-content-between')
-                ], className='nav-item'),
+                sidebarLink("Volt Overview", lightening_icon, 'https://demo.themesberg.com/volt/pages/dashboard/dashboard.html'),
+                sidebarLink("Dashboard", clock_icon, '/dashboard'),
+                sidebarLink("Settings", settings_icon, '/settings'),
+                sidebarLink("Calendar", calenderIcon, 'https://demo.themesberg.com/volt-pro/pages/calendar.html'),
 
                 # Page examples drop down
 
