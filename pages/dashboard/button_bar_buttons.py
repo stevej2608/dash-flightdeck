@@ -36,7 +36,7 @@ def upgradeIcon():
     ], className='dropdown-icon text-danger me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
 
 
-def upgradeLink(title, icon, href='#'):
+def _dropdownLink(title, icon, href='#'):
     return html.A([
         icon(),
         title
@@ -48,13 +48,14 @@ def newTasksButton():
         html.Button([
             plusIcon(),
                 "New Task"
-        ], className='btn btn-gray-800 d-inline-flex align-items-center me-2 dropdown-toggle', **{"data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}),
+        ], className='btn btn-gray-800 d-inline-flex align-items-center me-2 dropdown-toggle',
+        **{"data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}),
         html.Div([
-            upgradeLink("Add User", userIcon),
-            upgradeLink("Add Widget", widgetIcon),
-            upgradeLink("Upload Files", uploadIcon),
-            upgradeLink("Preview Security", securityIcon),
-            upgradeLink("Upgrade to Pro", upgradeIcon),
+            _dropdownLink("Add User", userIcon),
+            _dropdownLink("Add Widget", widgetIcon),
+            _dropdownLink("Upload Files", uploadIcon),
+            _dropdownLink("Preview Security", securityIcon),
+            _dropdownLink("Upgrade to Pro", upgradeIcon),
 
         ], className='dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1')
     ], className='dropdown')
