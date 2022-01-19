@@ -2,6 +2,8 @@
 from dash import html, dcc
 from dash_svg import Svg, Path
 
+from pages.components import dropdownButton, dropdownLink
+
 def clipBoard():
     return Svg([
         Path(d='M9 2a1 1 0 000 2h2a1 1 0 100-2H9z'),
@@ -41,28 +43,12 @@ def allReportsIcon():
     ], className='dropdown-icon text-gray-400 me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
 
 
-def dropdownLink(icon, text, href):
-    return html.A([
-        icon(),
-        text
-    ], className='dropdown-item d-flex align-items-center', href=href)
-
-
 def reportsDropdown():
-
-    button = html.Button([
-        clipBoard(),
-        "Reports",
-        downArrow()
-        ], className='btn btn-gray-800 d-inline-flex align-items-center dropdown-toggle', **{"data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"})
-
-    dropdown = html.Div([
-        dropdownLink(productsIcon, "Products", href='#'),
-        dropdownLink(customersIcon,"Customers", href='#'),
-        dropdownLink(ordersIcon, "Orders", href='#'),
-        dropdownLink(consoleIcon, "Console", href='#'),
+    return dropdownButton([
+        dropdownLink("Products", productsIcon,href='#'),
+        dropdownLink("Customers", customersIcon, href='#'),
+        dropdownLink("Orders", ordersIcon, href='#'),
+        dropdownLink("Console", consoleIcon, href='#'),
         html.Div(role='separator', className='dropdown-divider my-1'),
-        dropdownLink(allReportsIcon, "All Reports", href='#')
-    ], className='dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1')
-
-    return [button, dropdown]
+        dropdownLink("All Reports", allReportsIcon, href='#')
+    ], "Reports", buttonIcon=clipBoard, buttonColor="gray-800", downArrow=True)

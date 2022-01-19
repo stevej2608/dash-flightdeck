@@ -18,7 +18,7 @@ def layout():
             lhs=newButton(),
             rhs = [
                 calenderButton(),
-                *reportsDropdown(),
+                reportsDropdown()
             ]
         ),
         html.Div([
