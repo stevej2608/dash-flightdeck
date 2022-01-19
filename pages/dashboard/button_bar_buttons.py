@@ -3,11 +3,6 @@ from dash_svg import Svg, Path
 
 from pages.components import dropdownButton, dropdownLink
 
-def plusIcon():
-    return Svg([
-        Path(strokeLinecap='round', strokeLinejoin='round', strokeWidth='2', d='M12 6v6m0 0v6m0-6h6m-6 0H6')
-    ], className='icon icon-xs me-2', fill='none', stroke='currentColor', viewBox='0 0 24 24', xmlns='http://www.w3.org/2000/svg')
-
 def userIcon():
     return Svg([
         Path(d='M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z')
@@ -45,4 +40,4 @@ def newTasksButton():
         dropdownLink("Upload Files", uploadIcon),
         dropdownLink("Preview Security", securityIcon),
         dropdownLink("Upgrade to Pro", upgradeIcon),
-    ], "New Task", plusIcon, buttonColor="gray-800")
+    ], "New Task", buttonColor="gray-800")

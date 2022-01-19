@@ -1,4 +1,11 @@
 from dash import html
+from dash_svg import Svg, Path
+
+def plusIcon():
+    return Svg([
+        Path(strokeLinecap='round', strokeLinejoin='round', strokeWidth='2', d='M12 6v6m0 0v6m0-6h6m-6 0H6')
+    ], className='icon icon-xs me-2', fill='none', stroke='currentColor', viewBox='0 0 24 24', xmlns='http://www.w3.org/2000/svg')
+
 
 def dropdownLink(title, icon, href='#'):
     return html.A([
@@ -7,7 +14,7 @@ def dropdownLink(title, icon, href='#'):
     ], className='dropdown-item d-flex align-items-center', href=href)
 
 
-def dropdownButton(dropdownEntries, buttonText, buttonIcon, buttonColor='secondary'):
+def dropdownButton(dropdownEntries, buttonText, buttonIcon=plusIcon, buttonColor='secondary'):
     return  html.Div([
         html.Div([
             html.Button([
