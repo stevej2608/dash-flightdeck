@@ -1,6 +1,12 @@
 from dash import html
 from dash_svg import Svg, Path
-import dash_bootstrap_components as dbc
+
+
+def progressBar(value, color='success', margin='mb-0'):
+    return html.Div([
+        html.Div(role='progressbar', className=f'progress-bar bg-{color}', style={"width": f"{value}%"}, **{"aria-valuenow": f"{value}", "aria-valuemin": "0", "aria-valuemax": "100"}),
+    ], className=f'{margin} progress')
+
 
 def _progressBar(title, value, color="success"):
     return html.Div([
@@ -18,7 +24,7 @@ def _progressBar(title, value, color="success"):
                         html.Span(f"{value} %")
                     ], className='small fw-bold text-gray-500')
                 ], className='progress-info'),
-                dbc.Progress(value=value, color=color, className="mb-0"),
+                progressBar(value,color=color, margin='mb-0')
             ], className='progress-wrapper')
         ], className='col')
     ], className='row mb-4')
