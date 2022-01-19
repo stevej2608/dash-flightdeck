@@ -2,7 +2,7 @@
 from dash import html, dcc
 from dash_svg import Svg, Path
 
-def reportsDropdown():
+def dropdownEntries():
     return html.Div([
             html.A([
                 Svg([
@@ -51,6 +51,6 @@ def reportsDropdown():
             ], className='icon icon-xs ms-1', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
         ], className='btn btn-gray-800 d-inline-flex align-items-center dropdown-toggle', **{"data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"})
 
-    dropdown = reportsDropdown()
+    dropdown = dropdownEntries()
 
     return [button, dropdown]

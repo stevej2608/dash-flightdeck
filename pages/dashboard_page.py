@@ -1,10 +1,8 @@
 from dash import html, dcc, register_page
 from dash_svg import Svg, Path
 
-from .components import sideBar, mobileNavBar, topNavBar, footer
-from .components import buttonBar, newTasksButton
-
-from .dashboard import salesChart, customers, revenue, bounceRate, pageVisitsTable, teamMembers, progressTrack, totalOrders, rankingPanel, acquisition
+from .components import sideBar, mobileNavBar, topNavBar, footer, buttonBar
+from .dashboard import salesChart, customers, revenue, bounceRate, pageVisitsTable, teamMembers, progressTrack, totalOrders, rankingPanel, acquisition, newTasksButton
 
 register_page(__name__, path="/dashboard", title="Dash/Flightdeck - Dashboard")
 

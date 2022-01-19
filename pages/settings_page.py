@@ -1,8 +1,7 @@
 from dash import html, register_page
 
-from .components import sideBar, mobileNavBar, topNavBar, footer
-from .components import buttonBar, newButton, calenderButton
-from .settings import card1, card2, card3, generalForm, alertsNotifications, reportsDropdown
+from .components import sideBar, mobileNavBar, topNavBar, footer, buttonBar
+from .settings import card1, card2, card3, generalForm, alertsNotifications, reportsDropdown, newButton, calenderButton
 
 
 register_page(__name__, path="/settings", title="Dash/Flightdeck - Settings")
