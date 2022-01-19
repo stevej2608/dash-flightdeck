@@ -1,6 +1,8 @@
 from dash import html, dcc
 from dash_svg import Svg, Path
 
+from pages.components import dropdownButton, dropdownLink
+
 def plusIcon():
     return Svg([
         Path(strokeLinecap='round', strokeLinejoin='round', strokeWidth='2', d='M12 6v6m0 0v6m0-6h6m-6 0H6')
@@ -36,26 +38,11 @@ def upgradeIcon():
     ], className='dropdown-icon text-danger me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
 
 
-def _dropdownLink(title, icon, href='#'):
-    return html.A([
-        icon(),
-        title
-    ], className='dropdown-item d-flex align-items-center', href=href)
-
-
 def newTasksButton():
-    return html.Div([
-        html.Button([
-            plusIcon(),
-                "New Task"
-        ], className='btn btn-gray-800 d-inline-flex align-items-center me-2 dropdown-toggle',
-        **{"data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}),
-        html.Div([
-            _dropdownLink("Add User", userIcon),
-            _dropdownLink("Add Widget", widgetIcon),
-            _dropdownLink("Upload Files", uploadIcon),
-            _dropdownLink("Preview Security", securityIcon),
-            _dropdownLink("Upgrade to Pro", upgradeIcon),
-
-        ], className='dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1')
-    ], className='dropdown')
+    return dropdownButton([
+        dropdownLink("Add User", userIcon),
+        dropdownLink("Add Widget", widgetIcon),
+        dropdownLink("Upload Files", uploadIcon),
+        dropdownLink("Preview Security", securityIcon),
+        dropdownLink("Upgrade to Pro", upgradeIcon),
+    ], "New Task", plusIcon, buttonColor="gray-800")

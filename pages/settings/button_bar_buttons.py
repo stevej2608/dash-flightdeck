@@ -1,5 +1,7 @@
-from dash import html, dcc
+from dash import html
 from dash_svg import Svg, Path
+
+from pages.components import dropdownButton, dropdownLink
 
 def plusIcon():
     return Svg([
@@ -28,29 +30,13 @@ def planIcon():
     ], className='dropdown-icon text-danger me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
 
 
-def _dropdownLink(title, icon, href='#'):
-    return html.A([
-        icon(),
-        title
-    ], className='dropdown-item d-flex align-items-center', href=href)
-
-
 def newButton():
-    return  html.Div([
-        html.Div([
-            html.Button([
-                plusIcon(),
-                "New"
-            ], className='btn btn-secondary d-inline-flex align-items-center me-2 dropdown-toggle',
-            **{"data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}),
-            html.Div([
-                _dropdownLink("Document", documentIcon),
-                _dropdownLink("Message", messagesIcon),
-                _dropdownLink("Product", productIcon),
-                _dropdownLink("My Plan", planIcon),
-            ], className='dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1')
-        ], className='dropdown')
-    ])
+    return dropdownButton([
+        dropdownLink("Document", documentIcon),
+        dropdownLink("Message", messagesIcon),
+        dropdownLink("Product", productIcon),
+        dropdownLink("My Plan", planIcon),
+    ], "New", plusIcon)
 
 def calenderButton():
     return  html.Button([
