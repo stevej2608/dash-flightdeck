@@ -1,5 +1,5 @@
-from .profile_cards import card1, card2, card3
-from .general_form import generalForm
+from .profile_cards import userPhotoCard, profilePhotoCard, coverPhotoCard
+from .general_form import generalInformationForm
 from .alerts_notifications import alertsNotifications
 from .reports_button import reportsDropdown
 from .button_bar_buttons import newButton, calenderButton

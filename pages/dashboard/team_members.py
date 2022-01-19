@@ -1,7 +1,7 @@
 from dash import html
 from dash_svg import Svg, Path
 
-def teamMember(name, picture, text, status, contact):
+def _teamMember(name, picture, text, status, contact):
     return  html.Li([
         html.Div([
             html.Div([
@@ -40,10 +40,10 @@ def teamMembers():
             ], className='card-header border-bottom d-flex align-items-center justify-content-between'),
             html.Div([
                 html.Ul([
-                    teamMember("Chris Wood","profile-picture-1","Online", "success", "Invite"),
-                    teamMember("Jose Leos","profile-picture-2","In a meeting", "warning", "Message"),
-                    teamMember("Bonnie Green","profile-picture-3","Offline", "danger", "Message"),
-                    teamMember("Neil Sims","profile-picture-4","Offline", "danger", "Message"),
+                    _teamMember("Chris Wood","profile-picture-1","Online", "success", "Invite"),
+                    _teamMember("Jose Leos","profile-picture-2","In a meeting", "warning", "Message"),
+                    _teamMember("Bonnie Green","profile-picture-3","Offline", "danger", "Message"),
+                    _teamMember("Neil Sims","profile-picture-4","Offline", "danger", "Message"),
                 ], className='list-group list-group-flush list my--3')
             ], className='card-body')
         ], className='card border-0 shadow')

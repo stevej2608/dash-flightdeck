@@ -38,7 +38,7 @@ def upIcon():
     ], className='icon icon-xs text-success', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
 
 
-def categoryRank(category, categoryIcon, rank, rankIcon):
+def _categoryRank(category, categoryIcon, rank, rankIcon):
     return html.Div([
         html.Div([
             html.Div([
@@ -54,7 +54,7 @@ def categoryRank(category, categoryIcon, rank, rankIcon):
         ])
     ], className='d-flex align-items-center justify-content-between border-bottom pb-3')
 
-def categoryRankExt(category, categoryIcon, rank, notes, upDownIcon, rankIcon):
+def _categoryRankExt(category, categoryIcon, rank, notes, upDownIcon, rankIcon):
     return html.Div([
         html.Div([
             html.Div([
@@ -79,9 +79,9 @@ def rankingPanel():
     return html.Div([
         html.Div([
             html.Div([
-                categoryRank("Global Rank", earthIcon, '#755', icon1),
-                categoryRankExt("Country Rank", countryIcon, '#32', "United States", upIcon, icon2),
-                categoryRankExt("Category Rank", categoryIcon, '#11', "Computers Electronics > Technology", upIcon, icon3),
+                _categoryRank("Global Rank", earthIcon, '#755', icon1),
+                _categoryRankExt("Country Rank", countryIcon, '#32', "United States", upIcon, icon2),
+                _categoryRankExt("Category Rank", categoryIcon, '#11', "Computers Electronics > Technology", upIcon, icon3),
            ], className='card-body')
         ], className='card border-0 shadow')
     ], className='col-12 px-0 mb-4')

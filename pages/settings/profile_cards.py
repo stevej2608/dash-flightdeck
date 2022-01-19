@@ -5,7 +5,7 @@ def background_img(url):
     return {"background": f'rgba(0, 0, 0, 0) url("{url}") repeat scroll 0% 0%'}
 
 
-def card1():
+def userPhotoCard():
     return html.Div([
         html.Div([
             html.Div(className='profile-cover rounded-top', style=background_img("/assets/img/profile-cover.jpg")),
@@ -25,7 +25,7 @@ def card1():
         ], className='card shadow border-0 text-center p-0')
     ], className='col-12 mb-4')
 
-def card2():
+def profilePhotoCard():
     return html.Div([
         html.Div([
             html.H2("Select profile photo", className='h5 mb-4'),
@@ -53,7 +53,7 @@ def card2():
     ], className='col-12')
 
 
-def card3():
+def coverPhotoCard():
     return html.Div([
         html.Div([
             html.H2("Select cover photo", className='h5 mb-4'),

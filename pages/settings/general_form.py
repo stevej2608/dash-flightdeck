@@ -1,7 +1,7 @@
 from dash import html, dcc
 from dash_svg import Svg, Path
 
-def generalForm():
+def generalInformationForm():
     return html.Div([
         html.H2("General information", className='h5 mb-4'),
         html.Form([

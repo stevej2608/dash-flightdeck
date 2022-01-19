@@ -1,7 +1,7 @@
 from dash import html, register_page
 
 from .components import sideBar, mobileNavBar, topNavBar, footer, buttonBar
-from .settings import card1, card2, card3, generalForm, alertsNotifications, reportsDropdown, newButton, calenderButton
+from .settings import userPhotoCard, profilePhotoCard, coverPhotoCard, generalInformationForm, alertsNotifications, reportsDropdown, newButton, calenderButton
 
 
 register_page(__name__, path="/settings", title="Dash/Flightdeck - Settings")
@@ -23,18 +23,17 @@ def layout():
         ),
         html.Div([
             html.Div([
-                generalForm(),
+                generalInformationForm(),
                 alertsNotifications()
             ], className='col-12 col-xl-8'),
             html.Div([
                 html.Div([
-                    card1(),
-                    card2(),
-                    card3(),
+                    userPhotoCard(),
+                    profilePhotoCard(),
+                    coverPhotoCard(),
                 ], className='row')
             ], className='col-12 col-xl-4')
         ], className='row'),
-
         # settingsPopupPanel(),
         # settingsPopupButton(),
         footer()

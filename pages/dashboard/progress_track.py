@@ -2,7 +2,7 @@ from dash import html
 from dash_svg import Svg, Path
 import dash_bootstrap_components as dbc
 
-def progressBar(title, value, color="success"):
+def _progressBar(title, value, color="success"):
     return html.Div([
         html.Div([
             Svg([
@@ -33,10 +33,10 @@ def progressTrack():
                 html.A("See tasks", href='#', className='btn btn-sm btn-primary')
             ], className='card-header border-bottom d-flex align-items-center justify-content-between'),
             html.Div([
-                progressBar("Rocket - SaaS Template", 75),
-                progressBar("Themesberg - Design System", 60),
-                progressBar("Homepage Design in Figma", 45, color='warning'),
-                progressBar("Backend for Themesberg v2", 34, color='danger'),
+                _progressBar("Rocket - SaaS Template", 75),
+                _progressBar("Themesberg - Design System", 60),
+                _progressBar("Homepage Design in Figma", 45, color='warning'),
+                _progressBar("Backend for Themesberg v2", 34, color='danger'),
             ], className='card-body')
         ], className='card border-0 shadow')
     ], className='col-12 col-xxl-6 mb-4')
