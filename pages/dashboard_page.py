@@ -12,7 +12,6 @@ layout = html.Div([
     mobileNavBar(),
     sideBar(),
     html.Main([
-
         topNavBar(),
         buttonBar(
             lhs=newTasksButton()
