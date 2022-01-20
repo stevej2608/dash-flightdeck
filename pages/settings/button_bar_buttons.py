@@ -1,14 +1,14 @@
 from dash import html
 
 from pages.components import dropdownButton, dropdownLink
-from pages.components.hero_icons import DOCUMENT_ICON, MESSAGE_ICON, PRODUCTION_ICON, PLAN_ICON, CALENDER_ICON
+from pages.components.hero_icons import DOCUMENT_ICON, MESSAGE_ICON, PRODUCTION_ICON, FIRE_ICON_DANGER, CALENDER_ICON
 
 def newButton():
     return dropdownButton([
         dropdownLink("Document", DOCUMENT_ICON),
         dropdownLink("Message", MESSAGE_ICON),
         dropdownLink("Product", PRODUCTION_ICON),
-        dropdownLink("My Plan", PLAN_ICON),
+        dropdownLink("My Plan", FIRE_ICON_DANGER),
     ], "New")
 
 def calenderButton():
