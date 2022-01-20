@@ -67,6 +67,7 @@ disable=print-statement,
         global-statement,
         redefined-outer-name,
         multiple-statements,
+        no-name-in-module,
 
         parameter-unpacking,
         unpacking-in-except,

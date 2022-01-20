@@ -19,7 +19,7 @@ or
 ## Volt
 
 The volt distribution is in the folder *./volt* This is just used as a
-back reference.
+back reference and is not part of the running dashboard
 
 ### Building CSS from SASS
 
@@ -46,6 +46,8 @@ variables
 
 ### Links
 
+* [demo](https://demo.themesberg.com/volt/pages/dashboard/dashboard.html)
+* [docs](https://themesberg.com/docs/volt-bootstrap-5-dashboard/getting-started/quick-start/)
 * [Volt Bootstrap 5 Dashboard](https://demo.themesberg.com/volt/)
 * [github](https://github.com/themesberg/volt-bootstrap-5-dashboard)
-* [demo](https://demo.themesberg.com/volt/pages/dashboard/dashboard.html)
+* [heroicons](https://heroicons.dev/)

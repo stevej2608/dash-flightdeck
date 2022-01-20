@@ -1,5 +1,7 @@
 from dash import html, dcc
-from dash_svg import Svg, Path
+
+from .hero_icons import DOWNLOAD_ICON, SETTINGS_ICON
+
 
 def settingsPopupPanel():
     return html.Div([
@@ -14,9 +16,7 @@ def settingsPopupPanel():
             ], className='d-flex justify-content-between align-items-center mb-3'),
             html.A([
                 "Download",
-                Svg([
-                    Path(fillRule='evenodd', d='M2 9.5A3.5 3.5 0 005.5 13H9v2.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 15.586V13h2.5a4.5 4.5 0 10-.616-8.958 4.002 4.002 0 10-7.753 1.977A3.5 3.5 0 002 9.5zm9 3.5H9V8a1 1 0 012 0v5z', clipRule='evenodd')
-                ], className='icon icon-xs ms-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+                DOWNLOAD_ICON
             ], href='https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard', target='_blank', className='btn btn-secondary d-inline-flex align-items-center justify-content-center mb-3 w-100'),
             html.P("Available in the following technologies:", className='fs-7 text-gray-300 text-center'),
             html.Div([
@@ -35,9 +35,7 @@ def settingsPopupButton():
     return html.Div([
         html.Div([
             html.Span([
-                Svg([
-                    Path(fillRule='evenodd', d='M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z', clipRule='evenodd')
-                ], className='icon icon-xs me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg'),
+                SETTINGS_ICON,
                 "Settings"
             ], className='fw-bold d-inline-flex align-items-center h6')
         ], className='card-body bg-gray-800 text-white rounded-top p-3 py-2')
