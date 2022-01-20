@@ -1,5 +1,4 @@
 from dash import html
-from dash_svg import Svg, Path
 from dash_chartist import DashChartist
 
 data = {

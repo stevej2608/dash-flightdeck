@@ -1,6 +1,6 @@
 from dash import html
 
-from .hero_icons import DOWN_ARROW_ICON, PLUS_ICON
+from icons.hero import DOWN_ARROW_ICON, PLUS_ICON
 
 
 def dropdownLink(title, icon, href='#'):

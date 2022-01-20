@@ -1,6 +1,6 @@
-
 from pages.components import dropdownButton, dropdownLink
-from pages.components.hero_icons import USER_ADD_ICON, WIDGET_ICON, UPLOAD_ICON, SECURITY_ICON, FIRE_ICON_DANGER
+
+from icons.hero import USER_ADD_ICON, WIDGET_ICON, UPLOAD_ICON, SECURITY_ICON, FIRE_ICON_DANGER
 
 
 def newTasksButton():

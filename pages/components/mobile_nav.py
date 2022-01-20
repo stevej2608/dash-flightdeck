@@ -1,6 +1,6 @@
 from dash import html, dcc
 
-from .hero_icons import CROSS_ICON
+from icons.hero import CROSS_ICON
 
 def mobileNavBar():
     """ Mobile only navbar - Volt logo & burger button """

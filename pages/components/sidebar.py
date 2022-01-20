@@ -1,7 +1,7 @@
 from dash import html, dcc
+from icons.hero import DOWN_ARROW_ICON, LIGHTENING_ICON, CHART_PIE_ICON, VIEW_GRID_ICON, CALENDER_ICON, TABLE_ICON, FIRE_ICON
 
 from .mobile_nav import mobileSidebarHeader
-from .hero_icons import DOWN_ARROW_ICON, LIGHTENING_ICON, CHART_PIE_ICON, VIEW_GRID_ICON, CALENDER_ICON, TABLE_ICON, FIRE_ICON
 
 def sidebarLink(text, icon, href, active=""):
     return  html.Li([

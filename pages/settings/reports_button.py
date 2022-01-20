@@ -1,7 +1,7 @@
 from dash import html
 
 from pages.components import dropdownButton, dropdownLink
-from pages.components.hero_icons import CLIPBOARD_ICON, PRODUCTS_ICON, CUSTOMERS_ICON, ORDERS_ICON, CONSOLE_ICON, ALL_REPORTS_ICON
+from icons.hero import CLIPBOARD_ICON, PRODUCTS_ICON, CUSTOMERS_ICON, ORDERS_ICON, CONSOLE_ICON, ALL_REPORTS_ICON
 
 def reportsDropdown():
     return dropdownButton([

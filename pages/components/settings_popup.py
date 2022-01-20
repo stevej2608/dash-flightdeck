@@ -1,5 +1,6 @@
 from dash import html
-from .hero_icons import DOWNLOAD_ICON, VIEW_GRID_ICON
+
+from icons.hero import DOWNLOAD_ICON, VIEW_GRID_ICON
 
 def settingsPopupPanel():
     return html.Div([
