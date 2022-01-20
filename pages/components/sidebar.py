@@ -1,7 +1,7 @@
 from dash import html, dcc
 
 from .mobile_nav import mobileSidebarHeader
-from .hero_icons import DOWN_ARROW_ICON, LIGHTENING_ICON, CLOCK_ICON, SETTINGS_ICON, CALENDER_ICON, PAGE_ICON, FIRE_ICON
+from .hero_icons import DOWN_ARROW_ICON, LIGHTENING_ICON, CHART_PIE_ICON, VIEW_GRID_ICON, CALENDER_ICON, TABLE_ICON, FIRE_ICON
 
 def sidebarLink(text, icon, href, active=""):
     return  html.Li([
@@ -68,13 +68,13 @@ def sideBar():
 
             html.Ul([
                 sidebarLink("Volt Overview", LIGHTENING_ICON, 'https://demo.themesberg.com/volt/pages/dashboard/dashboard.html'),
-                sidebarLink("Dashboard", CLOCK_ICON, '/dashboard'),
-                sidebarLink("Settings", SETTINGS_ICON, '/settings'),
+                sidebarLink("Dashboard", CHART_PIE_ICON, '/dashboard'),
+                sidebarLink("Settings", VIEW_GRID_ICON, '/settings'),
                 sidebarLink("Calendar", CALENDER_ICON, 'https://demo.themesberg.com/volt-pro/pages/calendar.html'),
 
                 # Page examples drop down
 
-                sidebarDropdown("Page examples", PAGE_ICON, [
+                sidebarDropdown("Page examples", TABLE_ICON, [
                     dropdownEntry("Sign In", '../pages/examples/sign-in.html'),
                     dropdownEntry("Sign Up", '../pages/examples/sign-up.html'),
                     dropdownEntry("Forgot password", '../pages/examples/forgot-password.html'),

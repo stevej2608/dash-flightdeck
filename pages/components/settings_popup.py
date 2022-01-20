@@ -1,7 +1,5 @@
-from dash import html, dcc
-
-from .hero_icons import DOWNLOAD_ICON, SETTINGS_ICON
-
+from dash import html
+from .hero_icons import DOWNLOAD_ICON, VIEW_GRID_ICON
 
 def settingsPopupPanel():
     return html.Div([
@@ -35,7 +33,7 @@ def settingsPopupButton():
     return html.Div([
         html.Div([
             html.Span([
-                SETTINGS_ICON,
+                VIEW_GRID_ICON,
                 "Settings"
             ], className='fw-bold d-inline-flex align-items-center h6')
         ], className='card-body bg-gray-800 text-white rounded-top p-3 py-2')
