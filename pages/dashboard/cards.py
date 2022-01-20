@@ -1,5 +1,5 @@
 from dash import html
-from pages.components.hero_icons import PEOPLE_ICON, BAG_ICON, CHART_ICON, USA_ICON, GERMANY_ICON, UP_ARROW_ICON, DOWN_ARROW_ICON
+from pages.components.hero_icons import PEOPLE_ICON, BAG_ICON, CHART_ICON, GLOBE_ICON, GLOBE_ICON, UP_ARROW_ICON, DOWN_ARROW_ICON
 
 def cardFrame(content):
     return html.Div([
@@ -30,7 +30,7 @@ def customers():
             ], className='d-none d-sm-block'),
             html.Small([
                 "Feb 1 - Apr 1,",
-                USA_ICON,
+                GLOBE_ICON,
                 "USA"
             ], className='d-flex align-items-center text-gray-500'),
             html.Div([
@@ -62,7 +62,7 @@ def revenue():
             ], className='d-none d-sm-block'),
             html.Small([
                 "Feb 1 - Apr 1,",
-                GERMANY_ICON,
+                GLOBE_ICON,
                 "GER"
             ], className='d-flex align-items-center text-gray-500'),
             html.Div([
