@@ -1,7 +1,7 @@
 from dash import html, dcc
 
 from .mobile_nav import mobileSidebarHeader
-from .hero_icons import ARROW_ICON, LIGHTENING_ICON, CLOCK_ICON, SETTINGS_ICON, CALENDER_ICON, PAGE_ICON, FIRE_ICON
+from .hero_icons import DOWN_ARROW_ICON, LIGHTENING_ICON, CLOCK_ICON, SETTINGS_ICON, CALENDER_ICON, PAGE_ICON, FIRE_ICON
 
 def sidebarLink(text, icon, href, active=""):
     return  html.Li([
@@ -38,7 +38,7 @@ def sidebarDropdown(text, icon, children):
                 html.Span(text, className='sidebar-text')
             ]),
             html.Span([
-                ARROW_ICON
+                DOWN_ARROW_ICON
             ], className='link-arrow')
         ], className='nav-link collapsed d-flex justify-content-between align-items-center', **{"data-bs-toggle": "collapse", "data-bs-target": "#submenu-pages"}),
 

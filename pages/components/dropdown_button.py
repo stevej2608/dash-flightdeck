@@ -1,6 +1,6 @@
 from dash import html
 
-from .hero_icons import ARROW_ICON, PLUS_ICON
+from .hero_icons import DOWN_ARROW_ICON, PLUS_ICON
 
 
 def dropdownLink(title, icon, href='#'):
@@ -16,7 +16,7 @@ def dropdownButton(dropdownEntries, buttonText, buttonIcon=PLUS_ICON, buttonColo
             html.Button([
                 buttonIcon,
                 buttonText,
-                ARROW_ICON if downArrow else None
+                DOWN_ARROW_ICON if downArrow else None
             ], className=f'btn btn-{buttonColor} d-inline-flex align-items-center me-2 dropdown-toggle',
             **{"data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}),
             html.Div(dropdownEntries, className='dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1')
