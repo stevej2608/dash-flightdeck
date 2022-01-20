@@ -1,5 +1,5 @@
 from dash import html, dcc
-from dash_svg import Svg, Path
+
 
 def alertsNotifications():
     return  html.Div([

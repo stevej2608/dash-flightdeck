@@ -1,5 +1,6 @@
 from dash import html, dcc
-from dash_svg import Svg, Path
+
+from icons.hero import PAPER_CLIP_ICON, USER_ADD_BTN_ICON
 
 def background_img(url):
     return {"background": f'rgba(0, 0, 0, 0) url("{url}") repeat scroll 0% 0%'}
@@ -15,9 +16,7 @@ def userPhotoCard():
                 html.H5("Senior Software Engineer", className='fw-normal'),
                 html.P("New York, USA", className='text-gray mb-4'),
                 html.A([
-                    Svg([
-                        Path(d='M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z')
-                    ], className='icon icon-xs me-1', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg'),
+                    USER_ADD_BTN_ICON,
                     "Connect"
                 ], className='btn btn-sm btn-gray-800 d-inline-flex align-items-center me-2', href='#'),
                 html.A("Send Message", className='btn btn-sm btn-secondary', href='#')
@@ -37,9 +36,7 @@ def profilePhotoCard():
                 html.Div([
                     html.Div([
                         html.Div([
-                            Svg([
-                                Path(fillRule='evenodd', d='M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z', clipRule='evenodd')
-                            ], className='icon text-gray-500 me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg'),
+                            PAPER_CLIP_ICON,
                             dcc.Input(type='file'),
                             html.Div([
                                 html.Div("Choose Image", className='fw-normal text-dark mb-1'),
@@ -65,9 +62,7 @@ def coverPhotoCard():
                 html.Div([
                     html.Div([
                         html.Div([
-                            Svg([
-                                Path(fillRule='evenodd', d='M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z', clipRule='evenodd')
-                            ], className='icon text-gray-500 me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg'),
+                            PAPER_CLIP_ICON,
                             dcc.Input(type='file'),
                             html.Div([
                                 html.Div("Choose Image", className='fw-normal text-dark mb-1'),
