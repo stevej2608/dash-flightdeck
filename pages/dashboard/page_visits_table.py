@@ -25,7 +25,7 @@ DOWN_ICON = Svg([
 def _tableHead():
     return html.Thead([
         html.Tr([
-            html.Th(colTitle, className='border-bottom', scope='col') for colTitle in df.columns
+            html.Th(colTitle, className='border-bottom', scope='col') for colTitle in df.columns[0:-1]
         ])
     ], className='thead-light')
 
