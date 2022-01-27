@@ -3,8 +3,8 @@ from icons.hero import LIGHTENING_ICON, CHART_PIE_ICON, VIEW_GRID_ICON, CALENDER
 
 from .mobile_nav import mobileSidebarHeader
 
-def _sidebarLink(text, icon, href, active="", link=True):
-    Element = dcc.Link if link else html.A
+def _sidebarLink(text, icon, href, active="", hyperlink=False):
+    Element = html.A if hyperlink else dcc.Link
     return  html.Li([
         Element([
             html.Span([
@@ -68,7 +68,7 @@ def sideBar():
             # Sidebar List of entries
 
             html.Ul([
-                _sidebarLink("Volt Overview", LIGHTENING_ICON, 'https://demo.themesberg.com/volt/pages/dashboard/dashboard.html', link=False),
+                _sidebarLink("Volt Overview", LIGHTENING_ICON, 'https://demo.themesberg.com/volt/pages/dashboard/dashboard.html', hyperlink=True),
                 _sidebarLink("Dashboard", CHART_PIE_ICON, '/pages/dashboard.html'),
                 _sidebarLink("Settings", VIEW_GRID_ICON, '/pages/settings.html'),
                 _sidebarLink("Calendar", CALENDER_ICON, 'https://demo.themesberg.com/volt-pro/pages/calendar.html'),
