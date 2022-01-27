@@ -79,7 +79,7 @@ def sideBar():
                     _dropdownEntry("Sign Up", '/pages/sign-up.html'),
                     _dropdownEntry("Forgot password", '/pages/forgot-password.html'),
                     _dropdownEntry("Reset password", '/pages/reset-password.html'),
-                    _dropdownEntry("Lock", '../pages/examples/lock.html'),
+                    _dropdownEntry("Lock", '/pages/lock.html'),
                     _dropdownEntry("404 Not Found", '/pages/404.html'),
                     _dropdownEntry("500 Not Found", '/pages/500.html'),
                 ]),
