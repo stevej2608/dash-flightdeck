@@ -1,9 +1,8 @@
 from dash import html, dcc
 
-from icons.hero import PAPER_CLIP_ICON, USER_ADD_BTN_ICON
+from pages.components import background_img
 
-def background_img(url):
-    return {"background": f'rgba(0, 0, 0, 0) url("{url}") repeat scroll 0% 0%'}
+from icons.hero import PAPER_CLIP_ICON, USER_ADD_BTN_ICON
 
 
 def userPhotoCard():
