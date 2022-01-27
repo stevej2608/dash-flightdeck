@@ -15,5 +15,9 @@
   },
   "remote.localPortHost": "allInterfaces",
   "python.formatting.provider": "black",
-  "python.formatting.blackPath": "black"
+  "python.formatting.blackPath": "black",
+  "cSpell.words": [
+    "fmxw",
+    "thead"
+  ]
 }

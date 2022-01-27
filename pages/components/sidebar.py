@@ -68,20 +68,20 @@ def sideBar():
 
             html.Ul([
                 _sidebarLink("Volt Overview", LIGHTENING_ICON, 'https://demo.themesberg.com/volt/pages/dashboard/dashboard.html'),
-                _sidebarLink("Dashboard", CHART_PIE_ICON, '/dashboard'),
-                _sidebarLink("Settings", VIEW_GRID_ICON, '/settings'),
+                _sidebarLink("Dashboard", CHART_PIE_ICON, '/pages/dashboard.html'),
+                _sidebarLink("Settings", VIEW_GRID_ICON, '/pages/settings.html'),
                 _sidebarLink("Calendar", CALENDER_ICON, 'https://demo.themesberg.com/volt-pro/pages/calendar.html'),
 
                 # Page examples drop down
 
                 _sidebarDropdown("Page examples", TABLE_ICON, [
-                    _dropdownEntry("Sign In", '../pages/examples/sign-in.html'),
-                    _dropdownEntry("Sign Up", '../pages/examples/sign-up.html'),
-                    _dropdownEntry("Forgot password", '../pages/examples/forgot-password.html'),
-                    _dropdownEntry("Reset password", '../pages/examples/reset-password.html'),
+                    _dropdownEntry("Sign In", '/pages/sign-in.html'),
+                    _dropdownEntry("Sign Up", '/pages/sign-up.html'),
+                    _dropdownEntry("Forgot password", '/pages/forgot-password.html'),
+                    _dropdownEntry("Reset password", '/pages/reset-password.html'),
                     _dropdownEntry("Lock", '../pages/examples/lock.html'),
-                    _dropdownEntry("404 Not Found", '../pages/examples/404.html'),
-                    _dropdownEntry("500 Not Found", '../pages/examples/500.html'),
+                    _dropdownEntry("404 Not Found", '/pages/404.html'),
+                    _dropdownEntry("500 Not Found", '/pages/500.html'),
                 ]),
 
                 # Bottom Item

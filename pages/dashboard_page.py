@@ -4,7 +4,7 @@ from dash import html, register_page
 from .components import sideBar, mobileNavBar, topNavBar, footer, buttonBar
 from .dashboard import salesChart, customers, revenue, bounceRate, pageVisitsTable, teamMembers, progressTrack, totalOrdersBarChart, rankingPanel, acquisition, newTasksButton
 
-register_page(__name__, path="/dashboard", title="Dash/Flightdeck - Dashboard")
+register_page(__name__, path="/pages/dashboard.html", title="Dash/Flightdeck - Dashboard")
 
 def layout():
     logging.info('layout()')
