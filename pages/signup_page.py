@@ -1,7 +1,7 @@
 from dash import html, dcc, register_page
 from dash_svg import Svg, Path
 
-register_page(__name__, path="/pages/sign-in.html", title="Dash/Flightdeck - Sign up")
+register_page(__name__, path="/pages/sign-up.html", title="Dash/Flightdeck - Sign up")
 
 
 layout = html.Div([
