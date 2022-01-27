@@ -11,18 +11,18 @@ def settingsPopupPanel():
                     "Open source",
                     html.Span("💛", role='img', **{"aria-label": "gratitude"})
                 ], className='m-0 mb-1 me-4 fs-7'),
-                html.A("Star", className='github-button', href='https://github.com/themesberg/volt-bootstrap-5-dashboard', **{"data-color-scheme": "no-preference: dark; light: light; dark: light;", "data-icon": "octicon-star", "data-size": "large", "data-show-count": "true", "aria-label": "Star themesberg/volt-bootstrap-5-dashboard on GitHub"})
+                dcc.Link("Star", className='github-button', href='https://github.com/themesberg/volt-bootstrap-5-dashboard', **{"data-color-scheme": "no-preference: dark; light: light; dark: light;", "data-icon": "octicon-star", "data-size": "large", "data-show-count": "true", "aria-label": "Star themesberg/volt-bootstrap-5-dashboard on GitHub"})
             ], className='d-flex justify-content-between align-items-center mb-3'),
-            html.A([
+            dcc.Link([
                 "Download",
                 DOWNLOAD_ICON
             ], href='https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard', target='_blank', className='btn btn-secondary d-inline-flex align-items-center justify-content-center mb-3 w-100'),
             html.P("Available in the following technologies:", className='fs-7 text-gray-300 text-center'),
             html.Div([
-                html.A([
+                dcc.Link([
                     html.Img(src='../assets/img/technologies/bootstrap-5-logo.svg', className='image image-xs')
                 ], className='me-3', href='https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard', target='_blank'),
-                html.A([
+                dcc.Link([
                     html.Img(src='../assets/img/technologies/react-logo.svg', className='image image-xs')
                 ], href='https://demo.themesberg.com/volt-react-dashboard/#/', target='_blank')
             ], className='d-flex justify-content-center')

@@ -1,4 +1,4 @@
-from dash import html
+from dash import html,dcc
 
 from icons.hero import EARTH_ICON, COUNTRY_ICON, CATEGORY_ICON, ICON1_ICON, ICON1_ICON, ICON1_ICON, UP_ARROW_ICON
 
@@ -11,7 +11,7 @@ def _categoryRank(category, categoryIcon, rank, rankIcon):
             ], className='h6 mb-0 d-flex align-items-center')
         ]),
         html.Div([
-            html.A([
+            dcc.Link([
                 rank,
                 rankIcon
             ], href='#', className='d-flex align-items-center fw-bold')
@@ -31,7 +31,7 @@ def _categoryRankExt(category, categoryIcon, rank, notes, upDownIcon, rankIcon):
             ], className='small card-stats')
         ]),
         html.Div([
-            html.A([
+            dcc.Link([
                 rank,
                 rankIcon
             ], href='#', className='d-flex align-items-center fw-bold'),

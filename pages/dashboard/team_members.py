@@ -1,9 +1,9 @@
-from dash import html
+from dash import html, dcc
 
 from icons.hero import CALENDER_ICON
 
 def _contact_button(contact):
-    return html.A([
+    return dcc.Link([
         CALENDER_ICON,
         contact
     ], href='#', className='btn btn-sm btn-secondary d-inline-flex align-items-center')
@@ -13,13 +13,13 @@ def _teamMember(name, picture, text, status, contact):
         html.Div([
             html.Div([
                 # Avatar
-                html.A([
+                dcc.Link([
                     html.Img(className='rounded', alt='Image placeholder', src=f'../../assets/img/team/{picture}.jpg')
                 ], href='#', className='avatar')
             ], className='col-auto'),
             html.Div([
                 html.H4([
-                    html.A(name, href='#')
+                    dcc.Link(name, href='#')
                 ], className='h6 mb-0'),
                 html.Div([
                     html.Div(className=f'bg-{status} dot rounded-circle me-1'),
@@ -38,7 +38,7 @@ def teamMembers():
         html.Div([
             html.Div([
                 html.H2("Team members", className='fs-5 fw-bold mb-0'),
-                html.A("See all", href='#', className='btn btn-sm btn-primary')
+                dcc.Link("See all", href='#', className='btn btn-sm btn-primary')
             ], className='card-header border-bottom d-flex align-items-center justify-content-between'),
             html.Div([
                 html.Ul([

@@ -1,10 +1,10 @@
-from dash import html
+from dash import html, dcc
 
 from icons.hero import DOWN_ARROW_ICON, PLUS_ICON
 
 
 def dropdownLink(title, icon, href='#'):
-    return html.A([
+    return dcc.Link([
         icon,
         title
     ], className='dropdown-item d-flex align-items-center', href=href)

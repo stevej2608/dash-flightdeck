@@ -1,5 +1,5 @@
 
-from dash import html
+from dash import html, dcc
 from dash_svg import Svg, Path
 import pandas as pd
 
@@ -60,7 +60,7 @@ def pageVisitsTable():
                         html.H2("Page visits", className='fs-5 fw-bold mb-0')
                     ], className='col'),
                     html.Div([
-                        html.A("See all", href='#', className='btn btn-sm btn-primary')
+                        dcc.Link("See all", href='#', className='btn btn-sm btn-primary')
                     ], className='col text-end')
                 ], className='row align-items-center')
             ], className='card-header'),

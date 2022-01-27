@@ -16,7 +16,7 @@ def _sidebarLink(text, icon, href, active=""):
 
 def _sidebarButtonLink(text, icon, href, active=""):
     return  html.Li([
-        html.A([
+        dcc.Link([
             html.Span([
                 icon
             ], className='sidebar-icon d-inline-flex align-items-center justify-content-center'),
@@ -52,7 +52,7 @@ def _sidebarDropdown(text, icon, children):
 
 def _dropdownEntry(text, href):
     return html.Li([
-        html.A([
+        dcc.Link([
             html.Span(text, className='sidebar-text')
         ], className='nav-link', href=href)
     ], className='nav-item')

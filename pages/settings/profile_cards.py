@@ -14,11 +14,11 @@ def userPhotoCard():
                 html.H4("Neil Sims", className='h3'),
                 html.H5("Senior Software Engineer", className='fw-normal'),
                 html.P("New York, USA", className='text-gray mb-4'),
-                html.A([
+                dcc.Link([
                     USER_ADD_BTN_ICON,
                     "Connect"
                 ], className='btn btn-sm btn-gray-800 d-inline-flex align-items-center me-2', href='#'),
-                html.A("Send Message", className='btn btn-sm btn-secondary', href='#')
+                dcc.Link("Send Message", className='btn btn-sm btn-secondary', href='#')
             ], className='card-body pb-5')
         ], className='card shadow border-0 text-center p-0')
     ], className='col-12 mb-4')

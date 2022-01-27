@@ -1,4 +1,4 @@
-from dash import html
+from dash import html, dcc
 from dash_chartist import DashChartist
 
 data = {
@@ -36,8 +36,8 @@ def _chartHeader():
             ], className='small mt-2')
         ], className='d-block mb-3 mb-sm-0'),
         html.Div([
-            html.A("Month", href='#', className='btn btn-secondary text-dark btn-sm me-2'),
-            html.A("Week", href='#', className='btn btn-sm me-3')
+            dcc.Link("Month", href='#', className='btn btn-secondary text-dark btn-sm me-2'),
+            dcc.Link("Week", href='#', className='btn btn-sm me-3')
         ], className='d-flex ms-auto')
     ], className='card-header d-sm-flex flex-row align-items-center flex-0')
 

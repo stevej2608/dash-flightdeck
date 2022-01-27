@@ -1,4 +1,4 @@
-from dash import html
+from dash import html, dcc
 
 from icons.hero import CLIPBOARD_ICON
 
@@ -32,7 +32,7 @@ def progressTrack():
         html.Div([
             html.Div([
                 html.H2("Progress track", className='fs-5 fw-bold mb-0'),
-                html.A("See tasks", href='#', className='btn btn-sm btn-primary')
+                dcc.Link("See tasks", href='#', className='btn btn-sm btn-primary')
             ], className='card-header border-bottom d-flex align-items-center justify-content-between'),
             html.Div([
                 _progressDetails("Rocket - SaaS Template", 75),
