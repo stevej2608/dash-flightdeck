@@ -43,6 +43,14 @@ Converted from volt-min.css using [css2sass](https://css2sass.herokuapp.com/)
 I need to find a way to programmatically extract colours from the css and assign the to
 variables
 
+## volt_min.css
+
+To recreate volt_min.css
+
+    cd volt/pages
+    ./css-purge.sh
+    cp temp/volt.css ../../assets/css/volt_min.css
+
 
 ### Links
 
