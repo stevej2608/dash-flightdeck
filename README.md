@@ -52,6 +52,33 @@ To recreate volt_min.css
     cp temp/volt.css ../../assets/css/volt_min.css
 
 
+## Redis
+
+Create a redis server, ssh into the docker host VM (ssh default)
+
+    ssh vscode@default
+
+Create a host network named `stj-bridge`:
+
+    docker network create -d bridge --subnet 172.172.0.0/24 --gateway 172.172.0.1 --ip-range 172.172.0.128/25 --attachable stj-bridge
+
+Create a redis server named `redis-server` on the host network `stj-bridge`
+
+    docker run --name redis-server --network stj-bridge --restart always -d redis --save 60 1 --loglevel warning
+
+In `./devcontainer/devcontainer.json` add the following line:
+
+```
+  "runArgs": [
+    ...
+    "--network=stj-bridge"
+  ],
+```
+
+Reload the VSCODE remote container, then confirm `redis-server` is accessible.
+
+    ping redis-server
+
 ### Links
 
 * [demo](https://demo.themesberg.com/volt/pages/dashboard/dashboard.html)

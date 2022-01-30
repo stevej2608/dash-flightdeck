@@ -26,6 +26,7 @@
 
   "runArgs": [
     "--name=${localWorkspaceFolderBasename}",
+    "--network=stj-bridge",
     "--add-host=default:10.0.2.15",
     "--add-host=debian-server:192.168.2.196",
     "--env-file",".devcontainer/devcontainer.env"
