@@ -1,8 +1,8 @@
 from dash import html, dcc
-from icons.hero import LIGHTENING_ICON, CHART_PIE_ICON, VIEW_GRID_ICON, CALENDER_ICON, ARROW_ICON, TABLE_ICON, FIRE_ICON
+from icons.hero import LIGHTENING_ICON, CHART_PIE_ICON, VIEW_GRID_ICON, CALENDER_ICON, TABLE_ICON, FIRE_ICON
 
 from .mobile_nav import mobileSidebarHeader
-from components.sidebar_aoi import DropdownAIO, dropdownEntry
+from components.dropdown_folder_aoi import DropdownFolderAIO, dropdownFolderEntry
 
 def _sidebarLink(text, icon, href, active="", hyperlink=False):
     Element = html.A if hyperlink else dcc.Link
@@ -27,31 +27,6 @@ def _sidebarButtonLink(text, icon, href, active=""):
     ], className=f'nav-item {active}')
 
 
-def _sidebarDropdown(text, icon, children):
-    return html.Li([
-
-        # Dropdown button
-
-        html.Span([
-            html.Span([
-                html.Span([
-                    icon
-                ], className='sidebar-icon'),
-                html.Span(text, className='sidebar-text')
-            ]),
-            html.Span([
-                ARROW_ICON
-            ], className='link-arrow')
-        ], className='nav-link collapsed d-flex justify-content-between align-items-center', **{"data-bs-toggle": "collapse", "data-bs-target": "#submenu-pages"}),
-
-        # Drop down content - example page links
-
-        html.Div([
-            html.Ul(children, className='flex-column nav')
-        ], className='multi-level collapse', role='list', id='submenu-pages', **{"aria-expanded": "false"})
-    ], className='nav-item')
-
-
 def sideBar():
     return html.Nav([
         html.Div([
@@ -68,14 +43,14 @@ def sideBar():
 
                 # Page examples drop down
 
-                DropdownAIO([
-                    dropdownEntry("Sign In", '/pages/sign-in.html'),
-                    dropdownEntry("Sign Up", '/pages/sign-up.html'),
-                    dropdownEntry("Forgot password", '/pages/forgot-password.html'),
-                    dropdownEntry("Reset password", '/pages/reset-password.html'),
-                    dropdownEntry("Lock", '/pages/lock.html'),
-                    dropdownEntry("404 Not Found", '/pages/???.html'),
-                    dropdownEntry("500 Not Found", '/pages/500.html'),
+                DropdownFolderAIO([
+                    dropdownFolderEntry("Sign In", '/pages/sign-in.html'),
+                    dropdownFolderEntry("Sign Up", '/pages/sign-up.html'),
+                    dropdownFolderEntry("Forgot password", '/pages/forgot-password.html'),
+                    dropdownFolderEntry("Reset password", '/pages/reset-password.html'),
+                    dropdownFolderEntry("Lock", '/pages/lock.html'),
+                    dropdownFolderEntry("404 Not Found", '/pages/???.html'),
+                    dropdownFolderEntry("500 Not Found", '/pages/500.html'),
                 ], "Page examples", TABLE_ICON),
 
                 # Bottom Item

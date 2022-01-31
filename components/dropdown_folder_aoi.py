@@ -4,14 +4,14 @@ from dash import Output, Input, State, html, dcc, callback, MATCH
 
 from icons.hero import ARROW_ICON
 
-def dropdownEntry(text, href):
+def dropdownFolderEntry(text, href):
     return html.Li([
         dcc.Link([
             html.Span(text, className='sidebar-text')
         ], className='nav-link', href=href)
     ], className='nav-item')
 
-class DropdownAIO(html.Div):
+class DropdownFolderAIO(html.Div):
 
     class ids:
         button = lambda aio_id: {
@@ -28,6 +28,14 @@ class DropdownAIO(html.Div):
     ids = ids
 
     def __init__(self, children, text, icon, aio_id=None):
+        """Sidebar dropdown component with icon, text and arrow; that when clicked displays the child elements
+
+        Args:
+            children (list): The child elements
+            text (str): The drop down text
+            icon (Svg): The dropdown icon
+            aio_id (str, optional): The component ID. Defaults to None.
+        """
 
         if aio_id is None:
             aio_id = str(uuid.uuid4())
