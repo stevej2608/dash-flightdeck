@@ -1,10 +1,10 @@
 from dash import html
 
-from pages.components import dropdownButton, dropdownLink
+from components.dropdown_button_aoi import DropdownButtonAIO, dropdownLink
 from icons.hero import DOCUMENT_ICON, MESSAGE_ICON, UPLOAD_ICON, FIRE_ICON_DANGER, CALENDER_ICON
 
 def newButton():
-    return dropdownButton([
+    return DropdownButtonAIO([
         dropdownLink("Document", DOCUMENT_ICON),
         dropdownLink("Message", MESSAGE_ICON),
         dropdownLink("Product", UPLOAD_ICON),

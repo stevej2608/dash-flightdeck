@@ -1,10 +1,10 @@
 from dash import html
 
-from pages.components import dropdownButton, dropdownLink
+from components.dropdown_button_aoi import DropdownButtonAIO, dropdownLink
 from icons.hero import CLIPBOARD_ICON, PRODUCTS_ICON, CUSTOMERS_ICON, ORDERS_ICON, CONSOLE_ICON, ALL_REPORTS_ICON
 
 def reportsDropdown():
-    return dropdownButton([
+    return DropdownButtonAIO([
         dropdownLink("Products", PRODUCTS_ICON,href='#'),
         dropdownLink("Customers", CUSTOMERS_ICON, href='#'),
         dropdownLink("Orders", ORDERS_ICON, href='#'),
