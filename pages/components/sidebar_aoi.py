@@ -1,14 +1,8 @@
 import uuid
 import logging
-from dash import Dash, Output, Input, State, html, dcc, callback, MATCH
+from dash import Output, Input, State, html, dcc, callback, MATCH
 
-from app import create_app
-from server import serve_app
-
-from icons.hero import ARROW_ICON, TABLE_ICON
-
-
-# https://dash.plotly.com/all-in-one-components
+from icons.hero import ARROW_ICON
 
 def dropdownEntry(text, href):
     return html.Li([
@@ -19,7 +13,6 @@ def dropdownEntry(text, href):
 
 class DropdownAIO(html.Div):
 
-    # A set of functions that create pattern-matching callbacks of the sub-components
     class ids:
         button = lambda aio_id: {
             'component': 'DropdownAIO',
