@@ -2,6 +2,7 @@ from dash import html, dcc
 from icons.hero import LIGHTENING_ICON, CHART_PIE_ICON, VIEW_GRID_ICON, CALENDER_ICON, ARROW_ICON, TABLE_ICON, FIRE_ICON
 
 from .mobile_nav import mobileSidebarHeader
+from .sidebar_aoi import DropdownAIO, dropdownEntry
 
 def _sidebarLink(text, icon, href, active="", hyperlink=False):
     Element = html.A if hyperlink else dcc.Link
@@ -51,14 +52,6 @@ def _sidebarDropdown(text, icon, children):
     ], className='nav-item')
 
 
-def _dropdownEntry(text, href):
-    return html.Li([
-        dcc.Link([
-            html.Span(text, className='sidebar-text')
-        ], className='nav-link', href=href)
-    ], className='nav-item')
-
-
 def sideBar():
     return html.Nav([
         html.Div([
@@ -75,15 +68,15 @@ def sideBar():
 
                 # Page examples drop down
 
-                _sidebarDropdown("Page examples", TABLE_ICON, [
-                    _dropdownEntry("Sign In", '/pages/sign-in.html'),
-                    _dropdownEntry("Sign Up", '/pages/sign-up.html'),
-                    _dropdownEntry("Forgot password", '/pages/forgot-password.html'),
-                    _dropdownEntry("Reset password", '/pages/reset-password.html'),
-                    _dropdownEntry("Lock", '/pages/lock.html'),
-                    _dropdownEntry("404 Not Found", '/pages/???.html'),
-                    _dropdownEntry("500 Not Found", '/pages/500.html'),
-                ]),
+                DropdownAIO([
+                    dropdownEntry("Sign In", '/pages/sign-in.html'),
+                    dropdownEntry("Sign Up", '/pages/sign-up.html'),
+                    dropdownEntry("Forgot password", '/pages/forgot-password.html'),
+                    dropdownEntry("Reset password", '/pages/reset-password.html'),
+                    dropdownEntry("Lock", '/pages/lock.html'),
+                    dropdownEntry("404 Not Found", '/pages/???.html'),
+                    dropdownEntry("500 Not Found", '/pages/500.html'),
+                ], "Page examples", TABLE_ICON),
 
                 # Bottom Item
 

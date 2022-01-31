@@ -16,7 +16,7 @@
         // "DASH_DEBUG": "1",
         // "FLASK_ENV": "test"
       },
-      "justMyCode": false,
+      "justMyCode": true,
       "serverReadyAction": {
         "pattern": ".*Visit http://(.*)",
         "uriFormat": "http://%s",
