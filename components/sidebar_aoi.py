@@ -56,6 +56,10 @@ class DropdownAIO(html.Div):
     @callback(Output(ids.content(MATCH), 'className'),Input(ids.button(MATCH), 'n_clicks'), State(ids.content(MATCH), 'className'))
     def update_dropdown(n_clicks, className):
         logging.info('hidden = %s', className)
+
+        if not n_clicks:
+            return className
+
         if 'collapse' in className:
             return className.replace(' collapse', '')
         else:

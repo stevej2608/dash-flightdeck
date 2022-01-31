@@ -2,7 +2,7 @@ from dash import html, dcc
 from icons.hero import LIGHTENING_ICON, CHART_PIE_ICON, VIEW_GRID_ICON, CALENDER_ICON, ARROW_ICON, TABLE_ICON, FIRE_ICON
 
 from .mobile_nav import mobileSidebarHeader
-from .sidebar_aoi import DropdownAIO, dropdownEntry
+from components.sidebar_aoi import DropdownAIO, dropdownEntry
 
 def _sidebarLink(text, icon, href, active="", hyperlink=False):
     Element = html.A if hyperlink else dcc.Link
