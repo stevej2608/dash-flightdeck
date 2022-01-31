@@ -38,7 +38,8 @@
     "ms-python.vscode-pylance",
     "dbaeumer.vscode-eslint",
     "ritwickdey.liveserver",
-    "streetsidesoftware.code-spell-checker"
+    "streetsidesoftware.code-spell-checker",
+    "rioj7.command-variable"
 	],
 
   // appPort, The LHS port must match the value of $HOSTPORT defined
