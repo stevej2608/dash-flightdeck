@@ -4,18 +4,6 @@ from icons.hero import LIGHTENING_ICON, CHART_PIE_ICON, VIEW_GRID_ICON, CALENDER
 from .mobile_nav import mobileSidebarHeader
 from components.dropdown_folder_aoi import DropdownFolderAIO, dropdownFolderEntry
 
-def _sidebarBrandLink(text, icon, href, active="", hyperlink=False):
-    Element = html.A if hyperlink else dcc.Link
-    return  html.Li([
-        Element([
-            html.Span([
-                icon
-            ], className='sidebar-icon'),
-            html.Span(text, className="mt-1 ms-1 sidebar-text")
-        ], href=href, className="nav-link d-flex align-items-center")
-    ], className=f'nav-item {active}')
-
-
 def _sidebarLink(text, icon, href, active="", hyperlink=False):
     Element = html.A if hyperlink else dcc.Link
     return  html.Li([
@@ -48,7 +36,7 @@ def sideBar():
             # Sidebar List of entries
 
             html.Ul([
-                _sidebarBrandLink("Volt Overview", LIGHTENING_ICON, 'https://demo.themesberg.com/volt/pages/dashboard/dashboard.html', hyperlink=True),
+                _sidebarLink("Volt Overview", LIGHTENING_ICON, 'https://demo.themesberg.com/volt/pages/dashboard/dashboard.html', hyperlink=True),
                 _sidebarLink("Dashboard", CHART_PIE_ICON, '/pages/dashboard.html'),
                 _sidebarLink("Tansactions", CREDIT_CARD_ICON, '/pages/transactions.html'),
                 _sidebarLink("Settings", VIEW_GRID_ICON, '/pages/settings.html'),
