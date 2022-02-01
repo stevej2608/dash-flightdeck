@@ -1,5 +1,5 @@
 from dash import html, dcc
-from icons.hero import LIGHTENING_ICON, CHART_PIE_ICON, VIEW_GRID_ICON, CALENDER_ICON, TABLE_ICON, FIRE_ICON, CREDIT_CARD_ICON
+from icons.hero import LIGHTENING_ICON, CHART_PIE_ICON, VIEW_GRID_ICON, CALENDER_ICON, TABLE_ICON, FIRE_ICON, PAGES_ICON, CREDIT_CARD_ICON
 
 from .mobile_nav import mobileSidebarHeader
 from components.dropdown_folder_aoi import DropdownFolderAIO, dropdownFolderEntry
@@ -42,6 +42,10 @@ def sideBar():
                 _sidebarLink("Settings", VIEW_GRID_ICON, '/pages/settings.html'),
                 _sidebarLink("Calendar", CALENDER_ICON, 'https://demo.themesberg.com/volt-pro/pages/calendar.html'),
 
+                DropdownFolderAIO([
+                    dropdownFolderEntry("Bootstrap Tables", '/pages/tables/boostrap-tables.html'),
+                ], "Tables", TABLE_ICON),
+
                 # Page examples drop down
 
                 DropdownFolderAIO([
@@ -52,7 +56,8 @@ def sideBar():
                     dropdownFolderEntry("Lock", '/pages/lock.html'),
                     dropdownFolderEntry("404 Not Found", '/pages/???.html'),
                     dropdownFolderEntry("500 Not Found", '/pages/500.html'),
-                ], "Page examples", TABLE_ICON),
+                ], "Page examples", PAGES_ICON),
+
 
                 # Bottom Item
 
