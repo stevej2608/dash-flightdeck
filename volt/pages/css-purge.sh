@@ -5,8 +5,7 @@ SAFE_LIST="ct-bar chartist-tooltip ct-area ct-chart-line ct-end ct-grid ct-grid 
 
 echo "purging css ..."
 
-purgecss -v -keyframes -font --safelist $SAFE_LIST -css $VOLT_CSS --content settings-min.html dashboard/dashboard-min.html examples/*.html --output temp
-
+purgecss -v -keyframes -font --safelist $SAFE_LIST -css $VOLT_CSS --content settings-min.html transactions-min.html dashboard/dashboard-min.html examples/*.html --output temp
 echo "filter css ..."
 
 csstools filter --skip_comments ../css/bootstrap.css ./temp/volt.css -o ../css/volt-min.css

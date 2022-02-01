@@ -1,5 +1,5 @@
 from dash import html, dcc
-from icons.hero import LIGHTENING_ICON, CHART_PIE_ICON, VIEW_GRID_ICON, CALENDER_ICON, TABLE_ICON, FIRE_ICON
+from icons.hero import LIGHTENING_ICON, CHART_PIE_ICON, VIEW_GRID_ICON, CALENDER_ICON, TABLE_ICON, FIRE_ICON, CREDIT_CARD_ICON
 
 from .mobile_nav import mobileSidebarHeader
 from components.dropdown_folder_aoi import DropdownFolderAIO, dropdownFolderEntry
@@ -38,6 +38,7 @@ def sideBar():
             html.Ul([
                 _sidebarLink("Volt Overview", LIGHTENING_ICON, 'https://demo.themesberg.com/volt/pages/dashboard/dashboard.html', hyperlink=True),
                 _sidebarLink("Dashboard", CHART_PIE_ICON, '/pages/dashboard.html'),
+                _sidebarLink("Tansactions", CREDIT_CARD_ICON, '/pages/transactions.html'),
                 _sidebarLink("Settings", VIEW_GRID_ICON, '/pages/settings.html'),
                 _sidebarLink("Calendar", CALENDER_ICON, 'https://demo.themesberg.com/volt-pro/pages/calendar.html'),
 
