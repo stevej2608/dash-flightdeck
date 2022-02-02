@@ -883,9 +883,19 @@ button:not(:disabled),
   border-top-right-radius: 0.5rem !important;
 }
 
+.rounded-end {
+  border-top-right-radius: 0.5rem !important;
+  border-bottom-right-radius: 0.5rem !important;
+}
+
 .rounded-bottom {
   border-bottom-right-radius: 0.5rem !important;
   border-bottom-left-radius: 0.5rem !important;
+}
+
+.rounded-start {
+  border-bottom-left-radius: 0.5rem !important;
+  border-top-left-radius: 0.5rem !important;
 }
 @media (min-width: 992px) {
 
@@ -1449,6 +1459,13 @@ label {
   height: 1.5rem;
 }
 
+.image-small {
+  height: 1rem;
+}
+.image-small img {
+  height: 1rem;
+}
+
 .form-bg-image {
   background-repeat: no-repeat !important;
   background-position: top center !important;
@@ -1493,6 +1510,10 @@ label {
   background-color: #E5E7EB;
   font-weight: 500;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.progress-lg {
+  height: 0.6rem;
 }
 
 .progress-info {

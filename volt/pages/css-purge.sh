@@ -9,8 +9,9 @@ purgecss -v -keyframes -font --safelist $SAFE_LIST -css $VOLT_CSS --content \
     settings-min.html \
     transactions-min.html \
     dashboard/dashboard-min.html \
-    examples/*.html --output temp \
-    tables/bootstrap-tables-min.html
+    tables/bootstrap-tables-min.html \
+    examples/*.html \
+    --output temp
 
 echo "filter css ..."
 

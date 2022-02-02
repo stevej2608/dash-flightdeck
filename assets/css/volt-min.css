@@ -1359,6 +1359,10 @@ label {
   display: none;
 }
 
+.image-small {
+  height:1rem;
+}
+
 .icon {
   height: 2rem;
 }
