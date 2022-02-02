@@ -1,5 +1,4 @@
-from dash import html, dcc
-from dash_svg import Svg, Path
+from dash import html
 import pandas as pd
 
 TABLE_COLS = ["#", "Bill For", "Issue Date", "Due Date", "Total", "Status", "Action"]
