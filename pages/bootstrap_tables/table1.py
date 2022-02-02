@@ -70,19 +70,23 @@ def data2Dict():
 df = pd.DataFrame.from_dict(data2Dict())
 
 
-def progressBar(progress):
+def progressBar(value):
+    value = value[0:-1]
     return html.Td([
         html.Div([
             html.Div([
-                html.Div(progress, className='small fw-bold')
+                html.Div(value, className='small fw-bold')
             ], className='col-12 col-xl-2 px-0'),
             html.Div([
                 html.Div([
-                    html.Div(className='progress-bar bg-dark', role='progressbar', style='width: 51%;', **{"aria-valuenow": "51", "aria-valuemin": "0", "aria-valuemax": "100"})
+                    html.Div(className='progress-bar bg-dark',
+                             role='progressbar',
+                             style={"width": f"{value}%"}, **{"aria-valuenow": f"{value}", "aria-valuemin": "0", "aria-valuemax": "100"})
                 ], className='progress progress-lg mb-0')
             ], className='col-12 col-xl-10 px-0 px-xl-1')
         ], className='row d-flex align-items-center')
     ])
+
 
 def trafficChange(value):
 
