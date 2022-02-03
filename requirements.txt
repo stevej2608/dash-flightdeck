@@ -1,10 +1,11 @@
-dash>=2.0.0
-dash-labs>=1.0.0
 dash-chartist>=0.0.2
+dash-holoniq-components>=0.0.19
+dash-labs>=1.0.0
 dash-svg>=0.0.7
+dash>=2.0.0
+Flask-Session>=0.4.0
 pandas>=1.4.0
+paste
+redis>=4.1.2
 uwsgi
 waitress
-paste
-Flask-Session>=0.4.0
-redis>=4.1.2

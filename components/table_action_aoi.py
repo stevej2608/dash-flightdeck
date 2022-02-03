@@ -1,6 +1,7 @@
 import uuid
 import logging
 from dash import Output, Input, State, html, dcc, callback, MATCH
+import dash_holoniq_components as dhc
 
 from icons.hero import ARROW_ICON
 
@@ -38,7 +39,7 @@ class TableActionAIO(html.Div):
         if aio_id is None:
             aio_id = str(uuid.uuid4())
 
-        _button = html.Button([
+        _button = dhc.Button([
                 html.Span([
                     html.Span(className='fas fa-ellipsis-h icon-dark')
                 ], className='icon icon-sm'),
@@ -58,15 +59,15 @@ class TableActionAIO(html.Div):
 
     @callback(Output(ids.container(MATCH), 'className'),
             Input(ids.button(MATCH), 'n_clicks'),
-            Input(ids.container(MATCH), 'n_clicks'),
+            Input(ids.button(MATCH), 'focus'),
             State(ids.container(MATCH), 'className'))
-    def show_dropdown(button_clicks, container_clicks, className):
-        logging.info('show_dropdown: button_clicks=%s, container_clicks=%s, className = %s', button_clicks, container_clicks, className)
+    def show_dropdown(button_clicks, button_focus, className):
+        logging.info('show_dropdown: button_clicks=%s, className = %s', button_clicks, className)
 
-        if not (button_clicks or container_clicks):
+        if not button_clicks:
             return className
 
-        if 'show' in className:
+        if 'show' in className and button_focus == False:
             return className.replace(' show', '')
         else:
             return className + ' show'
