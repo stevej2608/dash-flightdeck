@@ -1,7 +1,7 @@
 import uuid
 import logging
 from dash import Output, Input, State, html, dcc, callback, MATCH
-
+import dash_holoniq_components as dhc
 from icons.hero import DOWN_ARROW_ICON, PLUS_ICON
 
 def dropdownLink(title, icon, href='#'):
@@ -18,9 +18,9 @@ class DropdownButtonAIO(html.Div):
             'subcomponent': 'button',
             'aio_id': aio_id
         }
-        content = lambda aio_id: {
+        container = lambda aio_id: {
             'component': 'DropdownButtonAIO',
-            'subcomponent': 'content',
+            'subcomponent': 'container',
             'aio_id': aio_id
         }
 
@@ -57,7 +57,7 @@ class DropdownButtonAIO(html.Div):
 
         aio_id = str(uuid.uuid4())
 
-        button = html.Button([
+        _button = dhc.Button([
                 buttonIcon,
                 buttonText,
                 DOWN_ARROW_ICON if downArrow else None
@@ -65,21 +65,24 @@ class DropdownButtonAIO(html.Div):
 
         # Drop down container
 
-        container = html.Div(
+        _container = html.Div(
             dropdownEntries,
-            id=self.ids.content(aio_id),
+            id=self.ids.container(aio_id),
             className='dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1')
 
-        super().__init__(html.Div([button, container], className='dropdown'))
+        super().__init__(html.Div([_button, _container], className='dropdown'))
 
-    @callback(Output(ids.content(MATCH), 'className'),Input(ids.button(MATCH), 'n_clicks'), State(ids.content(MATCH), 'className'))
-    def update_dropdown(n_clicks, className):
-        logging.info('hidden = %s', className)
+    @callback(Output(ids.container(MATCH), 'className'),
+            Input(ids.button(MATCH), 'n_clicks'),
+            Input(ids.button(MATCH), 'focus'),
+            State(ids.container(MATCH), 'className'))
+    def show_dropdown(button_clicks, button_focus, className):
+        logging.info('show_dropdown: button_clicks=%s, className = %s', button_clicks, className)
 
-        if not n_clicks:
+        if not button_clicks:
             return className
 
-        if 'show' in className:
+        if 'show' in className and button_focus == False:
             return className.replace(' show', '')
         else:
             return className + ' show'
