@@ -5,7 +5,8 @@ import dash_labs as dl
 external_stylesheets = [
     "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css",
     "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css",
-    "https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.4/chartist.min.css"
+    "https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.4/chartist.min.css",
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.2.0/css/all.min.css"
     ]
 
 external_scripts = [

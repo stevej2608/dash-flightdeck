@@ -33,6 +33,30 @@ def data2Dict():
 
 df = pd.DataFrame.from_dict(data2Dict())
 
+def actionDropdown():
+    return html.Div([
+        html.Button([
+            html.Span([
+                html.Span(className='fas fa-ellipsis-h icon-dark')
+            ], className='icon icon-sm'),
+            html.Span("Toggle Dropdown", className='visually-hidden')
+        ], className='btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0', **{"data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}),
+        html.Div([
+            html.A([
+                html.Span(className='fas fa-eye me-2'),
+                "View Details"
+            ], className='dropdown-item rounded-top', href='#'),
+            html.A([
+                html.Span(className='fas fa-edit me-2'),
+                "Edit"
+            ], className='dropdown-item', href='#'),
+            html.A([
+                html.Span(className='fas fa-trash-alt me-2'),
+                "Remove"
+            ], className='dropdown-item text-danger rounded-bottom', href='#')
+        ], className='dropdown-menu py-0')
+    ], className='btn-group')
+
 def _tableHead():
     return html.Thead([
         html.Tr([
@@ -60,30 +84,7 @@ def _tableRow(cid, product, issue_date, due_date, total, status, action):
         html.Td([
             html.Span(status, className='fw-bold text-warning')
         ]),
-        html.Td([
-            html.Div([
-                html.Button([
-                    html.Span([
-                        html.Span(className='fas fa-ellipsis-h icon-dark')
-                    ], className='icon icon-sm'),
-                    html.Span("Toggle Dropdown", className='visually-hidden')
-                ], className='btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0', **{"data-bs-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}),
-                html.Div([
-                    html.A([
-                        html.Span(className='fas fa-eye me-2'),
-                        "View Details"
-                    ], className='dropdown-item rounded-top', href='#'),
-                    html.A([
-                        html.Span(className='fas fa-edit me-2'),
-                        "Edit"
-                    ], className='dropdown-item', href='#'),
-                    html.A([
-                        html.Span(className='fas fa-trash-alt me-2'),
-                        "Remove"
-                    ], className='dropdown-item text-danger rounded-bottom', href='#')
-                ], className='dropdown-menu py-0')
-            ], className='btn-group')
-        ])
+        html.Td(actionDropdown())
     ])
 
 def _tableBody():
