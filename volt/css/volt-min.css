@@ -15,28 +15,6 @@
   line-height: 1;
 }
 
-.ct-chart-line .ct-label {
-  display: block;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-}
-
-.ct-label.ct-horizontal.ct-end {
-  -webkit-box-align: flex-start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-  -webkit-box-pack: flex-start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: flex-start;
-  justify-content: flex-start;
-  text-align: left;
-  text-anchor: start;
-}
-
 .ct-grid {
   stroke: rgba(0, 0, 0, 0.2);
   stroke-width: 1px;
@@ -1340,11 +1318,6 @@ label {
   stroke-width: 2px;
   stroke-dasharray: 2px;
 }
-.ct-series-g .ct-label.ct-horizontal.ct-end {
-  margin-left: -9px;
-  margin-top: 10px;
-  color: #1F2937;
-}
 
 .dropdown-menu .dropdown-item {
   padding: 0.5rem 1rem;
@@ -1532,6 +1505,29 @@ label {
   justify-content: space-between;
   -ms-flex-pack: space-between;
   margin-bottom: 0.5rem;
+}
+
+.progress-tooltip {
+  background: #1F2937;
+  color: #ffffff;
+  font-weight: 500;
+  padding: 0.25rem 0.375rem;
+  line-height: 1;
+  font-size: 0.75rem;
+  position: relative;
+  border-radius: 0.35rem;
+}
+.progress-tooltip:after {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  left: 10px;
+  border: solid transparent;
+  height: 0;
+  width: 0;
+  pointer-events: none;
+  border-top-color: #111827;
+  border-width: 6px;
 }
 
 .progress-info .bg-secondary::after {
@@ -1763,6 +1759,10 @@ a:hover {
   margin-left: -15px;
   border: 15px solid transparent;
   border-top-color: #F2F4F6;
+}
+
+.chartist-tooltip.tooltip-show {
+  opacity: 1;
 }
 
 .ct-area, .ct-line {

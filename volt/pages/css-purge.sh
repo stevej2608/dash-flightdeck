@@ -1,7 +1,13 @@
 #!/bin/bash
 
 VOLT_CSS=../css/volt.css
-SAFE_LIST="ct-bar chartist-tooltip ct-area ct-chart-line ct-end ct-grid ct-grid ct-grids ct-horizontal ct-horizontal ct-label ct-labels ct-line ct-point ct-series ct-series-a ct-series-b"
+SAFE_LIST="ct-bar ct-tooltip "\
+"progress-tooltip progress-info ct-area ct-chart-line"\
+"ct-end ct-grid ct-grid ct-grids ct-horizontal "\
+"ct-horizontal ct-label ct-labels ct-line ct-point "\
+"chartist-tooltip tooltip-show chartist-tooltip-value"\
+"ct-series ct-series-a ct-series-b"
+
 
 echo "purging css ..."
 
@@ -22,4 +28,5 @@ csstools filter --skip_comments ../css/bootstrap.css ./temp/volt.css -o ../css/v
 echo "clean css ..."
 
 sed -i ':a; /^\n*$/{ s/\n//; N;  ba};' ../css/volt-min.css
+
 
