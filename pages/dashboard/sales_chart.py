@@ -47,7 +47,7 @@ def salesChart():
         html.Div([
             _chartHeader(),
             html.Div([
-                DashChartist(className='ct-chart-sales-value ct-double-octave ct-series-g', type=chartType, options=options, data=data)
+                DashChartist(className='ct-chart-sales-value ct-double-octave ct-series-g', type=chartType, options=options, tooltips=True, data=data)
             ], className='card-body p-2')
         ], className='card bg-yellow-100 border-0 shadow')
     ], className='col-12 mb-4')
