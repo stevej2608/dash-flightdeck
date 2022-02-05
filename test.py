@@ -1,11 +1,11 @@
 import logging
-import uuid
-from dash import Output, Input, State, html, dcc, callback, MATCH
+from dash import html, dcc, MATCH, callback
 import dash_holoniq_components as dhc
 from icons.hero import DOWN_ARROW_ICON, PLUS_ICON, PRODUCTS_ICON, CUSTOMERS_ICON, CLIPBOARD_ICON
 from app import create_app
 from server import serve_app
 
+from dash_spa import AIOPrefix, AIOBase
 
 def dropdownLink(title, icon, href='#'):
     return dcc.Link([
@@ -13,40 +13,44 @@ def dropdownLink(title, icon, href='#'):
         title
     ], className='dropdown-item d-flex align-items-center', href=href)
 
-class DropdownButtonNewAIO(html.Div):
 
-    class ids:
-        button = lambda aio_id: {
-            'component': 'DropdownButtonNewAIO',
-            'subcomponent': 'button',
-            'aio_id': aio_id
-        }
-        container = lambda aio_id: {
-            'component': 'DropdownButtonNewAIO',
-            'subcomponent': 'container',
-            'aio_id': aio_id
-        }
+class DropdownButtonNewAIO(AIOBase):
 
-    ids = ids
+    def __init__(self, dropdownEntries,
+                buttonText, buttonIcon=PLUS_ICON,
+                buttonColor='secondary', downArrow=False):
 
-    def __init__(self, dropdownEntries, buttonText, buttonIcon=PLUS_ICON, buttonColor='secondary', downArrow=False):
+        io = AIOPrefix('DropdownButtonNewAIO')
 
-        aio_id = str(uuid.uuid4())
-
-        _button = dhc.Button([
+        button = dhc.Button([
                 buttonIcon,
                 buttonText,
                 DOWN_ARROW_ICON if downArrow else None
-            ], id=self.ids.button(aio_id), className=f'btn btn-{buttonColor} d-inline-flex align-items-center me-2 dropdown-toggle')
+            ], io.id('btn'), className=f'btn btn-{buttonColor} d-inline-flex align-items-center me-2 dropdown-toggle')
 
         # Drop down container
 
-        _container = html.Div(
+        container = html.Div(
             dropdownEntries,
-            id=self.ids.container(aio_id),
+            id=io.id('container'),
             className='dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1')
 
-        super().__init__(html.Div([_button, _container], className='dropdown'))
+        super().__init__(html.Div([button, container], className='dropdown'))
+
+        @callback(container.output.className(MATCH),
+                  button.input.n_clicks(MATCH),
+                  button.input.focus(MATCH),
+                  container.state.className(MATCH))
+        def _show_dropdown(button_clicks, button_focus, className):
+            logging.info('show_dropdown: button_clicks=%s, className = %s', button_clicks, className)
+
+            if not button_clicks:
+                return className
+
+            if 'show' in className and button_focus is False:
+                return className.replace(' show', '')
+            else:
+                return className + ' show'
 
 
 
