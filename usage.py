@@ -1,6 +1,5 @@
 import logging
 import dash_labs as dl
-from numpy import sctype2char
 
 from app import create_app
 from server import serve_app

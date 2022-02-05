@@ -82,7 +82,7 @@ class DropdownButtonAIO(html.Div):
         if not button_clicks:
             return className
 
-        if 'show' in className and button_focus == False:
+        if 'show' in className and button_focus is False:
             return className.replace(' show', '')
         else:
             return className + ' show'

@@ -1,5 +1,5 @@
 import logging
-from dash import html, dcc, register_page
+from dash import html, register_page
 from dash_svg import Svg, Path
 
 from .components import sideBar, mobileNavBar, topNavBar, footer
