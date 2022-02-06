@@ -51,6 +51,6 @@
   "postCreateCommand": "chmod +x .devcontainer/init.sh && .devcontainer/init.sh",
 
   "workspaceFolder": "/${localWorkspaceFolderBasename}",
-	"workspaceMount": "source=/workspaces/tmp/${localWorkspaceFolderBasename},target=/${localWorkspaceFolderBasename},type=bind,consistency=cached",
+	"workspaceMount": "source=/workspaces/${localWorkspaceFolderBasename},target=/${localWorkspaceFolderBasename},type=bind,consistency=cached",
 
 }
