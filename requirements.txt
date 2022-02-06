@@ -2,10 +2,16 @@ dash-chartist>=0.0.2
 dash-holoniq-components>=0.0.19
 dash-labs>=1.0.0
 dash-svg>=0.0.8
-dash>=2.0.0
+dash[testing]>=2.0.0
 Flask-Session>=0.4.0
 pandas>=1.4.0
 paste
 redis>=4.1.2
 uwsgi
 waitress
+
+# Testing
+
+pytest>=6.0.2
+selenium>=4.1.0
+pytest-env>=0.6.2
