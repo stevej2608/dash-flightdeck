@@ -14,7 +14,6 @@ button2 = html.Button(id=btn.idx(2))
 
 div = html.Div(id=id("output"))
 
-
 call_count = Value("i", 0)
 
 app = Dash(__name__)
@@ -22,8 +21,13 @@ app.layout = html.Div([button1, button2, div])
 
 @app.callback(div.output.children, btn.input.n_clicks)
 def update_output(n_clicks):
-    call_count.value = call_count.value + 1
-    return n_clicks
+    if btn.isTriggered(button1.input.n_clicks):
+        return "button # 1"
+
+    if btn.isTriggered(button2.input.n_clicks):
+        return "button # 2"
+
+    return "???"
 
 if __name__ == "__main__":
 

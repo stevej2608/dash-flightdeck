@@ -1,14 +1,14 @@
 import logging
-import inspect
+import json
 import uuid
 import dash
 from dash import html, callback, ALL, MATCH
 from dash.development.base_component import Component
 from dash.dependencies import DashDependency
 
-def _resolver(self, arg):
-    key = inspect.stack()[0][3]
-    logging.info('key=[%s]=%s', key, arg)
+# def _resolver(self, arg):
+#     key = inspect.stack()[0][3]
+#     logging.info('key=[%s]=%s', key, arg)
 
 
 def match(m):
@@ -20,7 +20,8 @@ def match(m):
             self.dash_factory = dash_factory
 
         def __getattr__(self, attr):
-            return self.dash_factory(self.id, attr)
+            cb = self.dash_factory(self.id, attr)
+            return cb
 
     class _Match:
         def __init__(self, match):
@@ -42,6 +43,15 @@ def match(m):
         def callbackIO(self, attr, io_type):
             cb = io_type(self.match, attr)
             return cb
+
+        def isTriggered(self, element):
+            ctx = dash.callback_context
+
+            if not ctx.triggered: return False
+
+            prop_id = f'{json.dumps(element.id, sort_keys=True, separators=(",", ":"))}.{element.component_property}'
+
+            return ctx.triggered[0]['prop_id'] == prop_id
 
         @property
         def input(self):

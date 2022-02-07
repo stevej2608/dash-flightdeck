@@ -2,7 +2,7 @@ import time
 from multiprocessing import Value
 from dash import Dash, Input, Output, html, ALL, MATCH
 
-from dash_spa import prefix, match, AIOPrefix, AIOBase
+from dash_spa import prefix, match, isTriggered,AIOPrefix, AIOBase
 
 def xtest_simple_ids(dash_duo):
 
@@ -50,6 +50,7 @@ def test_pattern_ids(dash_duo):
 
     @app.callback(div.output.children, btn.input.n_clicks)
     def update_output(n_clicks):
+        idx = isTriggered(button1)
         call_count.value = call_count.value + 1
         if n_clicks == 1:
             time.sleep(1)
