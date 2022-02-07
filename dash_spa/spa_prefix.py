@@ -5,6 +5,23 @@ from dash import html, callback
 from dash.development.base_component import Component
 from dash.dependencies import DashDependency
 
+
+def prefixX(p):
+
+    class _Prefix:
+        def __init__(self, prefix):
+            self.prefix = prefix
+
+        def io(self, id):
+            return f'{self.prefix}_{id}'
+
+    return _Prefix(p)
+
+
+def prefix(pfx):
+    return lambda id :f'{pfx}_{id}'
+
+
 class AIOPrefix:
 
     def __init__(self, component_id):
@@ -62,51 +79,13 @@ Will return the same Dash Dependency Output instance as:
 
     def __init__(self, component, iofactory):
 
-        def get_prefix():
-
-            # log.info('get_prefix(%s)', component.id)
-
-            for frm in inspect.stack()[3:]:
-
-                try:
-
-                    mod_name = inspect.getmodule(frm[0]).__name__
-
-                    if mod_name in ['dash_spa.spa', '__main__', '_pytest.python']: break
-
-                    if mod_name in ['dash_spa.spa_prefix']: continue
-
-                    # Use blueprint rule context has been defined
-
-                    if 'ctx' in frm.frame.f_locals:
-                        ctx = frm.frame.f_locals['ctx']
-                        prefix = ctx.url_prefix[1:].replace('/','-')
-                        return [prefix,ctx.rule, component.id] if ctx.prefix_ids else [component.id]
-
-                except Exception:
-                    pass
-
-            # Default to using module name as prefix
-
-            for frm in inspect.stack()[3:]:
-                mod = inspect.getmodule(frm[0])
-                if mod.__name__  not in  ['dash_spa.spa_prefix','dash_spa.spa_components']:
-                    return [mod.__name__.replace('.','-'), component.id]
-
-            raise Exception('Unable to resolve context')
-
         # Add component id prefix if its not allready been done
 
         if not hasattr(component, '_spa_prefixed_id'):
 
             assert hasattr(component, 'id'), "The dash component must have an 'id' attribute"
 
-            component._spa_prefixed_id = get_prefix()
-            # component.id = '-'.join(component._spa_prefixed_id)
-
-            # if 'container' not in component.id:
-            #     log.info("Resolved id to %s", component.id)
-
+            component._spa_prefixed_id = component.id
 
         self.component = component
         self.iofactory = iofactory

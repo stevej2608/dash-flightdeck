@@ -16,7 +16,7 @@
         // "DASH_DEBUG": "1",
         // "FLASK_ENV": "test"
       },
-      "justMyCode": true,
+      "justMyCode": false,
       "serverReadyAction": {
         "pattern": ".*Visit http://(.*)",
         "uriFormat": "http://%s",
@@ -31,7 +31,6 @@
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
     },
-
     {
       "name": "3. Python: Module",
       "type": "python",
@@ -45,7 +44,38 @@
         "uriFormat": "http://%s",
         "action": "openExternally"
       }
-    }
-
+    },
+    {
+      "name": "3. PyTest (all)",
+      "type": "python",
+      "request": "launch",
+      "stopOnEntry": false,
+      "module": "pytest",
+      "args": [
+        "-sv"
+      ],
+      "cwd": "${workspaceRoot}",
+      "env": {},
+      "console": "internalConsole",
+      "justMyCode": false
+    },
+    {
+      "name": "4. PyTest (Current file)",
+      "type": "python",
+      "request": "launch",
+      "stopOnEntry": false,
+      "module": "pytest",
+      "args": [
+        "--headless",
+        "-sv",
+        "${file}"
+      ],
+      "cwd": "${workspaceRoot}",
+      "env": {},
+      "envFile": "${workspaceRoot}/.env",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false
+    },
   ]
 }

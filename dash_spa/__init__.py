@@ -1,2 +1,2 @@
 
-from .spa_prefix import AIOPrefix, AIOBase
+from .spa_prefix import prefix, AIOPrefix, AIOBase
