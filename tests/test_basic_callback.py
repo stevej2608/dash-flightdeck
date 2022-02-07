@@ -1,10 +1,10 @@
 import time
-from multiprocessing import Value
+from multiprocessing import Value, Array
 from dash import Dash, Input, Output, html, ALL, MATCH
 
-from dash_spa import prefix, match, isTriggered,AIOPrefix, AIOBase
+from dash_spa import prefix, match, isTriggered, cssid, AIOPrefix, AIOBase
 
-def xtest_simple_ids(dash_duo):
+def test_simple_ids(dash_duo):
 
     id = prefix('test')
 
@@ -46,18 +46,23 @@ def test_pattern_ids(dash_duo):
     app = Dash(__name__)
     app.layout = html.Div([button1, button2, div])
 
-    call_count = Value("i", 0)
+    call_count = Array("i", [0, 0])
 
     @app.callback(div.output.children, btn.input.n_clicks)
     def update_output(n_clicks):
-        idx = isTriggered(button1)
-        call_count.value = call_count.value + 1
-        if n_clicks == 1:
-            time.sleep(1)
-        return n_clicks
+        if isTriggered(button1.input.n_clicks):
+            call_count[0] += 1
+
+        if isTriggered(button2.input.n_clicks):
+            call_count[1] += 1
+
+        return f"Button1.n_clicks={call_count[0]}, Button2.n_clicks={call_count[1]}"
 
     dash_duo.start_server(app)
-    dash_duo.multiple_click("#test_input", clicks=3)
 
-    assert call_count.value == 4, "get called 4 times"
-    assert dash_duo.find_element("#test_output").text == "3", "clicked button 3 times"
+    dash_duo.multiple_click(cssid(button1), clicks=1)
+    dash_duo.multiple_click(cssid(button2), clicks=2)
+
+    assert call_count[0] == 1, "Button 1 get called 1 time"
+    assert call_count[1] == 2, "Button 2 get called 2 times"
+    assert dash_duo.find_element(f"#{div.id}").text == "Button1.n_clicks=1, Button2.n_clicks=2"

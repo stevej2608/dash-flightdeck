@@ -6,10 +6,27 @@ from dash import html, callback, ALL, MATCH
 from dash.development.base_component import Component
 from dash.dependencies import DashDependency
 
-# def _resolver(self, arg):
-#     key = inspect.stack()[0][3]
-#     logging.info('key=[%s]=%s', key, arg)
+def cssid(element):
+    """Convert the ID of given Dash html element into a css selector
 
+    Args:
+        element (Dash element): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    id = json.dumps(element.id, sort_keys=True, separators=(",", ":"))
+    for c in r'{}",:':
+        id = id.replace(c, f"\\{c}")
+    id = '#' + id
+    return id
+
+
+def isTriggered(element):
+    ctx = dash.callback_context
+    if not ctx.triggered: return False
+    prop_id = f'{json.dumps(element.id, sort_keys=True, separators=(",", ":"))}.{element.component_property}'
+    return ctx.triggered[0]['prop_id'] == prop_id
 
 def match(m):
 
@@ -43,15 +60,6 @@ def match(m):
         def callbackIO(self, attr, io_type):
             cb = io_type(self.match, attr)
             return cb
-
-        def isTriggered(self, element):
-            ctx = dash.callback_context
-
-            if not ctx.triggered: return False
-
-            prop_id = f'{json.dumps(element.id, sort_keys=True, separators=(",", ":"))}.{element.component_property}'
-
-            return ctx.triggered[0]['prop_id'] == prop_id
 
         @property
         def input(self):

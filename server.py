@@ -1,5 +1,4 @@
 import os
-import logging
 
 def serve_app(app, path="", debug=False):
     """Serve Dash application
