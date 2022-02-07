@@ -1,13 +1,12 @@
 from typing import Callable
-import logging
 import json
 import uuid
 import dash
-from dash import html, callback, callback_context, ALL, MATCH
+from dash import html, callback, callback_context, ALL, MATCH, ALLSMALLER
 from dash.development.base_component import Component
 from dash.dependencies import DashDependency, Input, Output, State
 
-def cssid(element: Component) -> str:
+def css_id(element: Component) -> str:
     """Convert the ID of given Dash component into a css selector
 
     Args:
@@ -23,25 +22,42 @@ def cssid(element: Component) -> str:
     return id
 
 
-def isTriggered(element: DashDependency) -> bool:
+def isTriggered(component: DashDependency) -> bool:
+    """Return true if the given dash component was the reasion for the enclosing callback being triggered
+
+    Args:
+        component (DashDependency): The calback component being tested
+
+    Returns:
+        bool: Return true if the given component is the trigger
+    """
     ctx = callback_context
     if not ctx.triggered: return False
-    prop_id = f'{json.dumps(element.id, sort_keys=True, separators=(",", ":"))}.{element.component_property}'
+    prop_id = f'{json.dumps(component.id, sort_keys=True, separators=(",", ":"))}.{component.component_property}'
     return ctx.triggered[0]['prop_id'] == prop_id
 
+
 def match(m: dict):
+    """
+
+    Args:
+        m (dict): [description]
+
+    Returns:
+        [type]: [description]
+    """
 
     class _Factory:
 
         def __init__(self, id: dict, dash_factory: DashDependency):
-            self.id = id
+            self._id = id
             self.dash_factory = dash_factory
 
         def __getattr__(self, attr: str):
-            cb = self.dash_factory(self.id, attr)
+            cb = self.dash_factory(self._id, attr)
             return cb
 
-    class _Match:
+    class Matcher:
         def __init__(self, match: dict):
             self.match = match
 
@@ -53,7 +69,7 @@ def match(m: dict):
                 return lambda value : self.resolver(key, value)
 
             for key, value in match.items():
-                if value in [ALL, MATCH]:
+                if value in [ALL, MATCH, ALLSMALLER]:
                     self.__dict__[key] = _resolver(key)
 
         def resolver(self, key: str, arg:str) -> dict:
@@ -77,7 +93,7 @@ def match(m: dict):
         def state(self) -> _Factory:
             return _Factory(self.match, State)
 
-    return _Match(m)
+    return Matcher(m)
 
 
 def prefix(pfx:str) -> Callable[[str], str]:
@@ -89,6 +105,7 @@ def prefix(pfx:str) -> Callable[[str], str]:
     Returns:
          ((str) -> str)
     """
+    pfx = pfx.replace('.', '_')
     return lambda id :f'{pfx}_{id}'
 
 

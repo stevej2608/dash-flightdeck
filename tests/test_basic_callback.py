@@ -2,7 +2,7 @@ import time
 from multiprocessing import Value, Array
 from dash import Dash, Input, Output, html, ALL, MATCH
 
-from dash_spa import prefix, match, isTriggered, cssid, AIOPrefix, AIOBase
+from dash_spa import prefix, match, isTriggered, css_id, AIOPrefix, AIOBase
 
 def test_simple_ids(dash_duo):
 
@@ -35,13 +35,13 @@ def test_pattern_ids(dash_duo):
 
     # https://dash.plotly.com/pattern-matching-callbacks
 
-    id = prefix('test')
-    btn = match({'type': id('button'), 'idx': ALL})
+    pid = prefix(__name__)
+    btn = match({'type': pid('button'), 'idx': ALL})
 
     button1 = html.Button(id=btn.idx(1))
     button2 = html.Button(id=btn.idx(2))
 
-    div = html.Div(id=id("output"))
+    div = html.Div(id=pid("output"))
 
     app = Dash(__name__)
     app.layout = html.Div([button1, button2, div])
@@ -49,21 +49,21 @@ def test_pattern_ids(dash_duo):
     call_count = Array("i", [0, 0])
 
     @app.callback(div.output.children, btn.input.n_clicks)
-    def update_output(n_clicks):
+    def _update_output(n_clicks):
         if isTriggered(button1.input.n_clicks):
-            call_count[0] += 1
+            call_count[0] = n_clicks[0]
 
         if isTriggered(button2.input.n_clicks):
-            call_count[1] += 1
+            call_count[1] = n_clicks[1]
 
         return f"Button1.n_clicks={call_count[0]}, Button2.n_clicks={call_count[1]}"
 
     dash_duo.start_server(app)
 
-    dash_duo.multiple_click(cssid(button1), clicks=1)
-    dash_duo.multiple_click(cssid(button2), clicks=2)
+    dash_duo.multiple_click(css_id(button1), clicks=1)
+    dash_duo.multiple_click(css_id(button2), clicks=2)
 
-    time.sleep(3)
+    time.sleep(1)
 
     assert call_count[0] == 1
     assert call_count[1] == 2

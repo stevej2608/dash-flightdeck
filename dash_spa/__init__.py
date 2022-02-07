@@ -1,2 +1,2 @@
 
-from .spa_prefix import prefix, match, isTriggered, cssid, AIOPrefix, AIOBase
+from .spa_prefix import prefix, match, isTriggered, css_id, AIOPrefix, AIOBase
