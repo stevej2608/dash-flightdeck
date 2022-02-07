@@ -69,6 +69,10 @@ def match(m: dict):
                 return lambda value : self.resolver(key, value)
 
             for key, value in match.items():
+
+                if key in ['input', 'output', 'state']:
+                    raise AttributeError(f'Invalid match key "{key}". Key values "input", "output" and "state" are not allowed')
+
                 if value in [ALL, MATCH, ALLSMALLER]:
                     self.__dict__[key] = _resolver(key)
 
@@ -76,10 +80,6 @@ def match(m: dict):
             id = self.match.copy()
             id[key] = arg
             return id
-
-        def callbackIO(self, attr, io_type):
-            cb = io_type(self.match, attr)
-            return cb
 
         @property
         def input(self) -> _Factory:
