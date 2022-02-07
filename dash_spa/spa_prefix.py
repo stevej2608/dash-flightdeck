@@ -1,21 +1,54 @@
+import logging
 import inspect
 import uuid
 import dash
-from dash import html, callback
+from dash import html, callback, ALL, MATCH
 from dash.development.base_component import Component
 from dash.dependencies import DashDependency
 
+def _resolver(self, arg):
+    key = inspect.stack()[0][3]
+    logging.info('key=[%s]=%s', key, arg)
 
-def prefixX(p):
 
-    class _Prefix:
-        def __init__(self, prefix):
-            self.prefix = prefix
+def match(m):
 
-        def io(self, id):
-            return f'{self.prefix}_{id}'
+    class _Factory:
 
-    return _Prefix(p)
+        def __init__(self, id, dash_factory):
+            self.id = id
+            self.dash_factory = dash_factory
+
+        def __getattr__(self, attr):
+            return self.dash_factory(self.id, attr)
+
+    class _Match:
+        def __init__(self, match):
+            self.match = match
+            for key, value in match.items():
+                if value in [ALL, MATCH]:
+                    self.__dict__[key] = lambda value : self.resolver(key, value)
+                    # setattr(_Match, key, _resolver)
+
+        # def io(self, id):
+        #     return f'{self.prefix}_{id}'
+
+        def resolver(self, key, arg):
+            logging.info('key=[%s]=%s', key, arg)
+            id = self.match.copy()
+            id[key] = arg
+            return id
+
+        def callbackIO(self, attr, io_type):
+            cb = io_type(self.match, attr)
+            return cb
+
+        @property
+        def input(self):
+            return _Factory(self.match, dash.dependencies.Input)
+
+
+    return _Match(m)
 
 
 def prefix(pfx):
