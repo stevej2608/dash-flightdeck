@@ -63,6 +63,8 @@ def test_pattern_ids(dash_duo):
     dash_duo.multiple_click(cssid(button1), clicks=1)
     dash_duo.multiple_click(cssid(button2), clicks=2)
 
-    assert call_count[0] == 1, "Button 1 get called 1 time"
-    assert call_count[1] == 2, "Button 2 get called 2 times"
+    time.sleep(3)
+
+    assert call_count[0] == 1
+    assert call_count[1] == 2
     assert dash_duo.find_element(f"#{div.id}").text == "Button1.n_clicks=1, Button2.n_clicks=2"

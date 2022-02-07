@@ -1,11 +1,35 @@
 import logging
-from dash import html, dcc, MATCH, callback
+from dash import html, dcc, MATCH, callback, Output
 import dash_holoniq_components as dhc
 from icons.hero import DOWN_ARROW_ICON, PLUS_ICON, PRODUCTS_ICON, CUSTOMERS_ICON, CLIPBOARD_ICON
 from app import create_app
 from server import serve_app
 
 from dash_spa import AIOPrefix, AIOBase
+
+def test():
+
+    aio_id = 1234
+
+    container = lambda aio_id: {
+        'component': 'DropdownButtonAIO',
+        'subcomponent': 'container',
+        'aio_id': aio_id
+    }
+
+    op1 = Output(container(MATCH), 'className')
+
+
+    io = AIOPrefix('DropdownButtonNewAIO')
+    id=io.id('container')
+    container_spa = html.Div(id=id)
+    op_spa = container_spa.output.className
+    op1 = op_spa(MATCH)
+
+    return op1, op_spa
+
+
+ttt = test()
 
 def dropdownLink(title, icon, href='#'):
     return dcc.Link([

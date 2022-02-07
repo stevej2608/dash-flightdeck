@@ -1,13 +1,14 @@
+from typing import Callable
 import logging
 import json
 import uuid
 import dash
-from dash import html, callback, ALL, MATCH
+from dash import html, callback, callback_context, ALL, MATCH
 from dash.development.base_component import Component
-from dash.dependencies import DashDependency
+from dash.dependencies import DashDependency, Input, Output, State
 
-def cssid(element):
-    """Convert the ID of given Dash html element into a css selector
+def cssid(element: Component) -> str:
+    """Convert the ID of given Dash component into a css selector
 
     Args:
         element (Dash element): [description]
@@ -22,37 +23,40 @@ def cssid(element):
     return id
 
 
-def isTriggered(element):
-    ctx = dash.callback_context
+def isTriggered(element: DashDependency) -> bool:
+    ctx = callback_context
     if not ctx.triggered: return False
     prop_id = f'{json.dumps(element.id, sort_keys=True, separators=(",", ":"))}.{element.component_property}'
     return ctx.triggered[0]['prop_id'] == prop_id
 
-def match(m):
+def match(m: dict):
 
     class _Factory:
 
-        def __init__(self, id, dash_factory):
+        def __init__(self, id: dict, dash_factory: DashDependency):
             self.id = id
             self.dash_factory = dash_factory
 
-        def __getattr__(self, attr):
+        def __getattr__(self, attr: str):
             cb = self.dash_factory(self.id, attr)
             return cb
 
     class _Match:
-        def __init__(self, match):
+        def __init__(self, match: dict):
             self.match = match
+
+            # For each of the pattern matching dict entries we
+            # create a lambda that can be called which in turn
+            # calls our resolver method
+
+            def _resolver(key):
+                return lambda value : self.resolver(key, value)
+
             for key, value in match.items():
                 if value in [ALL, MATCH]:
-                    self.__dict__[key] = lambda value : self.resolver(key, value)
-                    # setattr(_Match, key, _resolver)
+                    self.__dict__[key] = _resolver(key)
 
-        # def io(self, id):
-        #     return f'{self.prefix}_{id}'
-
-        def resolver(self, key, arg):
-            logging.info('key=[%s]=%s', key, arg)
+        def resolver(self, key: str, arg:str) -> dict:
             id = self.match.copy()
             id[key] = arg
             return id
@@ -62,14 +66,29 @@ def match(m):
             return cb
 
         @property
-        def input(self):
-            return _Factory(self.match, dash.dependencies.Input)
+        def input(self) -> _Factory:
+            return _Factory(self.match, Input)
 
+        @property
+        def output(self) -> _Factory:
+            return _Factory(self.match, Output)
+
+        @property
+        def state(self) -> _Factory:
+            return _Factory(self.match, State)
 
     return _Match(m)
 
 
-def prefix(pfx):
+def prefix(pfx:str) -> Callable[[str], str]:
+    """Return a lambda that will prefix all component IDs with the given prefix
+
+    Args:
+        pfx (str): The Component prefix to be assigned
+
+    Returns:
+         ((str) -> str)
+    """
     return lambda id :f'{pfx}_{id}'
 
 
