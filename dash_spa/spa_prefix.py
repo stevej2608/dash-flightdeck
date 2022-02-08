@@ -15,11 +15,15 @@ def css_id(element: Component) -> str:
     Returns:
         [type]: [description]
     """
-    id = json.dumps(element.id, sort_keys=True, separators=(",", ":"))
-    for c in r'{}",:':
-        id = id.replace(c, f"\\{c}")
-    id = '#' + id
-    return id
+
+    if isinstance(element.id, dict):
+        id = json.dumps(element.id, sort_keys=True, separators=(",", ":"))
+        for c in r'{}",:':
+            id = id.replace(c, f"\\{c}")
+    else:
+        id = element.id
+
+    return '#' + id
 
 
 def isTriggered(component: DashDependency) -> bool:
@@ -49,12 +53,12 @@ def match(m: dict):
 
     class _Factory:
 
-        def __init__(self, id: dict, dash_factory: DashDependency):
-            self._id = id
+        def __init__(self, component_id: dict, dash_factory: DashDependency):
+            self.component_id = component_id
             self.dash_factory = dash_factory
 
-        def __getattr__(self, attr: str):
-            cb = self.dash_factory(self._id, attr)
+        def __getattr__(self, component_property: str) -> DashDependency:
+            cb = self.dash_factory(self.component_id, component_property)
             return cb
 
     class Matcher:
@@ -76,9 +80,9 @@ def match(m: dict):
                 if value in [ALL, MATCH, ALLSMALLER]:
                     self.__dict__[key] = _resolver(key)
 
-        def resolver(self, key: str, arg:str) -> dict:
+        def resolver(self, key: str, value:str) -> dict:
             id = self.match.copy()
-            id[key] = arg
+            id[key] = value
             return id
 
         @property
@@ -96,7 +100,7 @@ def match(m: dict):
     return Matcher(m)
 
 
-def prefix(pfx:str) -> Callable[[str], str]:
+def prefix(pfx:str = None) -> Callable[[str], str]:
     """Return a lambda that will prefix all component IDs with the given prefix
 
     Args:
@@ -105,7 +109,8 @@ def prefix(pfx:str) -> Callable[[str], str]:
     Returns:
          ((str) -> str)
     """
-    pfx = pfx.replace('.', '_')
+
+    pfx = pfx.replace('.', '_') if pfx else str(uuid.uuid4()).replace('-', '_')
     return lambda id :f'{pfx}_{id}'
 
 

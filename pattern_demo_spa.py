@@ -6,13 +6,13 @@ from dash_spa import prefix, match
 
 app = Dash(__name__, suppress_callback_exceptions=True)
 
-pid = prefix(__name__)
+pid = prefix()
 
 button = html.Button("Add Filter", id=pid("dynamic-add-filter"), n_clicks=0)
 container = html.Div(id=pid('dynamic-dropdown-container'), children=[])
 
-dynamic_dropdown = match({'type': 'dynamic-dropdown','index': MATCH })
-dynamic_output = match({'type': 'dynamic-output','index': MATCH })
+dynamic_dropdown = match({'type': pid('dynamic-dropdown'),'index': MATCH })
+dynamic_output = match({'type': pid('dynamic-output'),'index': MATCH })
 
 app.layout = html.Div([button,container])
 

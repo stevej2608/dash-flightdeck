@@ -35,7 +35,7 @@ def test_pattern_ids(dash_duo):
 
     # https://dash.plotly.com/pattern-matching-callbacks
 
-    pid = prefix(__name__)
+    pid = prefix()
     btn = match({'type': pid('button'), 'idx': ALL})
 
     button1 = html.Button(id=btn.idx(1))
@@ -67,4 +67,4 @@ def test_pattern_ids(dash_duo):
 
     assert call_count[0] == 1
     assert call_count[1] == 2
-    assert dash_duo.find_element(f"#{div.id}").text == "Button1.n_clicks=1, Button2.n_clicks=2"
+    assert dash_duo.find_element(css_id(div)).text == "Button1.n_clicks=1, Button2.n_clicks=2"

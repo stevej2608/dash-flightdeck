@@ -7,7 +7,7 @@ import dash_bootstrap_components as dbc
 
 from server import serve_app
 
-pid = prefix('test')
+pid = prefix()
 btn = match({'type': pid('button'), 'idx': ALL})
 
 button1 = dbc.Button("Button1", id=btn.idx(1))
