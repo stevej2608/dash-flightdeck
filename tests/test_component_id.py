@@ -1,3 +1,4 @@
+import pytest
 from dash import html, ALL
 from dash_spa import prefix, match
 
@@ -28,3 +29,6 @@ def test_id_match():
 
     assert btn1.id == {'type': 'dash_btn', 'idx': 1}
     assert btn1.css_id == '#\\{\\"idx\\"\\:1\\,\\"type\\"\\:\\"dash_btn\\"\\}'
+
+    with pytest.raises(AttributeError):
+        html.Button(id=btn.idxx(1))

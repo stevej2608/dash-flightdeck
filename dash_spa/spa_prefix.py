@@ -21,14 +21,28 @@ def isTriggered(component: DashDependency) -> bool:
     return ctx.triggered[0]['prop_id'] == prop_id
 
 
-def match(m: dict):
-    """
+def match(pattern: dict):
+    """ Return a match factory that can be used to create
+    pattern matching component ids that all use the same base pattern
 
     Args:
-        m (dict): [description]
+        pattern (dict): Dictionary that contains the base pattern
 
     Returns:
-        [type]: [description]
+        _Factory: Factory that creates component IDs based on the supplied pattern
+
+    Example:
+
+            btn = match({'type': 'button', 'idx': ALL})
+
+            btn1 = html.Button(id=btn.idx(1))
+
+            btn2 = html.Button(id=btn.idx(2))
+
+            @app.callback(div.output.children, btn.input.n_clicks)
+            def _callback(n_clicks):
+                pass
+
     """
 
     class _Factory:
@@ -42,8 +56,8 @@ def match(m: dict):
             return cb
 
     class Matcher:
-        def __init__(self, match: dict):
-            self.match = match
+        def __init__(self, pattern: dict):
+            self.pattern = pattern
 
             # For each of the pattern matching dict entries we
             # create a lambda that can be called which in turn
@@ -52,7 +66,7 @@ def match(m: dict):
             def _resolver(key):
                 return lambda value : self.resolver(key, value)
 
-            for key, value in match.items():
+            for key, value in pattern.items():
 
                 if key in ['input', 'output', 'state']:
                     raise AttributeError(f'Invalid match key "{key}". Key values "input", "output" and "state" are not allowed')
@@ -61,23 +75,23 @@ def match(m: dict):
                     self.__dict__[key] = _resolver(key)
 
         def resolver(self, key: str, value:str) -> dict:
-            id = self.match.copy()
+            id = self.pattern.copy()
             id[key] = value
             return id
 
         @property
         def input(self) -> _Factory:
-            return _Factory(self.match, Input)
+            return _Factory(self.pattern, Input)
 
         @property
         def output(self) -> _Factory:
-            return _Factory(self.match, Output)
+            return _Factory(self.pattern, Output)
 
         @property
         def state(self) -> _Factory:
-            return _Factory(self.match, State)
+            return _Factory(self.pattern, State)
 
-    return Matcher(m)
+    return Matcher(pattern)
 
 
 def prefix(pfx:str = None) -> Callable[[str], str]:
