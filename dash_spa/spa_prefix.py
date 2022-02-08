@@ -1,4 +1,5 @@
 from typing import Callable
+import re
 import json
 import uuid
 import dash
@@ -104,7 +105,12 @@ def prefix(pfx:str = None) -> Callable[[str], str]:
          ((str) -> str)
     """
 
-    pfx = pfx.replace('.', '_') if pfx else f"i{str(uuid.uuid4()).replace('-', '_')}"
+    if pfx:
+        assert re.search("^[a-zA-Z_]", pfx), "The dash component prefix must start with a letter or underscore"
+        pfx = pfx.replace('.', '_')
+    else:
+        pfx = f"i{str(uuid.uuid4()).replace('-', '_')}"
+
     return lambda id :f'{pfx}_{id}'
 
 

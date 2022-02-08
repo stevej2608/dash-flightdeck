@@ -20,6 +20,9 @@ def test_id_simple():
     assert btn.id == "dash_button"
     assert btn.css_id == "#dash_button"
 
+    with pytest.raises(AssertionError):
+         prefix('1dash')
+
 
 def test_id_match():
     pfx = prefix('dash')
