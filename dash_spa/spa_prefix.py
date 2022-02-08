@@ -6,26 +6,6 @@ from dash import html, callback, callback_context, ALL, MATCH, ALLSMALLER
 from dash.development.base_component import Component
 from dash.dependencies import DashDependency, Input, Output, State
 
-def css_id(element: Component) -> str:
-    """Convert the ID of given Dash component into a css selector
-
-    Args:
-        element (Dash element): [description]
-
-    Returns:
-        [type]: [description]
-    """
-
-    if isinstance(element.id, dict):
-        id = json.dumps(element.id, sort_keys=True, separators=(",", ":"))
-        for c in r'{}",:':
-            id = id.replace(c, f"\\{c}")
-    else:
-        id = element.id
-
-    return '#' + id
-
-
 def isTriggered(component: DashDependency) -> bool:
     """Return true if the given dash component was the reasion for the enclosing callback being triggered
 
@@ -110,7 +90,7 @@ def prefix(pfx:str = None) -> Callable[[str], str]:
          ((str) -> str)
     """
 
-    pfx = pfx.replace('.', '_') if pfx else str(uuid.uuid4()).replace('-', '_')
+    pfx = pfx.replace('.', '_') if pfx else f"i{str(uuid.uuid4()).replace('-', '_')}"
     return lambda id :f'{pfx}_{id}'
 
 
@@ -211,8 +191,30 @@ def state(self):
         self._spa_state = DashIOFactory(self, dash.dependencies.State)
     return self._spa_state
 
+def css_id(self) -> str:
+    """Convert the ID of given Dash component into a css selector
+
+    Args:
+        element (Dash element): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
+    if isinstance(self.id, dict):
+        id = json.dumps(self.id, sort_keys=True, separators=(",", ":"))
+        for c in r'{}",:':
+            id = id.replace(c, f"\\{c}")
+    else:
+        id = self.id
+
+    return '#' + id
+
+
+
 # Inject DashIOFactory instances into the Dash component
 
 Component.input = property(input)
 Component.output = property(output)
 Component.state = property(state)
+Component.css_id = property(css_id)
