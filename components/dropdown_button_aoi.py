@@ -17,18 +17,21 @@ class DropdownButtonAIO(html.Div):
         button = match({'component': 'DropdownButtonAIO', 'subcomponent': 'button', 'idx': MATCH})
         container = match({'component': 'DropdownButtonAIO', 'subcomponent': 'container', 'idx': MATCH})
 
-    ids = ids
-
     @callback(ids.container.output.className, ids.button.input.n_clicks, ids.button.input.focus, ids.container.state.className)
     def show_dropdown(button_clicks, button_focus, className):
 
         if not button_clicks:
             return className
 
-        if 'show' in className and button_focus is False:
-            return className.replace(' show', '')
+        classNames = className.split()
+
+        if 'show' in classNames:
+            if button_focus is False:
+                classNames.remove('show')
         else:
-            return className + ' show'
+            classNames.append('show')
+
+        return ' '.join(classNames)
 
 
     def __init__(self, dropdownEntries, buttonText, buttonIcon=PLUS_ICON, buttonColor='secondary', downArrow=False):
@@ -76,4 +79,3 @@ class DropdownButtonAIO(html.Div):
             className='dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1')
 
         super().__init__(html.Div([button, container], className='dropdown'))
-
