@@ -1,7 +1,7 @@
-import uuid
 import logging
-from dash import Output, Input, State, html, dcc, callback, MATCH
+from dash import html, dcc, callback, MATCH
 import dash_holoniq_components as dhc
+from dash_spa import match, component_uuid
 from icons.hero import DOWN_ARROW_ICON, PLUS_ICON
 
 def dropdownLink(title, icon, href='#'):
@@ -13,16 +13,8 @@ def dropdownLink(title, icon, href='#'):
 class DropdownButtonAIO(html.Div):
 
     class ids:
-        button = lambda aio_id: {
-            'component': 'DropdownButtonAIO',
-            'subcomponent': 'button',
-            'aio_id': aio_id
-        }
-        container = lambda aio_id: {
-            'component': 'DropdownButtonAIO',
-            'subcomponent': 'container',
-            'aio_id': aio_id
-        }
+        button = match({'component': 'DropdownButtonAIO', 'subcomponent': 'button', 'idx': MATCH})
+        container = match({'component': 'DropdownButtonAIO', 'subcomponent': 'container', 'idx': MATCH})
 
     ids = ids
 
@@ -54,30 +46,34 @@ class DropdownButtonAIO(html.Div):
 
         """
 
+        logging.info('DropdownButtonAIO')
 
-        aio_id = str(uuid.uuid4())
+        ids = DropdownButtonAIO.ids
+        aio_id = component_uuid()
 
-        _button = dhc.Button([
+        button = dhc.Button([
                 buttonIcon,
                 buttonText,
                 DOWN_ARROW_ICON if downArrow else None
-            ], id=self.ids.button(aio_id), className=f'btn btn-{buttonColor} d-inline-flex align-items-center me-2 dropdown-toggle')
+            ], id=ids.button.idx(aio_id), className=f'btn btn-{buttonColor} d-inline-flex align-items-center me-2 dropdown-toggle')
+
+        logging.info('DropdownButtonAIO.button.id=%s', button.id)
 
         # Drop down container
 
-        _container = html.Div(
+        container = html.Div(
             dropdownEntries,
-            id=self.ids.container(aio_id),
+            id = ids.container.idx(aio_id),
             className='dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1')
 
-        super().__init__(html.Div([_button, _container], className='dropdown'))
+        logging.info('DropdownButtonAIO.container.id=%s', container.id)
 
-    @callback(Output(ids.container(MATCH), 'className'),
-            Input(ids.button(MATCH), 'n_clicks'),
-            Input(ids.button(MATCH), 'focus'),
-            State(ids.container(MATCH), 'className'))
-    def show_dropdown(button_clicks, button_focus, className):
-        logging.info('show_dropdown: button_clicks=%s, className = %s', button_clicks, className)
+        super().__init__(html.Div([button, container], className='dropdown'))
+
+
+    @callback(ids.container.output.className, ids.button.input.n_clicks, ids.button.input.focus, ids.container.state.className)
+    def show_dropdown(button_clicks, button_focus, className):  # pylint: disable=no-self-argument
+        # logging.info('show_dropdown: button_clicks=%s, className = %s', button_clicks, className)
 
         if not button_clicks:
             return className

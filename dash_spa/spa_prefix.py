@@ -94,6 +94,10 @@ def match(pattern: dict):
 
     return Matcher(pattern)
 
+def component_uuid() ->str:
+    """Return UUID converted for safe use as HTML element id"""
+    return f"i{str(uuid.uuid4()).replace('-', '_')}"
+
 
 def prefix(pfx:str = None) -> Callable[[str], str]:
     """Return a lambda that will prefix all component IDs with the given prefix
@@ -109,7 +113,7 @@ def prefix(pfx:str = None) -> Callable[[str], str]:
         assert re.search("^[a-zA-Z_]", pfx), "The dash component prefix must start with a letter or underscore"
         pfx = pfx.replace('.', '_')
     else:
-        pfx = f"i{str(uuid.uuid4()).replace('-', '_')}"
+        pfx = component_uuid()
 
     return lambda id :f'{pfx}_{id}'
 
