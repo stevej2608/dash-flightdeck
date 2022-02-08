@@ -3,7 +3,7 @@ import re
 import json
 import uuid
 import dash
-from dash import html, callback, callback_context, ALL, MATCH, ALLSMALLER
+from dash import callback_context, ALL, MATCH, ALLSMALLER
 from dash.development.base_component import Component
 from dash.dependencies import DashDependency, Input, Output, State
 
@@ -114,29 +114,6 @@ def prefix(pfx:str = None) -> Callable[[str], str]:
     return lambda id :f'{pfx}_{id}'
 
 
-class AIOPrefix:
-
-    def __init__(self, component_id):
-        self.component_id=component_id
-        self.aio_id = str(uuid.uuid4())
-
-    def id(self, subcomponent_id):
-        return {
-            'component': self.component_id,
-            'subcomponent': subcomponent_id,
-            'aio_id': self.aio_id
-        }
-
-
-class AIOBase(html.Div):
-
-    def __init__(self, children):
-        super().__init__(children)
-
-    def callback(self, output, inputs=[], state=[]):
-        return callback(output, inputs, state)
-
-
 # Simple helper to get the Dash components identifier
 #
 #   my_checkbox.component_id
@@ -147,7 +124,7 @@ class AIOBase(html.Div):
 
 DashDependency.id = property(lambda self: self.component_id)
 
-class DashIOFactory:
+class _DashIOFactory:
     """Dash Dependency Factory
 
 Inject DashIOFactory instances into the Dash component. The
@@ -191,6 +168,7 @@ Will return the same Dash Dependency Output instance as:
         self.__setattr__(name, dio)
         return dio
 
+
 # The following three methods have been injected in to dash's
 # Component class as properties 'input', 'output' and 'state'
 # In each case, when the property is accessed in a dash callback
@@ -198,27 +176,44 @@ Will return the same Dash Dependency Output instance as:
 
 def input(self):
     if not hasattr(self, '_spa_input'):
-        self._spa_input = DashIOFactory(self, dash.dependencies.Input)
+        self._spa_input = _DashIOFactory(self, dash.dependencies.Input)
     return self._spa_input
 
 def output(self):
     if not hasattr(self, '_spa_output'):
-        self._spa_output = DashIOFactory(self, dash.dependencies.Output)
+        self._spa_output = _DashIOFactory(self, dash.dependencies.Output)
     return self._spa_output
 
 def state(self):
     if not hasattr(self, '_spa_state'):
-        self._spa_state = DashIOFactory(self, dash.dependencies.State)
+        self._spa_state = _DashIOFactory(self, dash.dependencies.State)
     return self._spa_state
 
-def css_id(self) -> str:
+Component.input = property(input)
+Component.output = property(output)
+Component.state = property(state)
+
+def _css_id(self) -> str:
     """Convert the ID of given Dash component into a css selector
 
     Args:
         element (Dash element): [description]
 
     Returns:
-        [type]: [description]
+        [str]: The component id in a form suitable for use in dash_duo
+
+
+    Example:
+
+            pid = prefix()
+
+            btn = match({'type': pid('btn'), 'idx': ALL})
+            btn1 = html.Button(id=btn.idx(1))
+
+            dash_duo.multiple_click(button1.css_id, clicks=99)
+
+            dash_duo.find_element(btn1.css_id)
+
     """
 
     if isinstance(self.id, dict):
@@ -230,11 +225,4 @@ def css_id(self) -> str:
 
     return '#' + id
 
-
-
-# Inject DashIOFactory instances into the Dash component
-
-Component.input = property(input)
-Component.output = property(output)
-Component.state = property(state)
-Component.css_id = property(css_id)
+Component.css_id = property(_css_id)
