@@ -1,6 +1,5 @@
-import uuid
-import logging
-from dash import Output, Input, State, html, dcc, callback, MATCH
+from dash import html, dcc, callback, MATCH
+from dash_spa import match, component_uuid
 
 from icons.hero import ARROW_ICON
 
@@ -14,18 +13,21 @@ def dropdownFolderEntry(text, href):
 class DropdownFolderAIO(html.Div):
 
     class ids:
-        button = lambda aio_id: {
-            'component': 'DropdownAIO',
-            'subcomponent': 'button',
-            'aio_id': aio_id
-        }
-        content = lambda aio_id: {
-            'component': 'DropdownAIO',
-            'subcomponent': 'content',
-            'aio_id': aio_id
-        }
+        button = match({'component': 'DropdownFolderAIO', 'subcomponent': 'button', 'idx': MATCH})
+        container = match({'component': 'DropdownFolderAIO', 'subcomponent': 'container', 'idx': MATCH})
 
-    ids = ids
+    # pylint: disable=no-self-argument
+
+    @callback(ids.container.output.className, ids.button.input.n_clicks, ids.container.state.className)
+    def update_dropdown(n_clicks, className):
+
+        if not n_clicks:
+            return className
+
+        if 'collapse' in className:
+            return className.replace(' collapse', '')
+        else:
+            return className + ' collapse'
 
     def __init__(self, children, text, icon, aio_id=None):
         """Sidebar dropdown component with icon, text and arrow; that when clicked displays the child elements
@@ -37,8 +39,8 @@ class DropdownFolderAIO(html.Div):
             aio_id (str, optional): The component ID. Defaults to None.
         """
 
-        if aio_id is None:
-            aio_id = str(uuid.uuid4())
+        ids = DropdownFolderAIO.ids
+        aio_id = aio_id if aio_id else component_uuid()
 
         button = html.Span([
             html.Span([
@@ -46,29 +48,12 @@ class DropdownFolderAIO(html.Div):
                 html.Span(text, className='sidebar-text')
             ]),
             html.Span(ARROW_ICON, className='link-arrow')
-        ], id=self.ids.button(aio_id), className='nav-link collapsed d-flex justify-content-between align-items-center')
+        ], id=ids.button.idx(aio_id), className='nav-link collapsed d-flex justify-content-between align-items-center')
 
         # Drop down container
 
         container = html.Div([
             html.Ul(children, className='flex-column nav')
-        ], id=self.ids.content(aio_id),className='multi-level collapse', role='list')
+        ], id=ids.container.idx(aio_id), className='multi-level collapse', role='list')
 
-        super().__init__([
-            html.Li([
-                button,
-                container
-            ], className='nav-item')
-        ])
-
-    @callback(Output(ids.content(MATCH), 'className'),Input(ids.button(MATCH), 'n_clicks'), State(ids.content(MATCH), 'className'))
-    def update_dropdown(n_clicks, className):
-        logging.info('hidden = %s', className)
-
-        if not n_clicks:
-            return className
-
-        if 'collapse' in className:
-            return className.replace(' collapse', '')
-        else:
-            return className + ' collapse'
+        super().__init__(html.Li([button, container], className='nav-item'))

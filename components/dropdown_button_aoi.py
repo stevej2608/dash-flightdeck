@@ -3,8 +3,6 @@ import dash_holoniq_components as dhc
 from dash_spa import match, component_uuid
 from icons.hero import DOWN_ARROW_ICON, PLUS_ICON
 
-# pylint: disable=no-self-argument
-
 def dropdownLink(title, icon, href='#'):
     return dcc.Link([
         icon,
@@ -16,6 +14,8 @@ class DropdownButtonAIO(html.Div):
     class ids:
         button = match({'component': 'DropdownButtonAIO', 'subcomponent': 'button', 'idx': MATCH})
         container = match({'component': 'DropdownButtonAIO', 'subcomponent': 'container', 'idx': MATCH})
+
+    # pylint: disable=no-self-argument
 
     @callback(ids.container.output.className, ids.button.input.n_clicks, ids.button.input.focus, ids.container.state.className)
     def show_dropdown(button_clicks, button_focus, className):
@@ -34,7 +34,7 @@ class DropdownButtonAIO(html.Div):
         return ' '.join(classNames)
 
 
-    def __init__(self, dropdownEntries, buttonText, buttonIcon=PLUS_ICON, buttonColor='secondary', downArrow=False):
+    def __init__(self, dropdownEntries, buttonText, buttonIcon=PLUS_ICON, buttonColor='secondary', downArrow=False, aio_id=None):
         """Button with supplied icon and down arrow. When clicked a drop-down
         selection of entries is revealed.
 
@@ -63,7 +63,7 @@ class DropdownButtonAIO(html.Div):
         """
 
         ids = DropdownButtonAIO.ids
-        aio_id = component_uuid()
+        aio_id = aio_id if aio_id else component_uuid()
 
         button = dhc.Button([
                 buttonIcon,
