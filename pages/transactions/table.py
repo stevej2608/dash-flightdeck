@@ -1,7 +1,7 @@
 from dash import html
 import pandas as pd
 
-from components import TableActionAIO
+from components.table_action_aoi import TableActionAIO
 
 TABLE_COLS = ["#", "Bill For", "Issue Date", "Due Date", "Total", "Status", "Action"]
 
