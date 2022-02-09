@@ -1,7 +1,7 @@
 from dash import html
 import pandas as pd
+from components.dropdown_aio import DropdownAIO
 
-from components.table_action_aoi import TableActionAIO
 
 TABLE_COLS = ["#", "Bill For", "Issue Date", "Due Date", "Total", "Status", "Action"]
 
@@ -42,14 +42,34 @@ def _tableHead():
         ])
     ])
 
-def _tableRow(cid, product, issue_date, due_date, total, status, action=None):
 
-    action = TableActionAIO([
+def _tableAction():
+
+    button = DropdownAIO.Button([
+        html.Span(html.Span(className='fas fa-ellipsis-h icon-dark'), className='icon icon-sm'),
+        html.Span("Toggle Dropdown", className='visually-hidden')
+    ], className='btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0')
+
+    # dropdown bottom-left. Ripped from the Volt transactons table using Firefox debug tools
+
+    style={"position": "absolute",
+            "inset": "0px 0px auto auto",
+            "margin": "0px",
+            "transform": "translate3d(0px, 25.3333px, 0px)"
+            }
+
+    container = html.Div([
         html.A([html.Span(className='fas fa-eye me-2'), "View Details" ], className='dropdown-item rounded-top', href='#'),
         html.A([html.Span(className='fas fa-edit me-2'), "Edit"], className='dropdown-item', href='#'),
         html.A([html.Span(className='fas fa-trash-alt me-2'), "Remove" ], className='dropdown-item text-danger rounded-bottom', href='#')
-    ])
+    ], className='dropdown-menu py-0', style=style)
 
+    return html.Div(DropdownAIO(button, container), className='btn-group')
+
+
+def _tableRow(cid, product, issue_date, due_date, total, status, action=None):
+
+    action = _tableAction()
 
     return html.Tr([
         html.Td(html.A(cid, href='#', className='fw-bold')),
