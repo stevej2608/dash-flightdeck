@@ -2,12 +2,6 @@ from dash import html, dcc, callback, MATCH
 import dash_holoniq_components as dhc
 from dash_spa import match, component_uuid
 
-def dropdownFolderEntry(text, href):
-    return html.Li([
-        dcc.Link([
-            html.Span(text, className='sidebar-text')
-        ], className='nav-link', href=href)
-    ], className='nav-item')
 
 class TableActionAIO(html.Div):
 
@@ -67,11 +61,6 @@ class TableActionAIO(html.Div):
             id = ids.container.idx(aio_id),
             className='dropdown-menu py-0', style=style)
 
-        super().__init__([
-            html.Div([
-                button,
-                container
-            ], className='btn-group', style={"float" : "left"})
-        ])
+        super().__init__(html.Div([button, container], className='btn-group'))
 
 
