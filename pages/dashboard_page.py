@@ -6,9 +6,7 @@ from .dashboard import salesChart, customers, revenue, bounceRate, pageVisitsTab
 
 register_page(__name__, path="/pages/dashboard.html", title="Dash/Flightdeck - Dashboard")
 
-def layout():
-    logging.info('layout()')
-    return html.Div([
+layout = html.Div([
         mobileNavBar(),
         sideBar(),
         html.Main([

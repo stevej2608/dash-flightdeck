@@ -2,6 +2,8 @@ from dash import html
 import pandas as pd
 from components.dropdown_aio import DropdownAIO
 
+from components.table_pagination import TableAIOPagination
+
 
 TABLE_COLS = ["#", "Bill For", "Issue Date", "Due Date", "Total", "Status", "Action"]
 
@@ -88,51 +90,15 @@ def _tableBody():
     ])
 
 
-def _pagination():
-    return html.Div([
-        html.Nav([
-            html.Ul([
-                html.Li([
-                    html.A("Previous", className='page-link', href='#')
-                ], className='page-item'),
-                html.Li([
-                    html.A("1", className='page-link', href='#')
-                ], className='page-item'),
-                html.Li([
-                    html.A("2", className='page-link', href='#')
-                ], className='page-item active'),
-                html.Li([
-                    html.A("3", className='page-link', href='#')
-                ], className='page-item'),
-                html.Li([
-                    html.A("4", className='page-link', href='#')
-                ], className='page-item'),
-                html.Li([
-                    html.A("5", className='page-link', href='#')
-                ], className='page-item'),
-                html.Li([
-                    html.A("Next", className='page-link', href='#')
-                ], className='page-item')
-            ], className='pagination mb-0')
-        ], **{"aria-label": "Page navigation example"}),
-        html.Div([
-            "Showing ",
-            html.B("5"),
-            " out of ",
-            html.B("25"),
-            " entries"
-        ], className='fw-normal small mt-4 mt-lg-0')
-    ], className='card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between')
-
-
 def table():
     thead = _tableHead()
     tbody = _tableBody()
+    paginator = TableAIOPagination(["Previous", 1, 2, 3, 4, 5, "Next"], 5, 25)
     return html.Div([
         html.Table([
             thead,
             tbody,
         ], className='table table-hover'),
-        _pagination()
+        paginator
     ], className='card card-body border-0 shadow table-wrapper table-responsive')
 

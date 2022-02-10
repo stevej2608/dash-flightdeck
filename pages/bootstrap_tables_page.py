@@ -44,9 +44,7 @@ def banner():
     ], className='d-flex justify-content-between w-100 flex-wrap')
 
 
-def layout():
-    logging.info('layout()')
-    return  html.Div([
+layout = html.Div([
         mobileNavBar(),
         sideBar(),
         html.Main([

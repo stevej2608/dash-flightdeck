@@ -7,6 +7,8 @@ from dash import callback_context, ALL, MATCH, ALLSMALLER
 from dash.development.base_component import Component
 from dash.dependencies import DashDependency, Input, Output, State
 
+NOUPDATE = dash.no_update
+
 def isTriggered(component: DashDependency) -> bool:
     """Return true if the given dash component was the reasion for the enclosing callback being triggered
 

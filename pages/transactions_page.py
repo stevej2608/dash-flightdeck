@@ -20,30 +20,28 @@ def newPlanButton():
     ], href='#', className='btn btn-sm btn-gray-800 d-inline-flex align-items-center')
 
 
-def layout():
-    logging.info('layout()')
-    return  html.Div([
-        mobileNavBar(),
-        sideBar(),
-        html.Main([
-            topNavBar(),
+layout = html.Div([
+    mobileNavBar(),
+    sideBar(),
+    html.Main([
+        topNavBar(),
+        html.Div([
             html.Div([
+                breadCrumbs(),
+                html.H2("All Orders", className='h4'),
+                html.P("Your web analytics dashboard template.", className='mb-0')
+            ], className='d-block mb-4 mb-md-0'),
+            html.Div([
+                newPlanButton(),
                 html.Div([
-                    breadCrumbs(),
-                    html.H2("All Orders", className='h4'),
-                    html.P("Your web analytics dashboard template.", className='mb-0')
-                ], className='d-block mb-4 mb-md-0'),
-                html.Div([
-                    newPlanButton(),
-                    html.Div([
-                        button("Share"),
-                        button("Export")
-                    ], className='btn-group ms-2 ms-lg-3')
-                ], className='btn-toolbar mb-2 mb-md-0')
+                    button("Share"),
+                    button("Export")
+                ], className='btn-group ms-2 ms-lg-3')
+            ], className='btn-toolbar mb-2 mb-md-0')
 
-            ], className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4'),
-            tableHeader(),
-            table(),
-            footer()
-        ], className='content')
-    ])
+        ], className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4'),
+        tableHeader(),
+        table(),
+        footer()
+    ], className='content')
+])
