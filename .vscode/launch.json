@@ -30,6 +30,12 @@
       "program": "${file}",
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "serverReadyAction": {
+        "pattern": ".*Visit http://(.*)",
+        "uriFormat": "http://%s",
+        "action": "openExternally"
+      }
     },
     {
       "name": "3. Python: Module",

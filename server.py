@@ -1,4 +1,5 @@
 import os
+import logging
 
 def serve_app(app, path="", debug=False):
     """Serve Dash application
@@ -9,10 +10,10 @@ def serve_app(app, path="", debug=False):
         debug (bool, optional): Enable Dash debug. Defaults to False.
     """
 
-    # Turn off werkzeug  logging as it's very noisy
+    # Turn off werkzeug logging as it's very noisy
 
-    # aps_log = logging.getLogger('werkzeug')
-    # aps_log.setLevel(logging.ERROR)
+    aps_log = logging.getLogger('werkzeug')
+    aps_log.setLevel(logging.ERROR)
 
     # When running in a Docker container the internal port
     # is mapped onto a host port. Use the env variables passed

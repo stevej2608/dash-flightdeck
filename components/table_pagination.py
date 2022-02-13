@@ -2,14 +2,14 @@ import logging
 from dash import html, callback, ALL, callback_context
 from dash_spa import match, prefix, isTriggered, NOUPDATE
 
+# https://dash.plotly.com/all-in-one-components#example-2:-datatableaio---sharing-data-between-__init__-and-callback
+
 class TableAIOPagination(html.Div):
 
 
     def __init__(self, range, current, max, aio_id=None):
 
         pid = prefix()
-
-        logging.info('TableAIOPagination pid=%s', pid(''))
 
         range_match = match({'type': pid('li'), 'idx': ALL})
 
@@ -26,6 +26,7 @@ class TableAIOPagination(html.Div):
 
         @callback(showing.output.children, range_match.input.n_clicks)
         def update_pagination(current):
+            logging.info('update_pagination rang=%s', current)
             ctx = callback_context
             for index, element in enumerate(range_elements):
                 if isTriggered(element.input.n_clicks):
@@ -40,11 +41,14 @@ class TableAIOPagination(html.Div):
 
         super().__init__(div)
 
-    def range_element(self, text):
-        return html.Li([html.Span(text, className='page-link')], className='page-item')
+    def range_element(self, value):
+        active = "active" if isinstance(value, int) and value == 3 else ""
+        return html.Li([html.Span(value, className='page-link')], className=f'page-item {active}')
 
     def showing_container(self):
         return html.Div(className='fw-normal small mt-4 mt-lg-0')
 
     def showing_content(self, current, max):
         return ["Showing ",html.B(current)," out of ",html.B(max)," entries"]
+
+

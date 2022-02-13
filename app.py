@@ -14,12 +14,12 @@ external_scripts = [
     ]
 
 
-def create_app(layout, scripts=external_scripts, stylesheets=external_stylesheets):
+def create_app(layout, scripts=external_scripts, stylesheets=external_stylesheets, plugins=[dl.plugins.pages]):
     # Server definition
 
     server = flask.Flask(__name__)
     app = Dash(__name__,
-            plugins=[dl.plugins.pages],
+            plugins=plugins,
             external_stylesheets=stylesheets,
             external_scripts=scripts, server=server)
 
