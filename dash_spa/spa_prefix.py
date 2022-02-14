@@ -77,6 +77,16 @@ def match(pattern: dict):
                 if value in [ALL, MATCH, ALLSMALLER]:
                     self.__dict__[key] = _resolver(key)
 
+        def assign(self, **kwargs):
+            id = self.pattern.copy()
+            for k, v in list(kwargs.items()):
+                if k in id and id[k] in [ALL, MATCH, ALLSMALLER]:
+                    id[k] = v
+                else:
+                    raise AttributeError(f'Invalid match key "{k}"')
+            return id
+
+
         def resolver(self, key: str, value:str) -> dict:
             id = self.pattern.copy()
             id[key] = value
@@ -111,13 +121,16 @@ def prefix(pfx:str = None) -> Callable[[str], str]:
          ((str) -> str)
     """
 
+    def _prefix(pfx, id):
+        return f'{pfx}_{id}' if id else f'{pfx}'
+
     if pfx:
         assert re.search("^[a-zA-Z_]", pfx), "The dash component prefix must start with a letter or underscore"
         pfx = pfx.replace('.', '_')
     else:
         pfx = component_uuid()
 
-    return lambda id :f'{pfx}_{id}'
+    return lambda id=None : _prefix(pfx, id)
 
 
 # Simple helper to get the Dash components identifier

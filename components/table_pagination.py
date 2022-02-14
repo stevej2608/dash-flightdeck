@@ -1,4 +1,3 @@
-import logging
 from dash import html, callback, ALL, callback_context
 from dash_spa import match, prefix, isTriggered, NOUPDATE
 
@@ -24,15 +23,30 @@ class TableAIOPagination(html.Div):
         showing.children = self.showing_content(current, max)
         showing.id = pid('showing')
 
-        @callback(showing.output.children, range_match.input.n_clicks)
-        def update_pagination(current):
-            logging.info('update_pagination rang=%s', current)
+
+        @callback(showing.output.children,
+                  range_match.output.className,
+                  range_match.input.n_clicks,
+                  range_match.state.className)
+        def update_pagination2(clicks, className):
             ctx = callback_context
-            for index, element in enumerate(range_elements):
-                if isTriggered(element.input.n_clicks):
+            range_out = []
+            showing = NOUPDATE
+            for index, range_element in enumerate(range_elements):
+                classNames = className[index].split()
+
+                if 'active' in classNames:
+                    classNames.remove('active')
+
+                if isTriggered(range_element.input.n_clicks):
+                    classNames.append('active')
                     current = ctx.inputs_list[0][index]['id']['idx']
-                    return self.showing_content(current, max)
-            return NOUPDATE
+                    showing = self.showing_content(current, max)
+
+                range_out.append(' '.join(classNames))
+
+            return showing, range_out
+
 
         div = html.Div([
             html.Nav(html.Ul(range_elements , className='pagination mb-0')),
@@ -50,5 +64,3 @@ class TableAIOPagination(html.Div):
 
     def showing_content(self, current, max):
         return ["Showing ",html.B(current)," out of ",html.B(max)," entries"]
-
-
