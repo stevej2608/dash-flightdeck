@@ -2,7 +2,7 @@ from dash import html
 import pandas as pd
 from components.dropdown_aio import DropdownAIO
 
-from components.table_pagination import TableAIOPagination
+from components.table_pagination import TableAIOPaginator
 
 
 TABLE_COLS = ["#", "Bill For", "Issue Date", "Due Date", "Total", "Status", "Action"]
@@ -93,7 +93,7 @@ def _tableBody():
 def table():
     thead = _tableHead()
     tbody = _tableBody()
-    paginator = TableAIOPagination(["Previous", 1, 2, 3, 4, 5, "Next"], 5, 25, 3)
+    paginator = TableAIOPaginator(["Previous", 1, 2, 3, 4, 5, "Next"], 5, 25, 3)
     return html.Div([
         html.Table([
             thead,

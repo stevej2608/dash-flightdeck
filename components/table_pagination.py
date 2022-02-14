@@ -1,7 +1,7 @@
-from holoniq.utils import log
+from typing import Callable, List
 from dash import html, dcc, callback, ALL, callback_context
-from dash_spa import match, prefix, isTriggered
 from dash.exceptions import PreventUpdate
+from dash_spa import match, prefix, isTriggered
 
 # https://dash.plotly.com/all-in-one-components#example-2:-datatableaio---sharing-data-between-__init__-and-callback
 
@@ -12,8 +12,7 @@ class Dict2Obj:
             for key, value in d.items():
                 setattr(self, key, value)
 
-
-class TableAIOPagination(html.Ul):
+class TableAIOPaginator(html.Ul):
 
     @staticmethod
     def createStore(range, current, max, aio_id=None):
@@ -22,22 +21,42 @@ class TableAIOPagination(html.Ul):
         return dcc.Store(id=pid(), data=store_date)
 
 
-    def __init__(self, store: dcc.Store, className=None, aio_id=None):
+    def __init__(self, store: dcc.Store, range_element: Callable, className: str = None):
+        """Creates and manages a pagination UI AIO component. The supplied store
+        data range entries are are itterated, the range_element is called for each
+        value
 
-        pid = prefix(aio_id)
+        Args:
+            store (dcc.Store): Store is updated when the user clicks on a range UI component
+            range_element (Callable): Renders a range entry from the store
+            className (str, optional): The TableAIOPaginator className. Defaults to None.
 
-        log.info('TableAIOPagination id=%s', pid())
+        Returns:
+            html.Ui: The range AOI component
+
+        Example:
+
+            store = TableAIOPaginator.createStore(["Previous", 1, 2, 3, 4, 5, "Next"], 5, 25)
+
+            def range_element(value):
+                return html.Li([html.Span(value, className='page-link')], className='page-item')
+
+            paginator = TableAIOPaginator(store, range_element, className='pagination mb-0')
+
+        """
+
+        pid = prefix(store.id)
 
         range_match = match({'type': pid('li'), 'idx': ALL})
 
-        def range_element(text):
-            rng = self.range_element(text)
+        def _range_element(text):
+            rng = range_element(text)
             rng.id = range_match.idx(text)
             return rng
 
-        s = Dict2Obj(store.data)
+        data = Dict2Obj(store.data)
 
-        range_elements = [range_element(text) for text in s.range]
+        range_elements = [_range_element(text) for text in data.range]
 
         @callback(store.output.data,
                   range_match.output.className,
@@ -59,37 +78,48 @@ class TableAIOPagination(html.Ul):
 
                 range_out.append(' '.join(classNames))
 
-            log.info('TableAIOPagination data=%s', data)
-
             return data, range_out
 
-        super().__init__(range_elements, id=pid(), className=className)
-
-    def range_element(self, value):
-        active = "active" if isinstance(value, int) and value == 3 else ""
-        return html.Li([html.Span(value, className='page-link')], className=f'page-item {active}')
+        super().__init__(range_elements, id=pid('TableAIOPaginator'), className=className)
 
 
 class TableAIOPaginatorView(html.Div):
 
-    def __init__(self, store: dcc.Store, className, content, aio_id=None):
-        pid = prefix(aio_id)
+    def __init__(self, store: dcc.Store, content: Callable, className= None):
+        """Manages and updates the view component of the associated
+        TableAIOPaginator. The TableAIOPaginatorView callback is triggered when the
+        store component value changes. The callback calls the supplied
+        'content' function. The return values is rendered as the child
+        element of the TableAIOPaginatorView
 
-        log.info('TableAIOPaginatorView id=%s', pid())
+        Args:
+            store (dcc.Store): The store element that is updated by the paginator
+            content (Callable): Function used to update the component
+            className (str): the className of the component
 
+        Returns:
+            html.Div: The view component
+
+        Example:
+
+            store = TableAIOPaginator.createStore(["Previous", 1, 2, 3, 4, 5, "Next"], 5, 25)
+
+            def content(current, max):
+                return ["Showing ",html.B(current)," out of ",html.B(max)," entries"]
+
+            viewer = TableAIOPaginatorView(store, content, className='fw-normal small mt-4 mt-lg-0' )
+
+        """
+        pid = prefix(store.id)
         s = Dict2Obj(store.data)
 
-        super().__init__(content(s.current, s.max), id=pid('container'), className=className)
+        super().__init__(content(s.current, s.max), id=pid('TableAIOPaginatorView'), className=className)
 
         @callback(self.output.children, store.input.data)
         def update_view(data):
-
-            log.info('TableAIOPaginatorView data=%s', data)
 
             if data is not None:
                 s = Dict2Obj(data)
                 return content(s.current, s.max)
 
             raise PreventUpdate
-
-
