@@ -1,14 +1,6 @@
 from dash import html, dcc
-from dash_svg import Svg, Path
 from components.dropdown_aio import DropdownAIO
-
-TICK_ICON = Svg([
-        Path(fillRule='evenodd', d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z', clipRule='evenodd')
-    ], className='icon icon-xxs ms-auto', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
-
-GEAR_ICON = Svg([
-        Path(fillRule='evenodd', d='M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z', clipRule='evenodd')
-    ], className='icon icon-sm', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
+from icons.hero import TICK_ICON, GEAR_ICON
 
 
 def _searchOrders():
@@ -32,9 +24,9 @@ def _settingsDropdown():
 
     container =  html.Div([
         html.Span("Show", className='small ps-3 fw-bold text-dark'),
-        html.A(["10", TICK_ICON], className='dropdown-item d-flex align-items-center fw-bold', href='#'),
-        html.A("20", className='dropdown-item fw-bold', href='#'),
-        html.A("30", className='dropdown-item fw-bold rounded-bottom', href='#')
+        html.Div(["10", TICK_ICON], className='dropdown-item d-flex align-items-center fw-bold'),
+        html.Div("20", className='dropdown-item fw-bold'),
+        html.Div("30", className='dropdown-item fw-bold rounded-bottom')
     ], className='dropdown-menu dropdown-menu-xs dropdown-menu-end pb-0')
 
     dropdown = DropdownAIO(button, container)
