@@ -1,33 +1,37 @@
 import logging
 from multiprocessing import Array
-from dash import Dash, html, ALL
+from dash import Dash, html, ALL, callback
 
 from dash_spa import prefix, match, isTriggered
 import dash_bootstrap_components as dbc
 
 from server import serve_app
 
-pid = prefix()
-btn = match({'type': pid('button'), 'idx': ALL})
+def layout():
 
-button1 = dbc.Button("Button1", id=btn.idx(1))
-button2 = dbc.Button("Button2", id=btn.idx(2))
-div = html.H2(id=pid("output"))
+    logging.info('layout')
 
-app = Dash(__name__, external_stylesheets = [dbc.themes.BOOTSTRAP], assets_folder='empty')
-app.layout = html.Div([button1, button2, div])
+    pid = prefix()
+    btn = match({'type': pid('button'), 'idx': ALL})
 
-call_count = Array("i", [0, 0])
+    button1 = dbc.Button("Button1", id=btn.idx(1))
+    button2 = dbc.Button("Button2", id=btn.idx(2))
+    div = html.H2(id=pid("output"))
 
-@app.callback(div.output.children, btn.input.n_clicks)
-def update_output(n_clicks):
-    if isTriggered(button1.input.n_clicks):
-        call_count[0] = n_clicks[0]
 
-    if isTriggered(button2.input.n_clicks):
-        call_count[1] = n_clicks[1]
+    call_count = Array("i", [0, 0])
 
-    return f"Button1.n_clicks={call_count[0]}, Button2.n_clicks={call_count[1]}"
+    @callback(div.output.children, btn.input.n_clicks)
+    def update_output(n_clicks):
+        if isTriggered(button1.input.n_clicks):
+            call_count[0] = n_clicks[0]
+
+        if isTriggered(button2.input.n_clicks):
+            call_count[1] = n_clicks[1]
+
+        return f"Button1.n_clicks={call_count[0]}, Button2.n_clicks={call_count[1]}"
+
+    return html.Div([button1, button2, div])
 
 if __name__ == "__main__":
 
@@ -41,5 +45,8 @@ if __name__ == "__main__":
 
     aps_log = logging.getLogger('werkzeug')
     aps_log.setLevel(logging.ERROR)
+
+    app = Dash(__name__, external_stylesheets = [dbc.themes.BOOTSTRAP], assets_folder='empty')
+    app.layout = layout()
 
     serve_app(app, debug=False)

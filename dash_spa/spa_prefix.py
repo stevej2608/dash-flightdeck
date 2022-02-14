@@ -112,7 +112,8 @@ def component_uuid() ->str:
 
 
 def prefix(pfx:str = None) -> Callable[[str], str]:
-    """Return a lambda that will prefix all component IDs with the given prefix
+    """Return a lambda that will prefix all component IDs with the
+    given prefix. If no prefix is given one will be assigned
 
     Args:
         pfx (str): The Component prefix to be assigned
