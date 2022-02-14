@@ -15,7 +15,19 @@ class Dict2Obj:
 class TableAIOPaginator(html.Ul):
 
     @staticmethod
-    def createStore(range, current, max, aio_id=None):
+    def createStore(range: List, current:str, max:str, aio_id=None) -> dcc.Store:
+        """Create a dcc.Store component for use by TableAIOPaginator
+
+        Args:
+            range (List): Range of values to be displayed by TableAIOPaginator
+            current (str): The currently selected value
+            max (str): The maximum selectable value
+            aio_id (_type_, optional): _description_. Defaults to None.
+
+        Returns:
+            dcc.Store: The store component
+        """
+
         pid = prefix(aio_id)
         store_date = {'range': range, 'current': current, 'max': max}
         return dcc.Store(id=pid(), data=store_date)
@@ -64,17 +76,22 @@ class TableAIOPaginator(html.Ul):
                   store.state.data,
                   range_match.state.className)
         def update_paginator(clicks, data, className):
-            ctx = callback_context
+
+            # Set the selected element to active and update
+            # store.data['current'] with the selected value
+
             range_out = []
             for index, range_element in enumerate(range_elements):
                 classNames = className[index].split()
+
+                # Deactivate previously active
 
                 if 'active' in classNames:
                     classNames.remove('active')
 
                 if isTriggered(range_element.input.n_clicks):
                     classNames.append('active')
-                    data['current'] = ctx.inputs_list[0][index]['id']['idx']
+                    data['current'] = range_elements[index].id['idx']
 
                 range_out.append(' '.join(classNames))
 
@@ -89,12 +106,12 @@ class TableAIOPaginatorView(html.Div):
         """Manages and updates the view component of the associated
         TableAIOPaginator. The TableAIOPaginatorView callback is triggered when the
         store component value changes. The callback calls the supplied
-        'content' function. The return values is rendered as the child
+        'content' function. The function return value is rendered as the child
         element of the TableAIOPaginatorView
 
         Args:
             store (dcc.Store): The store element that is updated by the paginator
-            content (Callable): Function used to update the component
+            content (Callable): Function used to update the component children
             className (str): the className of the component
 
         Returns:
