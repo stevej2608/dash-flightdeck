@@ -2,7 +2,7 @@ from dash import html
 import pandas as pd
 from components.dropdown_aio import DropdownAIO
 
-from components.table_pagination import TableAIOPaginator
+from components.table_pagination import TableAIOPaginator, TableAIOPaginatorView
 
 
 TABLE_COLS = ["#", "Bill For", "Issue Date", "Due Date", "Total", "Status", "Action"]
@@ -90,10 +90,29 @@ def _tableBody():
     ])
 
 
+def create_paginator(range, current, max):
+    store = TableAIOPaginator.createStore(range, current, max)
+
+    def range_element(value):
+        return html.Li([html.Span(value, className='page-link')], className='page-item')
+
+    def content(current, max):
+        return ["Showing ",html.B(current)," out of ",html.B(max)," entries"]
+
+    paginator = TableAIOPaginator(store, range_element, className='pagination mb-0')
+    viewer = TableAIOPaginatorView(store, content=content, className='fw-normal small mt-4 mt-lg-0' )
+
+    return html.Div([
+        store,
+        html.Nav(paginator),
+        viewer
+    ], className='card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between')
+
+
 def table():
     thead = _tableHead()
     tbody = _tableBody()
-    paginator = TableAIOPaginator(["Previous", 1, 2, 3, 4, 5, "Next"], 5, 25, 3)
+    paginator = create_paginator(["Previous", 1, 2, 3, 4, 5, "Next"], 5, 25)
     return html.Div([
         html.Table([
             thead,
