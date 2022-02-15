@@ -25,11 +25,12 @@
     },
 
     {
-      "name": "1b. test_paginator.py",
+      "name": "1b. test_table_settings.py",
       "type": "python",
       "request": "launch",
       "cwd": "${workspaceRoot}",
-      "program": "test_paginator.py",
+      // "program": "test_paginator.py",
+      "program": "test_table_settings.py",
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
       "env": {

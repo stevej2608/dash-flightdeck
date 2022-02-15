@@ -1,7 +1,7 @@
 from dash import html, dcc
+from dash_svg import Svg, Path
 from components.dropdown_aio import DropdownAIO
 from icons.hero import TICK_ICON, GEAR_ICON
-
 
 def _searchOrders():
     return  html.Div([
