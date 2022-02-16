@@ -91,19 +91,18 @@ def _tableBody():
 
 
 def create_paginator(range, current, max):
-    store = TableAIOPaginator.createStore(range, current, max)
 
     def range_element(value):
         return html.Li([html.Span(value, className='page-link')], className='page-item')
 
+    paginator = TableAIOPaginator(range, current, max, range_element, className='pagination mb-0')
+
     def content(current, max):
         return ["Showing ",html.B(current)," out of ",html.B(max)," entries"]
 
-    paginator = TableAIOPaginator(store, range_element, className='pagination mb-0')
-    viewer = TableAIOPaginatorView(store, content=content, className='fw-normal small mt-4 mt-lg-0' )
+    viewer = TableAIOPaginatorView(paginator.store, content=content, className='fw-normal small mt-4 mt-lg-0' )
 
     return html.Div([
-        store,
         html.Nav(paginator),
         viewer
     ], className='card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between')

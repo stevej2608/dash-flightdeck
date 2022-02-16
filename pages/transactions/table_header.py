@@ -35,15 +35,13 @@ def _settingsDropdown():
 
         return element
 
-    store = ButtonContainerAIO.createStore(["10", "20", "30"], "10")
 
-    container = ButtonContainerAIO(store, element_renderer, className='dropdown-menu dropdown-menu-xs dropdown-menu-end pb-0')
-    container.children[0:0] = [store, html.Span("Show", className='small ps-3 fw-bold text-dark')]
+    container = ButtonContainerAIO(["10", "20", "30"], "10", element_renderer, className='dropdown-menu dropdown-menu-xs dropdown-menu-end pb-0')
+    container.children[0:0] = [html.Span("Show", className='small ps-3 fw-bold text-dark')]
 
     dropdown = DropdownAIO(button, container)
 
     return html.Div(dropdown, className='col-4 col-md-2 col-xl-1 ps-md-0 text-end')
-
 
 
 def tableHeader():

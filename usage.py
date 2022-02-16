@@ -1,6 +1,5 @@
 from holoniq.utils import set_level
 import dash_labs as dl
-
 from app import create_app
 from server import serve_app
 

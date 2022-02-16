@@ -1,6 +1,7 @@
 import flask
 from dash import Dash
 import dash_labs as dl
+from components.store_aio import StoreAIO
 
 external_stylesheets = [
     "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css",
@@ -22,6 +23,9 @@ def create_app(layout, scripts=external_scripts, stylesheets=external_stylesheet
             plugins=plugins,
             external_stylesheets=stylesheets,
             external_scripts=scripts, server=server)
+
+    if layout == dl.plugins.page_container:
+        dl.plugins.page_container.children.insert(0, StoreAIO.container)
 
 
     # Allow pages to access the dash app instance, eg:

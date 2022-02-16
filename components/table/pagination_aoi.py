@@ -1,7 +1,8 @@
 from typing import Callable, List
-from dash import html, dcc, callback, ALL
+from dash import html, callback, ALL
 from dash.exceptions import PreventUpdate
 from dash_spa import match, prefix, isTriggered
+from components.store_aio import StoreAIO
 
 from .table_aio import Dict2Obj
 
@@ -10,34 +11,18 @@ from .table_aio import Dict2Obj
 
 class TableAIOPaginator(html.Ul):
 
-    @staticmethod
-    def createStore(range: List, current:str, max:str, aio_id=None) -> dcc.Store:
-        """Create a dcc.Store component for use by TableAIOPaginator
-
-        Args:
-            range (List): Range of values to be displayed by TableAIOPaginator
-            current (str): The currently selected value
-            max (str): The maximum selectable value
-            aio_id (_type_, optional): _description_. Defaults to None.
-
-        Returns:
-            dcc.Store: The store component
-        """
-
-        pid = prefix(aio_id)
-        store_date = {'range': range, 'current': current, 'max': max}
-        return dcc.Store(id=pid(), data=store_date)
-
-
-    def __init__(self, store: dcc.Store, range_element: Callable, className: str = None):
+    def __init__(self, range: List, current:str, max:str, range_element: Callable, className: str = None, aio_id=None):
         """Creates and manages a pagination UI AIO component. The supplied store
         data range entries are are itterated, the range_element is called for each
         value
 
         Args:
-            store (dcc.Store): Store is updated when the user clicks on a range UI component
+            range (List): Range of values to be displayed by TableAIOPaginator
+            current (str): The currently selected value
+            max (str): The maximum selectable value
             range_element (Callable): Renders a range entry from the store
             className (str, optional): The TableAIOPaginator className. Defaults to None.
+            aio_id (_type_, optional): _description_. Defaults to None.
 
         Returns:
             html.Ui: The range AOI component
@@ -53,10 +38,12 @@ class TableAIOPaginator(html.Ul):
 
         """
 
-        pid = prefix(store.id)
+        self.store = StoreAIO.create_store({'range': range, 'current': current, 'max': max}, aio_id)
+
+        pid = prefix(self.store.id)
 
         range_match = match({'type': pid('li'), 'idx': ALL})
-        data = Dict2Obj(store.data)
+        data = Dict2Obj(self.store.data)
 
         def _range_element(text):
             rng = range_element(text)
@@ -68,10 +55,10 @@ class TableAIOPaginator(html.Ul):
 
         range_elements = [_range_element(text) for text in data.range]
 
-        @callback(store.output.data,
+        @callback(self.store.output.data,
                   range_match.output.className,
                   range_match.input.n_clicks,
-                  store.state.data,
+                  self.store.state.data,
                   range_match.state.className)
         def update_paginator(clicks, data, className):
 

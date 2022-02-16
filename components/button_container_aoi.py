@@ -4,6 +4,8 @@ from dash import html, dcc, callback, ALL
 from dash.exceptions import PreventUpdate
 from dash_spa import match, prefix, isTriggered
 
+from components.store_aio import StoreAIO
+
 class Dict2Obj:
     def __init__(self, d=dict) -> object:
         if d is not None:
@@ -12,22 +14,18 @@ class Dict2Obj:
 
 class ButtonContainerAIO(html.Div):
 
-    @staticmethod
-    def createStore(range: List, current:str, aio_id=None) -> dcc.Store:
-        pid = prefix(aio_id)
-        store_date = {'range': range, 'current': current}
-        return dcc.Store(id=pid(), data=store_date)
+    def __init__(self, range: List, current:str, range_element: Callable, className: str = None, aio_id=None):
 
+        self.store = store = StoreAIO.create_store({'range': range, 'current': current}, aio_id)
 
-    def __init__(self, store: dcc.Store, range_element: Callable, selected=0, className: str = None):
+        pid = prefix(self.store.id)
 
-        pid = prefix(store.id)
         data = Dict2Obj(store.data)
 
         range_match = match({'type': pid('li'), 'idx': ALL})
 
         def _range_element(index, text):
-            rng = range_element(text, index==selected)
+            rng = range_element(text, text==current)
             return html.Div(rng, id=range_match.idx(text))
 
         range_elements = [_range_element(index, text) for index, text in enumerate(data.range)]
