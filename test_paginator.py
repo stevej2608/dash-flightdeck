@@ -2,7 +2,7 @@ from dash import html
 from app import create_app
 from server import serve_app
 
-from components.table_pagination_aoi import TableAIOPaginator, TableAIOPaginatorView
+from components.table.pagination_aoi import TableAIOPaginator, TableAIOPaginatorView
 
 
 def create_paginator(range, current, max):

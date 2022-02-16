@@ -2,6 +2,12 @@ from dash import html, callback, MATCH
 from dash.development.base_component import Component
 from dash_spa import match, component_uuid
 
+class Dict2Obj:
+    def __init__(self, d=dict) -> object:
+        if d is not None:
+            for key, value in d.items():
+                setattr(self, key, value)
+
 class AIOBase:
 
     components = {}

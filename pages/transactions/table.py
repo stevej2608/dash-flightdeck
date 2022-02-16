@@ -2,7 +2,7 @@ from dash import html
 import pandas as pd
 from components.dropdown_aio import DropdownAIO
 
-from components.table_pagination_aoi import TableAIOPaginator, TableAIOPaginatorView
+from components.table import TableAIOPaginator, TableAIOPaginatorView
 
 
 TABLE_COLS = ["#", "Bill For", "Issue Date", "Due Date", "Total", "Status", "Action"]
