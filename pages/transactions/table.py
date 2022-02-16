@@ -86,7 +86,7 @@ def _tableRow(cid, product, issue_date, due_date, total, status, action=None):
 def _tableBody():
     rows = df.values.tolist()
     return html.Tbody([
-        _tableRow(cid, product, issue_date, due_date, total, status, action) for cid, product, issue_date, due_date, total, status, action in rows
+        _tableRow(*args) for args in rows
     ])
 
 

@@ -46,7 +46,7 @@ def _tableRow(name, views, value, rate, change):
 def _tableBody():
     rows = df.values.tolist()
     return html.Tbody([
-        _tableRow(name, views, value, rate, change) for name, views, value, rate, change in rows
+        _tableRow(*args) for args in rows
     ])
 
 def pageVisitsTable():

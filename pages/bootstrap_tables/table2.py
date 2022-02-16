@@ -102,7 +102,7 @@ def _tableRow(country, all, change, tal, talCh, widgets, widgetsCh):
 def _tableBody():
     rows = df.values.tolist()
     return html.Tbody([
-        _tableRow(country, all, change, tal, talCh, widgets, widgetsCh) for country, all, change, tal, talCh, widgets, widgetsCh in rows
+        _tableRow(*args) for args in rows
     ])
 
 

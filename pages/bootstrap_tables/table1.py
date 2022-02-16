@@ -136,7 +136,7 @@ def _tableRow(cid, ts, st, cat, rank, share, change):
 def _tableBody():
     rows = df.values.tolist()
     return html.Tbody([
-        _tableRow(cid, ts, st, cat, rank, share, change) for cid, ts, st, cat, rank, share, change in rows
+        _tableRow(*args) for args in rows
     ])
 
 def table1():
