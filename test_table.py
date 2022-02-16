@@ -5,7 +5,8 @@ import pandas as pd
 
 from components.store_aio import StoreAIO
 from components.dropdown_aio import DropdownAIO
-from components.table import TableAIO
+from test_paginator import create_paginator
+
 
 TABLE_COLS = ["#", "Bill For", "Issue Date", "Due Date", "Total", "Status", "Action"]
 
@@ -80,14 +81,10 @@ class TableBody(html.Tbody):
 
 class TableHead(html.Thead):
     def __init__(self, columns):
-        super().__init__([
-            html.Tr([
-                html.Th(colTitle, className='border-gray-200') for colTitle in columns
-            ])
-        ])
+        row =  html.Tr([html.Th(title, className='border-gray-200') for title in columns])
+        super().__init__(row)
 
 class Table(html.Table):
-
     def __init__(self, df, thead, tbody, className=None):
         thead = thead(df.columns)
         tbody = tbody(df.values.tolist())
@@ -96,9 +93,12 @@ class Table(html.Table):
 def layout():
 
     df = pd.DataFrame.from_dict(data2Dict(TABLE_COLS, TABLE_DATA))
+    paginator = create_paginator(["Previous", 1, 2, 3, 4, 5, "Next"], 1, 25)
 
     return html.Div([
+        StoreAIO.container,
         Table(df, TableHead, TableBody, className='table table-hover'),
+        paginator
     ], className='card card-body border-0 shadow table-wrapper table-responsive')
 
 
