@@ -8,21 +8,7 @@ class Dict2Obj:
             for key, value in d.items():
                 setattr(self, key, value)
 
-class AIOBase:
-
-    components = {}
-
-    def __init__(self, id=None):
-        self.id = id if id else component_uuid()
-        AIOBase.components[self.id] = self
-
-    @staticmethod
-    def getAIOinstance(id):
-        return AIOBase.components[id]
-
-
-
-class TableAIO(html.Div, AIOBase):
+class TableAIO(html.Div):
 
     class ids:
         table = match({'component': 'TableAIO', 'subcomponent': 'table', 'idx': MATCH})
@@ -30,5 +16,4 @@ class TableAIO(html.Div, AIOBase):
 
 
     def __init__(self, aio_id=None):
-        AIOBase.__init__(self, aio_id)
         super().__init__(html.Div(id=self.id))
