@@ -10,4 +10,9 @@ logging.basicConfig(
     format='%(levelname)s %(module)10s/%(lineno)-5d %(message)s'
 )
 
+def set_level(level=None):
+    if level:
+        logging.basicConfig(level= level)
+
+
 log = logging.getLogger()
