@@ -1,3 +1,4 @@
+from holoniq.utils import log
 from typing import Callable, List
 from dash import html, dcc, callback, ALL
 from dash.exceptions import PreventUpdate
@@ -37,6 +38,8 @@ class ButtonContainerAIO(html.Div):
                   store.state.data)
         def update_container(clicks, data):
 
+            log.info('click')
+
             if not any(clicks):
                 raise PreventUpdate
 
@@ -48,6 +51,7 @@ class ButtonContainerAIO(html.Div):
             for index, element in enumerate(range_elements):
                 text = range_elements[index].id['idx']
                 if isTriggered(element.input.n_clicks):
+                    log.info('click %s', text)
                     data['current'] = text
                     children = range_element(text, True)
                 else:

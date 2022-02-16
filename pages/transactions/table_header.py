@@ -1,6 +1,7 @@
 from dash import html, dcc
 from dash_svg import Svg, Path
 from components.dropdown_aio import DropdownAIO
+from components.button_container_aoi import ButtonContainerAIO
 from icons.hero import TICK_ICON, GEAR_ICON
 
 def _searchOrders():
@@ -22,12 +23,22 @@ def _settingsDropdown():
        GEAR_ICON,html.Span("Toggle Dropdown", className='visually-hidden')
     ], className='btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-1')
 
-    container =  html.Div([
-        html.Span("Show", className='small ps-3 fw-bold text-dark'),
-        html.Div(["10", TICK_ICON], className='dropdown-item d-flex align-items-center fw-bold'),
-        html.Div("20", className='dropdown-item fw-bold'),
-        html.Div("30", className='dropdown-item fw-bold rounded-bottom')
-    ], className='dropdown-menu dropdown-menu-xs dropdown-menu-end pb-0')
+
+    def element_renderer(value, selected):
+        if selected:
+            element = html.Div([value, TICK_ICON], className = 'dropdown-item d-flex align-items-center fw-bold')
+        else:
+            element = html.Div([value], className = 'dropdown-item fw-bold')
+
+        if value == "30":
+            element.className += ' rounded-bottom'
+
+        return element
+
+    store = ButtonContainerAIO.createStore(["10", "20", "30"], "10")
+
+    container = ButtonContainerAIO(store, element_renderer, className='dropdown-menu dropdown-menu-xs dropdown-menu-end pb-0')
+    container.children[0:0] = [store, html.Span("Show", className='small ps-3 fw-bold text-dark')]
 
     dropdown = DropdownAIO(button, container)
 
