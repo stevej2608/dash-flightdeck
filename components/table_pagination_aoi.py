@@ -60,13 +60,15 @@ class TableAIOPaginator(html.Ul):
         pid = prefix(store.id)
 
         range_match = match({'type': pid('li'), 'idx': ALL})
+        data = Dict2Obj(store.data)
 
         def _range_element(text):
             rng = range_element(text)
             rng.id = range_match.idx(text)
+            if text == data.current:
+                rng.className += " active"
             return rng
 
-        data = Dict2Obj(store.data)
 
         range_elements = [_range_element(text) for text in data.range]
 
@@ -76,6 +78,9 @@ class TableAIOPaginator(html.Ul):
                   store.state.data,
                   range_match.state.className)
         def update_paginator(clicks, data, className):
+
+            if not any(clicks):
+                raise PreventUpdate
 
             # Set the selected element to active and update
             # store.data['current'] with the selected value

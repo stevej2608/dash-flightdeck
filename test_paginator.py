@@ -5,8 +5,8 @@ from server import serve_app
 from components.table_pagination_aoi import TableAIOPaginator, TableAIOPaginatorView
 
 
-def create_paginator():
-    store = TableAIOPaginator.createStore(["Previous", 1, 2, 3, 4, 5, "Next"], 5, 25)
+def create_paginator(range, current, max):
+    store = TableAIOPaginator.createStore(range, current, max)
 
     def range_element(value):
         return html.Li([html.Span(value, className='page-link')], className='page-item')
@@ -25,9 +25,9 @@ def create_paginator():
 
 
 def layout():
-    paginator1 = create_paginator()
-    paginator2 = create_paginator()
-    paginator3 = create_paginator()
+    paginator1 = create_paginator(["Previous", 1, 2, 3, 4, 5, "Next"], 1, 25)
+    paginator2 = create_paginator(["Begin", 1, 2, 3, 4, 5, "End"], 3, 20)
+    paginator3 = create_paginator(["Previous", 1, 2, 3, 4, 5, 6, 7, "Next"], 7, 50)
     return html.Div([paginator1, paginator2, paginator3])
 
 

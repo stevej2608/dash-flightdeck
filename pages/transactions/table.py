@@ -112,7 +112,7 @@ def create_paginator(range, current, max):
 def table():
     thead = _tableHead()
     tbody = _tableBody()
-    paginator = create_paginator(["Previous", 1, 2, 3, 4, 5, "Next"], 5, 25)
+    paginator = create_paginator(["Previous", 1, 2, 3, 4, 5, "Next"], 1, 25)
     return html.Div([
         html.Table([
             thead,
