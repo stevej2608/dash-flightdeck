@@ -1,15 +1,60 @@
-from dash import html
+from holoniq.utils import log
+from dash import html, dcc, callback
+from dash.exceptions import PreventUpdate
+import pandas as pd
+
 from app import create_app
 from server import serve_app
-import pandas as pd
+
+from dash_spa import prefix
 
 from components.store_aio import StoreAIO
 from components.dropdown_aio import DropdownAIO
 from components.button_container_aoi import ButtonContainerAIO
-from test_paginator import create_paginator
 
-from icons.hero import TICK_ICON, GEAR_ICON
-from pages.transactions.table_header import _searchOrders
+from components.table import TableAIOPaginator, TableAIOPaginatorView
+
+from icons.hero import TICK_ICON, GEAR_ICON, SEARCH_ICON
+
+
+class SearchAIO(html.Div):
+
+    def __init__(self, placeholder='Search...',  aio_id=None):
+
+        self.store = StoreAIO.create_store({'search': ''}, aio_id)
+        pid = prefix(self.store.id)
+
+        search = dcc.Input(id=pid('input'), type='text', className='form-control', placeholder=placeholder)
+
+        @callback(self.store.output.data, search.input.value)
+        def _cb(value=""):
+            log.info('value = [%s]', value)
+            return value
+
+
+        ui = html.Div([
+            html.Span(SEARCH_ICON, className='input-group-text'),
+            search
+        ], className='input-group me-2 me-lg-3 fmxw-400')
+
+        super().__init__(ui, className='col col-md-6 col-lg-3 col-xl-4')
+
+class TablePaginator(html.Div):
+
+    def __init__(self, range, current, max, className=None):
+
+        def range_element(value):
+            return html.Li([html.Span(value, className='page-link')], className='page-item')
+
+        paginator = TableAIOPaginator(range, current, max, range_element, className='pagination mb-0')
+
+        def content(current, max):
+            return ["Showing ",html.B(current)," out of ",html.B(max)," entries"]
+
+        viewer = TableAIOPaginatorView(paginator.store, content=content, className='fw-normal small mt-4 mt-lg-0' )
+
+        super().__init__([html.Nav(paginator), viewer], className=className)
+
 
 class TableSetting(html.Div):
 
@@ -91,19 +136,23 @@ class Table(html.Table):
         tbody = tbody(df[0:5].values.tolist())
         super().__init__([thead, tbody], className=className)
 
-def table():
-    df = pd.read_csv('data/subscriptions.csv')
-    paginator = create_paginator(["Previous", 1, 2, 3, 4, 5, "Next"], 1, 25)
+def table(df):
+
+    paginator = TablePaginator(
+        ["Previous", 1, 2, 3, 4, 5, "Next"], 1, 25,
+        className='card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between'
+        )
+
     return html.Div([
         Table(df, TableHead, TableBody, className='table table-hover'),
         paginator
     ], className='card card-body border-0 shadow table-wrapper table-responsive')
 
 
-def pageHeader(settingsDropdown):
+def pageHeader(search, settingsDropdown):
     return html.Div([
         html.Div([
-            _searchOrders(),
+            search,
             settingsDropdown,
         ], className='row align-items-center justify-content-between')
     ], className='table-settings mb-4')
@@ -111,14 +160,16 @@ def pageHeader(settingsDropdown):
 def layout():
 
     df = pd.read_csv('data/subscriptions.csv')
+
     settingsDropdown = TableSetting()
+    search = SearchAIO(placeholder='Search orders')
 
     return html.Div([
         StoreAIO.container,
         html.Main([
             html.Div(className='d-flex py-4'),
-            pageHeader(settingsDropdown),
-            table(),
+            pageHeader(search, settingsDropdown),
+            table(df),
         ], className='content')
     ])
 
