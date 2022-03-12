@@ -8,7 +8,7 @@ def test_prefix_id():
 
 def test_prefix_name():
     pfx = prefix(__name__)
-    assert pfx('btn') == 'tests_test_component_id_btn'
+    assert pfx('btn') == 'tests_dash_spa_test_component_id_btn'
 
 def test_prefix_default():
     pfx = prefix()
