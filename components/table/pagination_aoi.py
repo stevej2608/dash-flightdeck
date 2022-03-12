@@ -10,6 +10,10 @@ from .table_aio import Dict2Obj
 
 
 class TableAIOPaginator(html.Ul):
+    """Creates and manages a pagination UI AIO component. The supplied store
+    data range entries are are itterated, the range_element is called for each
+    value
+    """
 
     def __init__(self, range: List, current:str, max:str, range_element: Callable, className: str = None, aio_id=None):
         """Creates and manages a pagination UI AIO component. The supplied store
