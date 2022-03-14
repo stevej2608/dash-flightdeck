@@ -15,12 +15,15 @@ button = html.Button("Add Filter", id="add-filter-ex3", n_clicks=0)
 container = html.Div(id='container-ex3', children=[])
 app.layout = html.Div([button, container])
 
+# Define MATCH & ALLSMALLER factories for the filter components
+# and associated callbacks
 
-dynamic_dropdown = match({'type': 'filter-dropdown-ex3','index': MATCH })
-dynamic_output = match({'type': 'output-ex3','index': MATCH })
+filter_output_match = match({'type': 'output-ex3','index': MATCH })
+filter_dropdown_match = match({'type': 'filter-dropdown-ex3','index': MATCH })
+filter_dropdown_smaller = match({'type': 'filter-dropdown-ex3','index': ALLSMALLER })
 
 # Add initial and then additional filters in response to
-# use clicking the 'Add Filter' button
+# user clicking the 'Add Filter' button
 
 @app.callback(container.output.children,button.input.n_clicks, container.state.children)
 def display_dropdowns(n_clicks, existing_children):
@@ -29,27 +32,26 @@ def display_dropdowns(n_clicks, existing_children):
         dcc.Dropdown(
             df['country'].unique(),
             df['country'].unique()[n_clicks],
-            id=dynamic_dropdown.index(n_clicks)
+            id=filter_dropdown_match.index(n_clicks)
         ),
-        html.Div(id=dynamic_output.index(n_clicks))
+        html.Div(id=filter_output_match.index(n_clicks))
     ]))
     return existing_children
 
-
-# Following a filter selection by the user, this callback is
+# Following a filter dropdown selection by the user, this callback is
 # called repeatedly by Dash, starting with dropdown/div pair that is
 # at the bottom of the list and finishing with dropdown that
-# was selected for update by the user.
+# was selected by the user.
 #
-# On each indexed invocation, N, the callback's previous_values[] argument contains
-# the values of the ALLSMALLER dropdown fillters [0..N-1].
-
+# On each callback invocation, N, the callback's previous_values[] argument contains
+# the values of the ALLSMALLER dropdown fillters [0..N-1]. That is the filter
+# values starting with the top filter down to the filter N-1
 
 @app.callback(
-    dynamic_output.output.children,
-    dynamic_dropdown.input.value,
-    Input({'type': 'filter-dropdown-ex3', 'index': ALLSMALLER}, 'value'),
-    dynamic_output.state.id)
+    filter_output_match.output.children,
+    filter_dropdown_match.input.value,
+    filter_dropdown_smaller.input.value,
+    filter_output_match.state.id)
 def display_output(matching_value, previous_values, id):
     log.info('display_output %s, %s, %s', id['index'], matching_value, previous_values)
     previous_values_in_reversed_order = previous_values[::-1]
