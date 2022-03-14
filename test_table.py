@@ -19,17 +19,20 @@ from icons.hero import TICK_ICON, GEAR_ICON
 
 class TablePaginator(html.Div):
 
-    def __init__(self, range, current, max, className=None):
+    def __init__(self):
+        """Custom Paginator"""
 
         def range_element(value):
             return html.Li([html.Span(value, className='page-link')], className='page-item')
 
-        paginator = TableAIOPaginator(range, current, max, range_element, className='pagination mb-0')
+        paginator = TableAIOPaginator(["Previous", 1, 2, 3, 4, 5, "Next"], 1, 25, range_element, className='pagination mb-0')
 
         def content(current, max):
             return ["Showing ",html.B(current)," out of ",html.B(max)," entries"]
 
         viewer = TableAIOPaginatorView(paginator.store, content=content, className='fw-normal small mt-4 mt-lg-0' )
+
+        className='card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between'
 
         super().__init__([html.Nav(paginator), viewer], className=className)
 
@@ -56,6 +59,8 @@ class TableSetting(html.Div):
 
         container = ButtonContainerAIO(["10", "20", "30"], "10", element_renderer, className='dropdown-menu dropdown-menu-xs dropdown-menu-end pb-0')
         container.children[0:0] = [html.Span("Show", className='small ps-3 fw-bold text-dark')]
+
+        self.store = container.store
 
         dropdown = DropdownAIO(button, container)
 
@@ -141,12 +146,7 @@ class Table(html.Table):
 
         super().__init__([thead, tbody], className=className)
 
-def table(df, search: dcc.Store):
-
-    paginator = TablePaginator(
-        ["Previous", 1, 2, 3, 4, 5, "Next"], 1, 25,
-        className='card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between'
-        )
+def table(df, search: dcc.Store, paginator: TablePaginator):
 
     return html.Div([
         Table(df, TableHead, TableBody, search=search, className='table table-hover'),
@@ -168,13 +168,14 @@ def layout():
 
     settingsDropdown = TableSetting()
     search = SearchAIO(placeholder='Search orders')
+    paginator = TablePaginator()
 
     return html.Div([
         StoreAIO.container,
         html.Main([
             html.Div(className='d-flex py-4'),
             pageHeader(search, settingsDropdown),
-            table(df, search.store),
+            table(df, search.store, paginator),
         ], className='content')
     ])
 
