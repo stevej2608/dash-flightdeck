@@ -1,10 +1,11 @@
-from dash import dash_table
+from dash import html, dash_table
+from dash_spa import spa_table
 import pandas as pd
 from collections import OrderedDict
 
 from app import create_app
 from server import serve_app
-
+5
 # Dash Example
 # https://dash.plotly.com/datatable/height
 
@@ -22,12 +23,19 @@ df = pd.DataFrame(
     OrderedDict([(name, col_data * 10) for (name, col_data) in data.items()])
 )
 
-layout = dash_table.DataTable(
+layout1 = dash_table.DataTable(
+    data=df.to_dict('records'),
+    columns=[{'id': c, 'name': c} for c in df.columns],
+    page_size=10
+)
+
+layout2 = spa_table.DataTable(
     data=df.to_dict('records'),
     columns=[{'id': c, 'name': c} for c in df.columns],
     page_size=10
 )
 
 if __name__ == "__main__":
+    layout = html.Div([layout1, layout2])
     app = create_app(layout, plugins=[])
     serve_app(app, debug=False)
