@@ -1,8 +1,8 @@
 from holoniq.utils import log
-from dash import Dash, dcc, html, Input, Output, State, MATCH, ALLSMALLER
+from dash import Dash, dcc, html, MATCH, ALLSMALLER
 import pandas as pd
 
-from dash_spa import prefix, match
+from dash_spa import match
 from server import serve_app
 
 # https://dash.plotly.com/pattern-matching-callbacks#simple-example-with-allsmaller
