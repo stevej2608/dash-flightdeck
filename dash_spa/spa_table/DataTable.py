@@ -11,7 +11,8 @@ class DataTable(html.Div):
 
     def __init__(self, data: TableData, columns: TableColumns, page_size: int = None, id: str = None):
         self.pid = prefix(id)
-        table = self.table(data[0:page_size], columns)
+        self.page_size = page_size
+        table = self.table(data, columns)
         paginator = self.tablePaginator()
         table_container = self.tableContainer(table, paginator)
         super().__init__(table_container)
@@ -42,20 +43,21 @@ class DataTable(html.Div):
 
     def tableHead(self, columns: TableColumns):
         style = self.cellStyle()
-        row =  html.Tr([html.Th(col['name'], className="dash-header column-0 ", style=style) for col in columns])
+        row =  html.Tr([html.Th(col['name'], className="dash-header", style=style) for col in columns])
         return html.Thead(row)
 
-    def tableBody(self, rows):
-        return html.Tbody([self.tableRow(**args) for args in rows], id=self.pid('tbody'))
+    def tableBody(self, data: TableData):
+        row_data = data[0:self.page_size]
+        return html.Tbody([self.tableRow(**args) for args in row_data], id=self.pid('tbody'))
 
     def tableRow(self, Date, Region, Temperature, Humidity, Pressure):
         style = self.cellStyle()
         return html.Tr([
-            html.Td(html.A(Date, href='#'), className="dash-cell column-0", style=style),
-            html.Td(html.Span(Region), className="dash-cell column-0",style=style),
-            html.Td(html.Span(Temperature), className="dash-cell column-0", style=style),
-            html.Td(html.Span(Humidity), className="dash-cell column-0", style=style),
-            html.Td(html.Span(Pressure), className="dash-cell column-0", style=style)
+            html.Td(html.A(Date, href='#'), className="dash-cell", style=style),
+            html.Td(html.Span(Region), className="dash-cell",style=style),
+            html.Td(html.Span(Temperature), className="dash-cell", style=style),
+            html.Td(html.Span(Humidity), className="dash-cell", style=style),
+            html.Td(html.Span(Pressure), className="dash-cell", style=style)
         ])
 
     def tablePaginator(self):
