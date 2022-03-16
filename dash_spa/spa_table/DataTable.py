@@ -7,16 +7,16 @@ TableData = List[Dict[str, Any]]
 
 TableColumns = List[Dict[str, Any]]
 
-CELL_STYLE={"border-color": "rgb(211, 211, 211)", "border-style": "solid", "border-width": "1px"}
-
 class DataTable(html.Div):
 
     def __init__(self, data: TableData, columns: TableColumns, page_size: int = None, id: str = None):
-
         self.pid = prefix(id)
-
         table = self.table(data[0:page_size], columns)
+        paginator = self.tablePaginator()
+        table_container = self.tableContainer(table, paginator)
+        super().__init__(table_container)
 
+    def tableContainer(self, table, paginator):
         spreadsheet_inner = html.Div(table,
             className="dash-spreadsheet-inner dash-spreadsheet dash-empty-01 dash-no-filter dash-fill-width",
             style={'min-height': '100%', 'min-width': '100%'}
@@ -27,36 +27,35 @@ class DataTable(html.Div):
             style={"width": "100%"}
             )
 
-        paginator = self.tablePaginator()
-
         table_container = html.Div([spreadsheet_container, paginator],
             className="dash-table-container",
             style={"position": "relative"}
             )
 
-        super().__init__(table_container)
+        return table_container
 
     def table(self, data: TableData, columns: TableColumns, id=None, className='cell-table'):
         pid = prefix(id)
         thead = self.tableHead(columns)
         tbody = self.tableBody(data)
-
         return html.Table([thead, tbody], className=className)
 
     def tableHead(self, columns: TableColumns):
-        row =  html.Tr([html.Th(col['name'], className="dash-header column-0 ", style=CELL_STYLE) for col in columns])
+        style = self.cellStyle()
+        row =  html.Tr([html.Th(col['name'], className="dash-header column-0 ", style=style) for col in columns])
         return html.Thead(row)
 
     def tableBody(self, rows):
         return html.Tbody([self.tableRow(**args) for args in rows], id=self.pid('tbody'))
 
     def tableRow(self, Date, Region, Temperature, Humidity, Pressure):
+        style = self.cellStyle()
         return html.Tr([
-            html.Td(html.A(Date, href='#'), className="dash-cell column-0", style=CELL_STYLE),
-            html.Td(html.Span(Region), className="dash-cell column-0",style=CELL_STYLE),
-            html.Td(html.Span(Temperature), className="dash-cell column-0", style=CELL_STYLE),
-            html.Td(html.Span(Humidity), className="dash-cell column-0", style=CELL_STYLE),
-            html.Td(html.Span(Pressure), className="dash-cell column-0", style=CELL_STYLE)
+            html.Td(html.A(Date, href='#'), className="dash-cell column-0", style=style),
+            html.Td(html.Span(Region), className="dash-cell column-0",style=style),
+            html.Td(html.Span(Temperature), className="dash-cell column-0", style=style),
+            html.Td(html.Span(Humidity), className="dash-cell column-0", style=style),
+            html.Td(html.Span(Pressure), className="dash-cell column-0", style=style)
         ])
 
     def tablePaginator(self):
@@ -73,7 +72,6 @@ class DataTable(html.Div):
             lastPageButton
             ], className="previous-next-container")
 
-
     def pageNumber(self):
         style={'min-width': '4ch'}
         pageInput = dcc.Input(className='current-page', placeholder='1', style=style, type='text', value='')
@@ -85,3 +83,6 @@ class DataTable(html.Div):
             "/",
             html.Div("6", className='last-page', style=style)
         ], className='page-number')
+
+    def cellStyle(self):
+        return {"border-color": "rgb(211, 211, 211)", "border-style": "solid", "border-width": "1px"}
