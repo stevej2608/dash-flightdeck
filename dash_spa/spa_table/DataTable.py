@@ -1,5 +1,5 @@
 from typing import List, Dict, Any
-from dash import html
+from dash import html, dcc
 
 from dash_spa import prefix
 
@@ -27,7 +27,9 @@ class DataTable(html.Div):
             style={"width": "100%"}
             )
 
-        table_container = html.Div(spreadsheet_container,
+        paginator = self.tablePaginator()
+
+        table_container = html.Div([spreadsheet_container, paginator],
             className="dash-table-container",
             style={"position": "relative"}
             )
@@ -38,6 +40,7 @@ class DataTable(html.Div):
         pid = prefix(id)
         thead = self.tableHead(columns)
         tbody = self.tableBody(data)
+
         return html.Table([thead, tbody], className=className)
 
     def tableHead(self, columns: TableColumns):
@@ -55,3 +58,30 @@ class DataTable(html.Div):
             html.Td(html.Span(Humidity), className="dash-cell column-0", style=CELL_STYLE),
             html.Td(html.Span(Pressure), className="dash-cell column-0", style=CELL_STYLE)
         ])
+
+    def tablePaginator(self):
+        firstPageButton = html.Button(html.I(className="fas fa-angle-double-left"), className="first-page")
+        previousPageButton = html.Button(html.I(className="fas fa-angle-left"), className="previous-page")
+        nextPageButton = html.Button(html.I(className="fas fa-angle-right"), className="next-page")
+        lastPageButton = html.Button(html.I(className="fas fa-angle-double-right"), className="last-page")
+        pageNumber = self.pageNumber()
+        return html.Div([
+            firstPageButton,
+            previousPageButton,
+            pageNumber,
+            nextPageButton,
+            lastPageButton
+            ], className="previous-next-container")
+
+
+    def pageNumber(self):
+        style={'min-width': '4ch'}
+        pageInput = dcc.Input(className='current-page', placeholder='1', style=style, type='text', value='')
+        return html.Div([
+            html.Div([
+                html.Div("1", className='current-page-shadow', style=style),
+                pageInput,
+            ], className='current-page-container'),
+            "/",
+            html.Div("6", className='last-page', style=style)
+        ], className='page-number')
