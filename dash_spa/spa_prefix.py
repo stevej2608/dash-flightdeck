@@ -20,7 +20,11 @@ def isTriggered(component: DashDependency) -> bool:
     """
     ctx = callback_context
     if not ctx.triggered: return False
-    prop_id = f'{json.dumps(component.id, sort_keys=True, separators=(",", ":"))}.{component.component_property}'
+    if isinstance(component.id, dict):
+        prop_id = f'{json.dumps(component.id, sort_keys=True, separators=(",", ":"))}.{component.component_property}'
+    else:
+        prop_id = f'{component.id}.{component.component_property}'
+
     return ctx.triggered[0]['prop_id'] == prop_id
 
 
