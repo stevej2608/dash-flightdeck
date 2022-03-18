@@ -106,9 +106,9 @@ class DataTable(html.Div):
     def __init__(self, data: TableData, columns: TableColumns, page_size: int = None, id: str = None):
         self.pid = prefix(id)
         self.page_size = page_size
+        self.paginator = TablePaginator(len(data), self.page_size)
         table = self.table(data, columns)
-        paginator = TablePaginator(len(data), self.page_size)
-        table_container = self.tableContainer(table, paginator)
+        table_container = self.tableContainer(table, self.paginator)
         super().__init__(table_container)
 
     def tableContainer(self, table, paginator):
@@ -133,15 +133,25 @@ class DataTable(html.Div):
         pid = prefix(id)
         thead = self.tableHead(columns)
         tbody = self.tableBody(data)
-        return html.Table([thead, tbody], className=className)
+        table = html.Table([thead, tbody], className=className, id = self.pid('table'))
+
+        @callback(table.output.children, self.paginator.store.input.data)
+        def _update_cb(paginator):
+            page = paginator['current_page']
+            tbody = self.tableBody(data, page)
+            return [thead, tbody]
+
+        return table
 
     def tableHead(self, columns: TableColumns):
         style = self.cellStyle()
         row =  html.Tr([html.Th(col['name'], className="dash-header", style=style) for col in columns])
         return html.Thead(row)
 
-    def tableBody(self, data: TableData):
-        row_data = data[0:self.page_size]
+    def tableBody(self, data: TableData, page: int = 1):
+        low = (page -1) * self.page_size
+        high = (page) * self.page_size
+        row_data = data[low:high]
         return html.Tbody([self.tableRow(**args) for args in row_data], id=self.pid('tbody'))
 
     def tableRow(self, Date, Region, Temperature, Humidity, Pressure):
