@@ -30,15 +30,16 @@
       "request": "launch",
       "cwd": "${workspaceRoot}",
       // "program": "test_paginator.py",
-      //"program": "test_table_settings.py",
-      "program": "test_table.py",
+      // "program": "test_table_settings.py",
+      // "program": "test_table.py",
+      "program": "dash_tables_example.py",
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
       "env": {
         // "DASH_DEBUG": "1",
         // "FLASK_ENV": "test"
       },
-      "justMyCode": false,
+      "justMyCode": true,
       "serverReadyAction": {
         "pattern": ".*Visit http://(.*)",
         "uriFormat": "http://%s",

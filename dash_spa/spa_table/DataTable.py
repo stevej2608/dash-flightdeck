@@ -2,7 +2,7 @@ from typing import List, Dict, Any
 from dash import html, dcc, callback
 from dash.exceptions import PreventUpdate
 
-from dash_spa import prefix, isTriggered
+from dash_spa import prefix, isTriggered, NOUPDATE
 import math
 
 TableData = List[Dict[str, Any]]
@@ -11,82 +11,94 @@ TableColumns = List[Dict[str, Any]]
 class TablePaginator(html.Div):
 
     def __init__(self, rows: int, page_size: int, id: str = None):
-        self.pid = prefix(id)
-        self.page_size = page_size
-        self.pages =  int(math.ceil(rows / page_size))
-        self.store = dcc.Store(id=self.pid('store'), data={'current_page': 1})
-        paginator = self.tablePaginator()
-        super().__init__(paginator)
-
-
-    def tablePaginator(self):
+        pid = prefix(id)
 
         def Button(icon, className):
-            id = self.pid(className)
-            return html.Button(html.I(className=icon), className=className, id=id)
+            return html.Button(html.I(className=icon), className=className, id=pid(className))
+
+        self.page_size = page_size
+        self.pages =  int(math.ceil(rows / page_size))
+        self.store = dcc.Store(id=pid('store'), data={'current_page': 1})
 
         firstPage = Button("fas fa-angle-double-left","first-page")
         previousPage = Button("fas fa-angle-left","previous-page")
         nextPage = Button("fas fa-angle-right", "next-page")
         lastPage = Button("fas fa-angle-double-right", "last-page")
 
-        pageInput = self.input(id=self.pid('input'))
+        style = {'min-width': '4ch'}
+        pageInput = dcc.Input(className='current-page', placeholder='1', style=style, type='text', value='', id=pid('input'))
+        pageInputShadow = html.Div(1, className='current-page-shadow', style=style, id=pid('input-shadow'))
 
-        @callback(pageInput.output.value, self.store.output.data,
-                  pageInput.input.value,
-                  firstPage.input.n_clicks,previousPage.input.n_clicks,nextPage.input.n_clicks,lastPage.input.n_clicks,
-                  self.store.input.data
-                  )
-        def button_callback(input, firstPageButton, previousPageButton, nextPageButton, lastPageButton, data):
+        @callback(self.store.output.data,
+
+                  pageInputShadow.output.children,
+                  pageInput.output.placeholder,
+                  pageInput.output.value,
+
+                  firstPage.input.n_clicks,
+                  previousPage.input.n_clicks,
+                  nextPage.input.n_clicks,
+                  lastPage.input.n_clicks,
+
+                  pageInput.input.n_submit,
+
+                  pageInput.state.value,
+                  self.store.state.data)
+
+        def _paginator_cb(firstPageButton, previousPageButton, nextPageButton, lastPageButton, submit, value, data):
+            update = False
             page = data['current_page']
 
             if isTriggered(firstPage.input.n_clicks):
                 page = 1
-            elif isTriggered(previousPage.input.n_clicks):
+                update = True
+            elif isTriggered(previousPage.input.n_clicks) and page > 1:
                 page -= 1
-            elif isTriggered(nextPage.input.n_clicks):
+                update = True
+            elif isTriggered(nextPage.input.n_clicks) and page < self.pages:
                 page += 1
+                update = True
             elif isTriggered(lastPage.input.n_clicks):
                 page = self.pages
-            if isTriggered(pageInput.input.value):
+                update = True
+            if isTriggered(pageInput.input.n_submit):
                 try:
-                    input = int(input)
+                    update = True
+                    input = int(value)
                     if input > 0 and input <= self.pages:
                         page = input
                 except Exception:
                     pass
 
+            if not update:
+                raise PreventUpdate
+
             data['current_page'] = page
 
-            return page, data
+            return data, page, page, ""
 
-        return html.Div([
+
+        paginator = [
             self.store,
             firstPage,
             previousPage,
-            self.pageNumberLayout(pageInput),
+            self.pageNumberLayout(pageInput, pageInputShadow, style),
             nextPage,
             lastPage
-            ], className="previous-next-container")
+            ]
 
-    def pageNumberLayout(self, pageInput):
-        style = self.inputStyle()
+        super().__init__(paginator, className="previous-next-container")
+
+    def pageNumberLayout(self, pageInput, pageInputShadow, style):
         current_page = self.store.data['current_page']
         return html.Div([
             html.Div([
-                html.Div(current_page, className='current-page-shadow', style=style),
+                pageInputShadow,
                 pageInput,
             ], className='current-page-container'),
             "/",
             html.Div(self.pages, className='last-page', style=style)
         ], className='page-number')
-
-    def input(self, id):
-        style = self.inputStyle()
-        return dcc.Input(className='current-page', placeholder='1', style=style, type='text', value='', id=id)
-
-    def inputStyle(self):
-        return {'min-width': '4ch'}
 
 
 class DataTable(html.Div):
