@@ -2,7 +2,7 @@ from typing import List, Dict, Any
 from dash import html, dcc, callback
 from dash.exceptions import PreventUpdate
 
-from dash_spa import prefix, isTriggered, NOUPDATE
+from dash_spa import prefix, isTriggered, component_uuid
 import math
 
 TableData = List[Dict[str, Any]]
@@ -27,13 +27,17 @@ class TablePaginator(html.Div):
 
         style = {'min-width': '4ch'}
         pageInput = dcc.Input(className='current-page', placeholder='1', style=style, type='text', value='', id=pid('input'))
-        pageInputShadow = html.Div(1, className='current-page-shadow', style=style, id=pid('input-shadow'))
+        pageInputShadow = html.Div(1, className='current-page-shadow', style=style)
+
+        currentPageContainer =  html.Div([
+                pageInputShadow,
+                pageInput,
+            ], className='current-page-container', id=pid('current-page-container'))
 
         @callback(self.store.output.data,
 
-                  pageInputShadow.output.children,
-                  pageInput.output.placeholder,
-                  pageInput.output.value,
+                  currentPageContainer.output.children,
+                  currentPageContainer.output.key,
 
                   firstPage.input.n_clicks,
                   previousPage.input.n_clicks,
@@ -63,39 +67,49 @@ class TablePaginator(html.Div):
                 update = True
             if isTriggered(pageInput.input.n_submit):
                 try:
-                    update = True
                     input = int(value)
                     if input > 0 and input <= self.pages:
                         page = input
+                        update = True
                 except Exception:
                     pass
 
             if not update:
                 raise PreventUpdate
 
+            # Update the page value in the store
+
             data['current_page'] = page
 
-            return data, page, page, ""
+            # Update the input box and its shadow with the new value
+            children = [
+                dcc.Input(className='current-page', placeholder=page, style=style, type='text', value='', id=pid('input')),
+                html.Div(page, className='current-page-shadow', style=style)
+            ]
+
+            # Change the key value on the current-page-container. This is needed to
+            # force the child input box and shadow to be re-rendered and most importantly
+            # for the input box to blur (loose focus)
+
+            key = component_uuid()
+
+            return data, children, key
 
 
         paginator = [
             self.store,
             firstPage,
             previousPage,
-            self.pageNumberLayout(pageInput, pageInputShadow, style),
+            self.pageNumberLayout(currentPageContainer, style),
             nextPage,
             lastPage
             ]
 
         super().__init__(paginator, className="previous-next-container")
 
-    def pageNumberLayout(self, pageInput, pageInputShadow, style):
-        current_page = self.store.data['current_page']
+    def pageNumberLayout(self, currentPageContainer, style):
         return html.Div([
-            html.Div([
-                pageInputShadow,
-                pageInput,
-            ], className='current-page-container'),
+            currentPageContainer,
             "/",
             html.Div(self.pages, className='last-page', style=style)
         ], className='page-number')
