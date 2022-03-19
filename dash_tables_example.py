@@ -23,19 +23,23 @@ df = pd.DataFrame(
     OrderedDict([(name, col_data * 10) for (name, col_data) in data.items()])
 )
 
-layout1 = dash_table.DataTable(
+# Example using the Dash javascript DataTable component
+
+layout_dash = dash_table.DataTable(
     data=df.to_dict('records'),
     columns=[{'id': c, 'name': c} for c in df.columns],
     page_size=10
 )
 
-layout2 = spa_table.DataTable(
+# Example using the pure python  DataTable clone
+
+layout_spa = spa_table.DataTable(
     data=df.to_dict('records'),
     columns=[{'id': c, 'name': c} for c in df.columns],
     page_size=10
 )
 
 if __name__ == "__main__":
-    layout = html.Div([layout1, layout2])
+    layout = html.Div(layout_spa)
     app = create_app(layout, plugins=[])
     serve_app(app, debug=False)
