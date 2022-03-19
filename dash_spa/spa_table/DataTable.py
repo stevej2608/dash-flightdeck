@@ -164,7 +164,10 @@ class DataTable(html.Div):
 
     def tableBody(self, data: TableData, page: int = 1):
         low = (page -1) * self.page_size
+
         high = (page) * self.page_size
+        high = high if high < len(data) else len(data)
+
         row_data = data[low:high]
         return html.Tbody([self.tableRow(**args) for args in row_data], id=self.pid('tbody'))
 
