@@ -1,7 +1,7 @@
 from dash import html, dcc, callback
 from dash.exceptions import PreventUpdate
 
-from dash_spa import prefix, isTriggered, component_uuid
+from dash_spa import prefix, isTriggered, component_id
 import math
 
 class TablePaginator(html.Div):
@@ -107,7 +107,7 @@ class TablePaginator(html.Div):
             # force the child input box and shadow to be re-rendered and most importantly
             # for the input box to blur (loose focus)
 
-            key = component_uuid()
+            key = component_id()
 
             return data, children, key
 

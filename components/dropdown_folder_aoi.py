@@ -1,5 +1,5 @@
 from dash import html, dcc, callback, MATCH
-from dash_spa import match, component_uuid
+from dash_spa import match, component_id
 
 from icons.hero import ARROW_ICON
 
@@ -40,7 +40,7 @@ class DropdownFolderAIO(html.Div):
         """
 
         ids = DropdownFolderAIO.ids
-        aio_id = aio_id if aio_id else component_uuid()
+        aio_id = aio_id if aio_id else component_id()
 
         button = html.Span([
             html.Span([

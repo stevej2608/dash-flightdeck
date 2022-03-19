@@ -1,6 +1,6 @@
 from dash import html, callback, MATCH
 from dash.development.base_component import Component
-from dash_spa import match, component_uuid
+from dash_spa import match, component_id
 
 class Dict2Obj:
     def __init__(self, d=dict) -> object:

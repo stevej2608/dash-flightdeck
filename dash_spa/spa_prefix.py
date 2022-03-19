@@ -1,11 +1,12 @@
 from typing import Callable
 import re
 import json
-import uuid
 import dash
 from dash import callback_context, ALL, MATCH, ALLSMALLER
 from dash.development.base_component import Component
 from dash.dependencies import DashDependency, Input, Output, State
+
+from .component_id import component_id
 
 NOUPDATE = dash.no_update
 
@@ -110,11 +111,6 @@ def match(pattern: dict):
 
     return Matcher(pattern)
 
-def component_uuid() ->str:
-    """Return UUID converted for safe use as HTML element id"""
-    return f"i{str(uuid.uuid4()).replace('-', '_')}"
-
-
 def prefix(pfx:str = None) -> Callable[[str], str]:
     """Return a lambda that will prefix all component IDs with the
     given prefix. If no prefix is given one will be assigned
@@ -133,7 +129,7 @@ def prefix(pfx:str = None) -> Callable[[str], str]:
         assert re.search("^[a-zA-Z_]", pfx), "The dash component prefix must start with a letter or underscore"
         pfx = pfx.replace('.', '_')
     else:
-        pfx = component_uuid()
+        pfx = component_id()
 
     return lambda id=None : _prefix(pfx, id)
 

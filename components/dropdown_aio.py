@@ -2,7 +2,7 @@ import logging
 from dash import html, callback, MATCH
 from dash.development.base_component import Component
 import dash_holoniq_components as dhc
-from dash_spa import match, component_uuid
+from dash_spa import match, component_id
 
 class DropdownAIO(html.Div):
 
@@ -34,7 +34,7 @@ class DropdownAIO(html.Div):
     def __init__(self, button:Component, container:Component, aio_id=None):
 
         ids = DropdownAIO.ids
-        aio_id = aio_id if aio_id else component_uuid()
+        aio_id = aio_id if aio_id else component_id()
 
         # logging.info('DropdownAIO pid=%s', aio_id)
 
