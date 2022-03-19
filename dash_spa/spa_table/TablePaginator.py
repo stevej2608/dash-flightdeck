@@ -20,10 +20,14 @@ class TablePaginator(html.Div):
     def value(self):
         return self.store.input.data
 
+    @property
+    def page_size(self):
+        return self._page_size
+
     def __init__(self, rows: int, page_size: int, id: str = None):
         pid = prefix(id)
 
-        self.page_size = page_size
+        self._page_size = page_size
         self.pages =  int(math.ceil(rows / page_size))
         self.store = dcc.Store(id=pid('store'), data={'current_page': 1})
 
