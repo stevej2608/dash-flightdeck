@@ -11,7 +11,8 @@ class DataTable(html.Div):
 
     def __init__(self, data: TableData, columns: TableColumns, page_size: int = None, id: str = None):
         self.pid = prefix(id)
-        self.paginator = self.tablePaginator(len(data), page_size)
+
+        self.paginator = self.tablePaginator(len(data), page_size) if page_size else None
 
         table = self.table(data, columns)
         table_container = self.tableContainer(table, self.paginator)
@@ -41,11 +42,13 @@ class DataTable(html.Div):
         tbody = self.tableBody(data)
         table = html.Table([thead, tbody], className=className, id = self.pid('table'))
 
-        @callback(table.output.children, self.paginator.value)
-        def _update_cb(paginator):
-            page = paginator['current_page']
-            tbody = self.tableBody(data, page)
-            return [thead, tbody]
+        if self.paginator:
+
+            @callback(table.output.children, self.paginator.value)
+            def _update_cb(paginator):
+                page = paginator['current_page']
+                tbody = self.tableBody(data, page)
+                return [thead, tbody]
 
         return table
 
@@ -55,13 +58,14 @@ class DataTable(html.Div):
         return html.Thead(row)
 
     def tableBody(self, data: TableData, page: int = 1):
-        low = (page -1) * self.paginator.page_size
 
-        high = (page) * self.paginator.page_size
-        high = high if high < len(data) else len(data)
+        if self.paginator:
+            low = (page -1) * self.paginator.page_size
+            high = (page) * self.paginator.page_size
+            high = high if high < len(data) else len(data)
+            data = data[low:high]
 
-        row_data = data[low:high]
-        return html.Tbody([self.tableRow(args) for args in row_data], id=self.pid('tbody'))
+        return html.Tbody([self.tableRow(args) for args in data], id=self.pid('tbody'))
 
     def tableRow(self, args):
         style = self.cellStyle()
