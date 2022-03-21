@@ -16,7 +16,7 @@ def create_paginator(range, current, max):
     def content(current, max):
         return ["Showing ",html.B(current)," out of ",html.B(max)," entries"]
 
-    viewer = TableAIOPaginatorView(paginator.store, content=content, className='fw-normal small mt-4 mt-lg-0' )
+    viewer = TableAIOPaginatorView(paginator.store, render_content=content, className='fw-normal small mt-4 mt-lg-0' )
 
     return html.Div([
         html.Nav(paginator),

@@ -30,7 +30,7 @@ class TablePaginator(html.Div):
         def content(current, max):
             return ["Showing ",html.B(current)," out of ",html.B(max)," entries"]
 
-        viewer = TableAIOPaginatorView(paginator.store, content=content, className='fw-normal small mt-4 mt-lg-0' )
+        viewer = TableAIOPaginatorView(paginator.store, render_content=content, className='fw-normal small mt-4 mt-lg-0' )
 
         className='card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between'
 

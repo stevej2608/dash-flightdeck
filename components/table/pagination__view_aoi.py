@@ -1,13 +1,13 @@
-from typing import Callable
-from dash import html, dcc, callback
+from dash import html, callback
 from dash.exceptions import PreventUpdate
 from dash_spa import prefix
 
 from .table_aio import Dict2Obj
+from .pagination_aoi import TableAIOPaginator
 
 class TableAIOPaginatorView(html.Div):
 
-    def __init__(self, store: dcc.Store, content: Callable, className= None):
+    def __init__(self, paginator: TableAIOPaginator, className= None):
         """Manages and updates the view component of the associated
         TableAIOPaginator. The TableAIOPaginatorView callback is triggered when the
         store component value changes. The callback calls the supplied
@@ -15,33 +15,41 @@ class TableAIOPaginatorView(html.Div):
         element of the TableAIOPaginatorView
 
         Args:
-            store (dcc.Store): The store element that is updated by the paginator
-            content (Callable): Function used to update the component children
+            paginator (TableAIOPaginator): The associated paginator
             className (str): the className of the component
 
         Returns:
             html.Div: The view component
 
         Example:
+        ```
 
-            store = TableAIOPaginator.createStore(["Previous", 1, 2, 3, 4, 5, "Next"], 5, 25)
+            paginator = TableAIOPaginator(["Previous", 1, 2, 3, 4, 5, "Next"], 5, 25)
+            viewer = TableAIOPaginatorView(paginator, render_content, className='fw-normal small mt-4 mt-lg-0' )
+        ```
 
-            def content(current, max):
-                return ["Showing ",html.B(current)," out of ",html.B(max)," entries"]
+        Markup:
+        ```
+            <div class="fw-normal small mt-4 mt-lg-0">
+                Showing <b>4</b> out of <b>25</b> entries
+            </div>
+        ```
 
-            viewer = TableAIOPaginatorView(store, content, className='fw-normal small mt-4 mt-lg-0' )
 
         """
-        pid = prefix(store.id)
-        s = Dict2Obj(store.data)
+        pid = prefix(paginator.id)
+        s = Dict2Obj(paginator.store.data)
 
-        super().__init__(content(s.current, s.max), id=pid('TableAIOPaginatorView'), className=className)
+        super().__init__(self.render_content(s.current_page, s.max), id=pid('TableAIOPaginatorView'), className=className)
 
-        @callback(self.output.children, store.input.data)
+        @callback(self.output.children, paginator.value)
         def update_view(data):
 
             if data is not None:
                 s = Dict2Obj(data)
-                return content(s.current, s.max)
+                return self.render_content(s.current_page, s.max)
 
             raise PreventUpdate
+
+    def render_content(self, current, max):
+        return ["Showing ",html.B(current)," out of ",html.B(max)," entries"]
