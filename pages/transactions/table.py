@@ -92,10 +92,7 @@ def _tableBody():
 
 def create_paginator(range, current, max):
 
-    def range_element(value):
-        return html.Li([html.Span(value, className='page-link')], className='page-item')
-
-    paginator = TableAIOPaginator(range, current, max, range_element, className='pagination mb-0')
+    paginator = TableAIOPaginator(range, current, max, className='pagination mb-0')
     viewer = TableAIOPaginatorView(paginator, className='fw-normal small mt-4 mt-lg-0' )
 
     return html.Div([

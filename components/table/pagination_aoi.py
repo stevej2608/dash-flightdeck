@@ -1,4 +1,4 @@
-from typing import Callable, List
+from typing import List
 from dash import html, callback, ALL
 from dash.exceptions import PreventUpdate
 from dash_spa import match, prefix, isTriggered
@@ -16,9 +16,8 @@ class TableAIOPaginator(html.Ul):
 
     Args:
         range (List): Range of values to be displayed by TableAIOPaginator
-        current_page (str): The currently selected value
-        max (str): The maximum selectable value
-        range_element (Callable): Renders a range entry from the store
+        initial_page (int): The currently selected value
+        max_page (int): The maximum selectable value
         className (str, optional): The TableAIOPaginator className. Defaults to None.
         aio_id (_type_, optional): _description_. Defaults to None.
 
@@ -57,9 +56,9 @@ class TableAIOPaginator(html.Ul):
     def value(self):
         return self.store.input.data
 
-    def __init__(self, range: List, current_page:str, max:str, range_element: Callable, className: str = None, aio_id=None):
+    def __init__(self, range: List, initial_page:int, max_page:int, className: str = None, aio_id=None):
 
-        self.store = StoreAIO.create_store({'range': range, 'current_page': current_page, 'max': max}, aio_id)
+        self.store = StoreAIO.create_store({'range': range, 'current_page': initial_page, 'max': max_page}, aio_id)
 
         pid = prefix(self.store.id)
 
@@ -67,7 +66,7 @@ class TableAIOPaginator(html.Ul):
         data = Dict2Obj(self.store.data)
 
         def _range_element(text):
-            rng = range_element(text)
+            rng = self.range_element(text)
             rng.id = range_match.idx(text)
             if text == data.current_page:
                 rng.className += " active"
@@ -107,3 +106,6 @@ class TableAIOPaginator(html.Ul):
             return data, range_out
 
         super().__init__(range_elements, id=pid('TableAIOPaginator'), className=className)
+
+    def range_element(self, value):
+        return html.Li([html.Span(value, className='page-link')], className='page-item')

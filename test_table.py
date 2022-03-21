@@ -22,15 +22,9 @@ class TablePaginator(html.Div):
     def __init__(self):
         """Custom Paginator"""
 
-        def range_element(value):
-            return html.Li([html.Span(value, className='page-link')], className='page-item')
+        paginator = TableAIOPaginator(["Previous", 1, 2, 3, 4, 5, "Next"], 1, 25, className='pagination mb-0')
 
-        paginator = TableAIOPaginator(["Previous", 1, 2, 3, 4, 5, "Next"], 1, 25, range_element, className='pagination mb-0')
-
-        def content(current, max):
-            return ["Showing ",html.B(current)," out of ",html.B(max)," entries"]
-
-        viewer = TableAIOPaginatorView(paginator.store, render_content=content, className='fw-normal small mt-4 mt-lg-0' )
+        viewer = TableAIOPaginatorView(paginator.store, className='fw-normal small mt-4 mt-lg-0' )
 
         className='card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between'
 
