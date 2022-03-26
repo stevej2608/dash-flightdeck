@@ -15,22 +15,27 @@ class TestPaginator(TableAIOPaginator):
 def test_paginator1():
     paginator = TestPaginator(total_items=100)
     p = paginator.select(1)
-    assert ' '.join(p) == 'prev [1] 2 3 4 5 6 7 ... 19 20 NEXT'
+    assert ' '.join(p) == 'prev [1] 2 3 4 5 6 7 8 ... 19 20 NEXT'
 
 def test_paginator2():
     paginator = TestPaginator(total_items=100)
     p = paginator.select(2)
-    assert ' '.join(p) == 'PREV 1 [2] 3 4 5 6 7 ... 19 20 NEXT'
+    assert ' '.join(p) == 'PREV 1 [2] 3 4 5 6 7 8 ... 19 20 NEXT'
 
 def test_paginator4():
     paginator = TestPaginator(total_items=100)
     p = paginator.select(4)
-    assert ' '.join(p) == 'PREV 1 2 3 [4] 5 6 7 ... 19 20 NEXT'
+    assert ' '.join(p) == 'PREV 1 2 3 [4] 5 6 7 8 ... 19 20 NEXT'
 
 def test_paginator5():
     paginator = TestPaginator(total_items=100)
     p = paginator.select(5)
-    assert ' '.join(p) == 'PREV 1 2 ... 3 4 [5] 6 7 ... 19 20 NEXT'
+    assert ' '.join(p) == 'PREV 1 2 3 4 [5] 6 7 8 ... 19 20 NEXT'
+
+def test_paginator6():
+    paginator = TestPaginator(total_items=100)
+    p = paginator.select(6)
+    assert ' '.join(p) == 'PREV 1 2 ... 4 5 [6] 7 8 ... 19 20 NEXT'
 
 def test_paginator7():
     paginator = TestPaginator(total_items=100)
@@ -38,10 +43,7 @@ def test_paginator7():
     assert ' '.join(p) == 'PREV 1 2 ... 5 6 [7] 8 9 ... 19 20 NEXT'
 
     p = paginator.select(7, adjacents=3)
-    assert ' '.join(p) == 'PREV 1 2 ... 4 5 6 [7] 8 9 10 ... 19 20 NEXT'
-
-    p = paginator.select(7, adjacents=4)
-    assert ' '.join(p) == 'PREV 1 2 3 4 5 6 [7] 8 9 10 11 ... 19 20 NEXT'
+    assert ' '.join(p) == 'PREV 1 2 3 4 5 6 [7] 8 9 10 ... 19 20 NEXT'
 
 def test_paginator15():
     paginator = TestPaginator(total_items=100)

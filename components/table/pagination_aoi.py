@@ -112,11 +112,11 @@ class TableAIOPaginator(html.Ul):
 
             # Test to see if we're close to beginning. If so only hide later pages
 
-            if page < 1 + (adjacents * 2):
+            if page < 2 + (adjacents * 2):
 
                 # PREVIOUS 1 [2] 3 4 5 6 7 ... 19 20 NEXT
 
-                for i in range(1, 4 + (adjacents * 2)):
+                for i in range(1, 5 + (adjacents * 2)):
                     pagination += self.emit(i, i == page)
 
                 pagination += self.emit('...', disabled=True)
