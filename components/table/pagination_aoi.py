@@ -1,3 +1,4 @@
+from typing import List
 from holoniq.utils import log
 from math import ceil
 from dash import html, callback, ALL
@@ -6,12 +7,11 @@ from dash_spa import match, prefix
 from components.store_aio import StoreAIO
 
 
-
-# https://dash.plotly.com/all-in-one-components#example-2:-datatableaio---sharing-data-between-__init__-and-callback
-
+# Smart pagination algorithm, converted from PHP
+# see: https://stackoverflow.com/a/163825/489239
 
 class TableAIOPaginator(html.Ul):
-    """Ellipses pagination logic
+    """Ellipses pagination component
 
     Args:
         page (int, optional): The active page. Defaults to 1.
@@ -71,13 +71,15 @@ class TableAIOPaginator(html.Ul):
                 raise PreventUpdate
 
             # Set the selected element to active and update
-            # store.data['current_page'] with the selected value
+            # store.data['page'] with the selected value
 
             page = data['page']
 
             index = self.range_match.triggerIndex()
             if index is not None:
-                selection = children[index][0]['props']['children']
+
+                selection = self.selection(children[index])
+
                 if selection == 'Previous':
                     page -=1
                 elif selection == 'Next':
@@ -92,14 +94,37 @@ class TableAIOPaginator(html.Ul):
             raise PreventUpdate
 
 
-    def select(self, page, adjacents=2):
+    def selection(self, element: html.Li) -> str:
+        """Return the selected page|Previous|Next
+
+        Given the selected child element access and return the
+        selected page from the HTML markup
+
+        Args:
+            children (html.Li): Selected child element
+
+        Returns:
+            str: page|Previous|Next
+        """
+        return element[0]['props']['children']
+
+
+    def select(self, page:int, adjacents=2) -> List[html.Li]:
+        """Return pagination chiled elements for given active page
+
+        Args:
+            page (int): The currently selected (active) page
+            adjacents (int, optional): How many adjacent pages should be shown on each side. Defaults to 2.
+
+        Returns:
+            List[html.Li]: Pagination chiled elements
+        """
 
         pagination = []
         lastpage = self.lastpage
 
         def emit(page, active=False, disabled=False):
             element = self.emit(page, active, disabled)
-            element.page = page
             return [element]
 
         first_pages = emit(1) + emit(2)
@@ -109,7 +134,7 @@ class TableAIOPaginator(html.Ul):
 
         pagination += emit(self.PREVIOUS, disabled = page == 1)
 
-        # Determin Pages
+        # Determin pages & ellipses to include...
 
         # Test to see if we have enough pages to bother breaking it up
 
@@ -154,7 +179,6 @@ class TableAIOPaginator(html.Ul):
                 for i in range(lastpage - (2 + (adjacents * 2)), lastpage + 1):
                     pagination += emit(i, i == page)
 
-
         # Append the Next button
 
         pagination += emit(self.NEXT, disabled=(page == lastpage))
@@ -162,7 +186,7 @@ class TableAIOPaginator(html.Ul):
         if lastpage <= 1 :
             pagination = []
 
-        # List of element that we want to trigger a callback when clicked
+        # Create a list of element that we want to trigger a callback when clicked
 
         selectable = [e for e in pagination if not ('active' in e.className or 'dissabled' in e.className)]
 
@@ -171,7 +195,7 @@ class TableAIOPaginator(html.Ul):
 
         return pagination
 
-    def emit(self, page, active=False, disabled=False):
+    def emit(self, page: str, active=False, disabled=False) -> html.Li:
         element = html.Li([html.Span(page, className='page-link')], className='page-item')
         if disabled:
             log.info('Dissabled - [%s]', page)
