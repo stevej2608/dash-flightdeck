@@ -37,6 +37,9 @@ class TableAIOPaginator(html.Ul):
     ```
     """
 
+    PREVIOUS = 'Previous'
+    NEXT = 'Next'
+
     @property
     def state(self):
         return self.store.state.data
@@ -48,11 +51,10 @@ class TableAIOPaginator(html.Ul):
     def __init__(self, page = 1, adjacents = 2, page_size = 5, total_items=None, className: str = None, aio_id=None):
         pid = prefix(aio_id)
         self.range_match = match({'type': pid('li'), 'idx': ALL})
+        self.lastpage = ceil(total_items / page_size)
+        self.store = StoreAIO.create_store({'page': page, 'max': self.lastpage}, id=pid('store'))
 
-        lastpage = ceil(total_items / page_size)
-        self.store = StoreAIO.create_store({'page': page, 'max': lastpage}, id=pid('store'))
-
-        pagination = self.paginator(page, adjacents, lastpage)
+        pagination = self.select(page, adjacents)
 
         super().__init__(pagination, id=pid('TableAIOPaginator'), className=className)
 
@@ -82,22 +84,22 @@ class TableAIOPaginator(html.Ul):
                     page = selection
 
                 data['page'] = page
-                pagination = self.paginator(page, adjacents, lastpage)
+                pagination = self.select(page, adjacents)
                 return data, pagination
 
             raise PreventUpdate
 
 
-    def paginator(self, page, adjacents, lastpage):
+    def select(self, page, adjacents=2):
+        lastpage = self.lastpage
         first_pages = self.emit(1) + self.emit(2)
-        ellipsis = self.emit('...')
         last_pages = self.emit(lastpage - 1) + self.emit(lastpage)
 
         pagination = []
 
         # Previous button
 
-        pagination += self.emit('Previous', disabled = page == 1)
+        pagination += self.emit(self.PREVIOUS, disabled = page == 1)
 
         # Determin Pages
 
@@ -117,7 +119,7 @@ class TableAIOPaginator(html.Ul):
                 for i in range(1, 4 + (adjacents * 2)):
                     pagination += self.emit(i, i == page)
 
-                pagination += ellipsis
+                pagination += self.emit('...', disabled=True)
                 pagination += last_pages
 
             elif lastpage - (adjacents * 2) > page and page > (adjacents * 2):
@@ -126,12 +128,12 @@ class TableAIOPaginator(html.Ul):
                 # PREVIOUS 1 2 ... 5 6 [7] 8 9 ... 19 20 NEXT
 
                 pagination += first_pages
-                pagination += ellipsis
+                pagination += self.emit('...', disabled=True)
 
                 for i in range(page - adjacents, page + adjacents + 1):
                     pagination += self.emit(i, i == page)
 
-                pagination += ellipsis
+                pagination += self.emit('...', disabled=True)
                 pagination += last_pages
             else:
 
@@ -139,7 +141,7 @@ class TableAIOPaginator(html.Ul):
                 # PREVIOUS 1 2 ... 14 15 16 17 [18] 19 20 NEXT
 
                 pagination += first_pages
-                pagination += ellipsis
+                pagination += self.emit('...', disabled=True)
 
                 for i in range(lastpage - (2 + (adjacents * 2)), lastpage + 1):
                     pagination += self.emit(i, i == page)
@@ -147,7 +149,7 @@ class TableAIOPaginator(html.Ul):
 
         # Append the Next button
 
-        pagination += self.emit("Next", disabled=(page == lastpage))
+        pagination += self.emit(self.NEXT, disabled=(page == lastpage))
 
         if lastpage <= 1 :
             pagination = []

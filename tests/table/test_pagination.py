@@ -1,54 +1,77 @@
-from paginator import paginate
+from components.table import TableAIOPaginator
+
+class TestPaginator(TableAIOPaginator):
+
+    PREVIOUS = 'Prev'
+    NEXT = 'Next'
+
+    def emit(self, page, active=False, disabled=False):
+        markup = f"{page}".lower() if disabled else f"{page}".upper()
+        if active:
+            return [f"[{markup}]"]
+        else:
+            return [f"{markup}"]
 
 def test_paginator1():
-    p = paginate(1, total_items=100)
+    paginator = TestPaginator(total_items=100)
+    p = paginator.select(1)
     assert ' '.join(p) == 'prev [1] 2 3 4 5 6 7 ... 19 20 NEXT'
 
 def test_paginator2():
-    p = paginate(2, total_items=100)
+    paginator = TestPaginator(total_items=100)
+    p = paginator.select(2)
     assert ' '.join(p) == 'PREV 1 [2] 3 4 5 6 7 ... 19 20 NEXT'
 
 def test_paginator4():
-    p = paginate(4, total_items=100)
+    paginator = TestPaginator(total_items=100)
+    p = paginator.select(4)
     assert ' '.join(p) == 'PREV 1 2 3 [4] 5 6 7 ... 19 20 NEXT'
 
 def test_paginator5():
-    p = paginate(5, total_items=100)
+    paginator = TestPaginator(total_items=100)
+    p = paginator.select(5)
     assert ' '.join(p) == 'PREV 1 2 ... 3 4 [5] 6 7 ... 19 20 NEXT'
 
 def test_paginator7():
-    p = paginate(7, total_items=100)
+    paginator = TestPaginator(total_items=100)
+    p = paginator.select(7)
     assert ' '.join(p) == 'PREV 1 2 ... 5 6 [7] 8 9 ... 19 20 NEXT'
 
-    p = paginate(7, adjacents=3, total_items=100)
+    p = paginator.select(7, adjacents=3)
     assert ' '.join(p) == 'PREV 1 2 ... 4 5 6 [7] 8 9 10 ... 19 20 NEXT'
 
-    p = paginate(7, adjacents=4, total_items=100)
+    p = paginator.select(7, adjacents=4)
     assert ' '.join(p) == 'PREV 1 2 3 4 5 6 [7] 8 9 10 11 ... 19 20 NEXT'
 
 def test_paginator15():
-    p = paginate(15, total_items=100)
+    paginator = TestPaginator(total_items=100)
+    p = paginator.select(15)
     assert ' '.join(p) == 'PREV 1 2 ... 13 14 [15] 16 17 ... 19 20 NEXT'
 
 def test_paginator16():
-    p = paginate(16, total_items=100)
+    paginator = TestPaginator(total_items=100)
+    p = paginator.select(16)
     assert ' '.join(p) == 'PREV 1 2 ... 14 15 [16] 17 18 19 20 NEXT'
 
 def test_paginator19():
-    p = paginate(19, total_items=100)
+    paginator = TestPaginator(total_items=100)
+    p = paginator.select(19)
     assert ' '.join(p) == 'PREV 1 2 ... 14 15 16 17 18 [19] 20 NEXT'
 
 def test_paginator20():
-    p = paginate(20, total_items=100)
+    paginator = TestPaginator(total_items=100)
+    p = paginator.select(20)
     assert ' '.join(p) == 'PREV 1 2 ... 14 15 16 17 18 19 [20] next'
 
 def test_paginator_pages2():
-    p = paginate(1, total_items=10)
+    paginator = TestPaginator(total_items=10)
+    p = paginator.select(1)
     assert ' '.join(p) == 'prev [1] 2 NEXT'
 
-    p = paginate(2, total_items=10)
+    p = paginator.select(2)
     assert ' '.join(p) == 'PREV 1 [2] next'
 
 def test_paginator_pages1():
-    p = paginate(1, total_items=5)
+    paginator = TestPaginator(total_items=5)
+    p = paginator.select(1)
     assert ' '.join(p) == ''
