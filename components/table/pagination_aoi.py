@@ -1,7 +1,8 @@
+from holoniq.utils import log
 from math import ceil
 from dash import html, callback, ALL
 from dash.exceptions import PreventUpdate
-from dash_spa import match, prefix, isTriggered
+from dash_spa import match, prefix
 from components.store_aio import StoreAIO
 
 
@@ -62,9 +63,9 @@ class TableAIOPaginator(html.Ul):
         @callback(self.store.output.data,
                   self.output.children,
                   self.range_match.input.n_clicks,
-                  self.range_match.state.id,
+                  self.range_match.state.children,
                   self.store.state.data)
-        def update_cb(clicks, id, data):
+        def update_cb(clicks, children, data):
 
             if not any(clicks):
                 raise PreventUpdate
@@ -74,8 +75,9 @@ class TableAIOPaginator(html.Ul):
 
             page = data['page']
 
-            selection = self.range_match.triggerIndex()
-            if selection is not None:
+            index = self.range_match.triggerIndex()
+            if index is not None:
+                selection = children[index][0]['props']['children']
                 if selection == 'Previous':
                     page -=1
                 elif selection == 'Next':
@@ -91,15 +93,21 @@ class TableAIOPaginator(html.Ul):
 
 
     def select(self, page, adjacents=2):
-        lastpage = self.lastpage
-        first_pages = self.emit(1) + self.emit(2)
-        last_pages = self.emit(lastpage - 1) + self.emit(lastpage)
 
         pagination = []
+        lastpage = self.lastpage
+
+        def emit(page, active=False, disabled=False):
+            element = self.emit(page, active, disabled)
+            element.page = page
+            return [element]
+
+        first_pages = emit(1) + emit(2)
+        last_pages = emit(lastpage - 1) + emit(lastpage)
 
         # Previous button
 
-        pagination += self.emit(self.PREVIOUS, disabled = page == 1)
+        pagination += emit(self.PREVIOUS, disabled = page == 1)
 
         # Determin Pages
 
@@ -107,7 +115,7 @@ class TableAIOPaginator(html.Ul):
 
         if lastpage < 7 + (adjacents * 2):
             for i in range(1, lastpage+1):
-                pagination += self.emit(i, i == page)
+                pagination += emit(i, i == page)
         elif lastpage > 5 + (adjacents * 2):
 
             # Test to see if we're close to beginning. If so only hide later pages
@@ -117,9 +125,9 @@ class TableAIOPaginator(html.Ul):
                 # PREVIOUS 1 [2] 3 4 5 6 7 ... 19 20 NEXT
 
                 for i in range(1, 5 + (adjacents * 2)):
-                    pagination += self.emit(i, i == page)
+                    pagination += emit(i, i == page)
 
-                pagination += self.emit('...', disabled=True)
+                pagination += emit('...', disabled=True)
                 pagination += last_pages
 
             elif lastpage - (adjacents * 2) > page and page > (adjacents * 2):
@@ -128,12 +136,12 @@ class TableAIOPaginator(html.Ul):
                 # PREVIOUS 1 2 ... 5 6 [7] 8 9 ... 19 20 NEXT
 
                 pagination += first_pages
-                pagination += self.emit('...', disabled=True)
+                pagination += emit('...', disabled=True)
 
                 for i in range(page - adjacents, page + adjacents + 1):
-                    pagination += self.emit(i, i == page)
+                    pagination += emit(i, i == page)
 
-                pagination += self.emit('...', disabled=True)
+                pagination += emit('...', disabled=True)
                 pagination += last_pages
             else:
 
@@ -141,28 +149,34 @@ class TableAIOPaginator(html.Ul):
                 # PREVIOUS 1 2 ... 14 15 16 17 [18] 19 20 NEXT
 
                 pagination += first_pages
-                pagination += self.emit('...', disabled=True)
+                pagination += emit('...', disabled=True)
 
                 for i in range(lastpage - (2 + (adjacents * 2)), lastpage + 1):
-                    pagination += self.emit(i, i == page)
+                    pagination += emit(i, i == page)
 
 
         # Append the Next button
 
-        pagination += self.emit(self.NEXT, disabled=(page == lastpage))
+        pagination += emit(self.NEXT, disabled=(page == lastpage))
 
         if lastpage <= 1 :
             pagination = []
+
+        # List of element that we want to trigger a callback when clicked
+
+        selectable = [e for e in pagination if not ('active' in e.className or 'dissabled' in e.className)]
+
+        for idx, element in enumerate(selectable):
+            element.id = self.range_match.idx(idx)
 
         return pagination
 
     def emit(self, page, active=False, disabled=False):
         element = html.Li([html.Span(page, className='page-link')], className='page-item')
         if disabled:
-            element.disabled = True
-        else:
-            element.id = self.range_match.idx(page)
-            if active:
-                element.className += " active"
+            log.info('Dissabled - [%s]', page)
+            element.className += ' dissabled'
+        if active:
+            element.className += " active"
 
-        return [element]
+        return element
