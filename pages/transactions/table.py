@@ -90,9 +90,9 @@ def _tableBody():
     ])
 
 
-def create_paginator(range, current, max):
+def create_paginator(current, max):
 
-    paginator = TableAIOPaginator(range, current, max, className='pagination mb-0')
+    paginator = TableAIOPaginator(page=current, total_items=max, className='pagination mb-0')
     viewer = TableAIOPaginatorView(paginator, className='fw-normal small mt-4 mt-lg-0' )
 
     return html.Div([
@@ -104,7 +104,7 @@ def create_paginator(range, current, max):
 def table():
     thead = _tableHead()
     tbody = _tableBody()
-    paginator = create_paginator(["Previous", 1, 2, 3, 4, 5, "Next"], 1, 25)
+    paginator = create_paginator(1, 250)
     return html.Div([
         html.Table([
             thead,

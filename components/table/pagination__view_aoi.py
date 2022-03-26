@@ -40,16 +40,16 @@ class TableAIOPaginatorView(html.Div):
         pid = prefix(paginator.id)
         s = Dict2Obj(paginator.store.data)
 
-        super().__init__(self.render_content(s.current_page, s.max), id=pid('TableAIOPaginatorView'), className=className)
+        super().__init__(self.render_content(s.page, s.max), id=pid('TableAIOPaginatorView'), className=className)
 
         @callback(self.output.children, paginator.value)
         def update_view(data):
 
             if data is not None:
                 s = Dict2Obj(data)
-                return self.render_content(s.current_page, s.max)
+                return self.render_content(s.page, s.max)
 
             raise PreventUpdate
 
     def render_content(self, current, max):
-        return ["Showing ",html.B(current)," out of ",html.B(max)," entries"]
+        return ["Showing page ",html.B(current)," out of ",html.B(max)," pages"]

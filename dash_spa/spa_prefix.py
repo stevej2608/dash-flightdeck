@@ -21,6 +21,10 @@ def isTriggered(component: DashDependency) -> bool:
     """
     ctx = callback_context
     if not ctx.triggered: return False
+
+    if not 'id' in component:
+        return False
+
     if isinstance(component.id, dict):
         prop_id = f'{json.dumps(component.id, sort_keys=True, separators=(",", ":"))}.{component.component_property}'
     else:
@@ -96,6 +100,17 @@ def match(pattern: dict):
             id = self.pattern.copy()
             id[key] = value
             return id
+
+        def triggerIndex(self):
+            ctx = callback_context
+            if ctx.triggered:
+                id = ctx.triggered[0]['prop_id'].split('.')
+                pattern = json.loads(id[0])
+                for k,v in self.pattern.items():
+                    if v == ALL:
+                        return pattern[k]
+            return None
+
 
         @property
         def input(self) -> _Factory:

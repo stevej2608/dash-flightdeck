@@ -1,51 +1,40 @@
-from typing import List
+from math import ceil
 from dash import html, callback, ALL
 from dash.exceptions import PreventUpdate
 from dash_spa import match, prefix, isTriggered
 from components.store_aio import StoreAIO
 
-from .table_aio import Dict2Obj
+
 
 # https://dash.plotly.com/all-in-one-components#example-2:-datatableaio---sharing-data-between-__init__-and-callback
 
 
 class TableAIOPaginator(html.Ul):
-    """Creates and manages a pagination UI AIO component. The supplied store
-    data range entries are are itterated, the range_element is called for each
-    value
+    """Ellipses pagination logic
 
     Args:
-        range (List): Range of values to be displayed by TableAIOPaginator
-        initial_page (int): The currently selected value
-        max_page (int): The maximum selectable value
-        className (str, optional): The TableAIOPaginator className. Defaults to None.
-        aio_id (_type_, optional): _description_. Defaults to None.
-
-    Returns:
-        html.Ui: The range AOI component
+        page (int, optional): The active page. Defaults to 1.
+        adjacents (int, optional): How many adjacent pages should be shown on each side. Defaults to 2.
+        page_size (int, optional): How many items to show per page. Defaults to 5.
+        total_items (int): Total number of items to be grouped into pages
 
     Example:
 
-        store = TableAIOPaginator.createStore(["Previous", 1, 2, 3, 4, 5, "Next"], 5, 25)
-
-        def range_element(value):
-            return html.Li([html.Span(value, className='page-link')], className='page-item')
-
-        paginator = TableAIOPaginator(store, range_element, className='pagination mb-0')
-
-    Markup:
-    ```
-        <ul class="pagination mb-0" >
-            <li class="page-item"><span class="page-link">Previous</span></li>
-            <li class="page-item active""><span class="page-link">1</span></li>
-            <li class="page-item"><span class="page-link">2</span></li>
-            <li class="page-item"><span class="page-link">3</span></li>
-            <li class="page-item"><span class="page-link">4</span></li>
-            <li class="page-item"><span class="page-link">5</span></li>
-            <li class="page-item"><span class="page-link">Next</span></li>
-        </ul>
     ```
 
+            « previous [1] 2 3 4 5 6 7 ... 19 20 NEXT »
+            « PREVIOUS 1 [2] 3 4 5 6 7 ... 19 20 NEXT »
+            « PREVIOUS 1 2 [3] 4 5 6 7 ... 19 20 NEXT »
+            « PREVIOUS 1 2 3 [4] 5 6 7 ... 19 20 NEXT »
+            « PREVIOUS 1 2 ... 3 4 [5] 6 7 ... 19 20 NEXT »
+
+            « PREVIOUS 1 2 ... 13 14 [15] 16 17 ... 19 20 NEXT »
+            « PREVIOUS 1 2 ... 14 15 [16] 17 18 19 20 NEXT »
+
+            « PREVIOUS 1 2 ... 14 15 16 17 18 [19] 20 NEXT »
+            « PREVIOUS 1 2 ... 14 15 16 17 18 19 [20] next »
+
+    ```
     """
 
     @property
@@ -56,31 +45,24 @@ class TableAIOPaginator(html.Ul):
     def value(self):
         return self.store.input.data
 
-    def __init__(self, range: List, initial_page:int, max_page:int, className: str = None, aio_id=None):
+    def __init__(self, page = 1, adjacents = 2, page_size = 5, total_items=None, className: str = None, aio_id=None):
+        pid = prefix(aio_id)
+        self.range_match = match({'type': pid('li'), 'idx': ALL})
 
-        self.store = StoreAIO.create_store({'range': range, 'current_page': initial_page, 'max': max_page}, aio_id)
+        lastpage = ceil(total_items / page_size)
+        self.store = StoreAIO.create_store({'page': page, 'max': lastpage}, id=pid('store'))
 
-        pid = prefix(self.store.id)
+        pagination = self.paginator(page, adjacents, lastpage)
 
-        range_match = match({'type': pid('li'), 'idx': ALL})
-        data = Dict2Obj(self.store.data)
+        super().__init__(pagination, id=pid('TableAIOPaginator'), className=className)
 
-        def _range_element(text):
-            rng = self.range_element(text)
-            rng.id = range_match.idx(text)
-            if text == data.current_page:
-                rng.className += " active"
-            return rng
-
-
-        range_elements = [_range_element(text) for text in data.range]
 
         @callback(self.store.output.data,
-                  range_match.output.className,
-                  range_match.input.n_clicks,
-                  self.store.state.data,
-                  range_match.state.className)
-        def update_paginator(clicks, data, className):
+                  self.output.children,
+                  self.range_match.input.n_clicks,
+                  self.range_match.state.id,
+                  self.store.state.data)
+        def update_cb(clicks, id, data):
 
             if not any(clicks):
                 raise PreventUpdate
@@ -88,24 +70,97 @@ class TableAIOPaginator(html.Ul):
             # Set the selected element to active and update
             # store.data['current_page'] with the selected value
 
-            range_out = []
-            for index, range_element in enumerate(range_elements):
-                classNames = className[index].split()
+            page = data['page']
 
-                # Deactivate previously active
+            selection = self.range_match.triggerIndex()
+            if selection is not None:
+                if selection == 'Previous':
+                    page -=1
+                elif selection == 'Next':
+                    page += 1
+                else:
+                    page = selection
 
-                if 'active' in classNames:
-                    classNames.remove('active')
+                data['page'] = page
+                pagination = self.paginator(page, adjacents, lastpage)
+                return data, pagination
 
-                if isTriggered(range_element.input.n_clicks):
-                    classNames.append('active')
-                    data['current_page'] = range_elements[index].id['idx']
+            raise PreventUpdate
 
-                range_out.append(' '.join(classNames))
 
-            return data, range_out
+    def paginator(self, page, adjacents, lastpage):
+        first_pages = self.emit(1) + self.emit(2)
+        ellipsis = self.emit('...')
+        last_pages = self.emit(lastpage - 1) + self.emit(lastpage)
 
-        super().__init__(range_elements, id=pid('TableAIOPaginator'), className=className)
+        pagination = []
 
-    def range_element(self, value):
-        return html.Li([html.Span(value, className='page-link')], className='page-item')
+        # Previous button
+
+        pagination += self.emit('Previous', disabled = page == 1)
+
+        # Determin Pages
+
+        # Test to see if we have enough pages to bother breaking it up
+
+        if lastpage < 7 + (adjacents * 2):
+            for i in range(1, lastpage+1):
+                pagination += self.emit(i, i == page)
+        elif lastpage > 5 + (adjacents * 2):
+
+            # Test to see if we're close to beginning. If so only hide later pages
+
+            if page < 1 + (adjacents * 2):
+
+                # PREVIOUS 1 [2] 3 4 5 6 7 ... 19 20 NEXT
+
+                for i in range(1, 4 + (adjacents * 2)):
+                    pagination += self.emit(i, i == page)
+
+                pagination += ellipsis
+                pagination += last_pages
+
+            elif lastpage - (adjacents * 2) > page and page > (adjacents * 2):
+
+                # We're in the middle hide some front and some back
+                # PREVIOUS 1 2 ... 5 6 [7] 8 9 ... 19 20 NEXT
+
+                pagination += first_pages
+                pagination += ellipsis
+
+                for i in range(page - adjacents, page + adjacents + 1):
+                    pagination += self.emit(i, i == page)
+
+                pagination += ellipsis
+                pagination += last_pages
+            else:
+
+                # Must be close to end only hide early pages
+                # PREVIOUS 1 2 ... 14 15 16 17 [18] 19 20 NEXT
+
+                pagination += first_pages
+                pagination += ellipsis
+
+                for i in range(lastpage - (2 + (adjacents * 2)), lastpage + 1):
+                    pagination += self.emit(i, i == page)
+
+
+        # Append the Next button
+
+        pagination += self.emit("Next", disabled=(page == lastpage))
+
+        if lastpage <= 1 :
+            pagination = []
+
+        return pagination
+
+    def emit(self, page, active=False, disabled=False):
+        element = html.Li([html.Span(page, className='page-link')], className='page-item')
+        if disabled:
+            element.disabled = True
+        else:
+            element.id = self.range_match.idx(page)
+            if active:
+                element.className += " active"
+
+        return [element]
