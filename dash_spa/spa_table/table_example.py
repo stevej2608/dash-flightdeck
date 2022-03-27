@@ -39,6 +39,8 @@ layout_spa = spa_table.DataTable(
     page_size=10
 )
 
+# python -m dash_spa.spa_table.table_example
+
 if __name__ == "__main__":
     layout = html.Div(layout_spa)
     app = create_app(layout, plugins=[])

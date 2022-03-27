@@ -8,6 +8,10 @@ TableData = List[Dict[str, Any]]
 TableColumns = List[Dict[str, Any]]
 
 class DataTable(html.Div):
+    """Python clone of the Dash DataTable component.
+
+    See: https://dash.plotly.com/datatable
+    """
 
     def __init__(self, data: TableData, columns: TableColumns, page_size: int = None, id: str = None):
         self.pid = prefix(id)
