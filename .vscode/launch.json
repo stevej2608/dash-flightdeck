@@ -25,27 +25,37 @@
     },
 
     {
-      "name": "1b. test_table.py",
+      "name": "1b. table_example (SPA)",
       "type": "python",
       "request": "launch",
-      "cwd": "${workspaceRoot}",
-      // "program": "test_paginator.py",
-      // "program": "test_table_settings.py",
-      // "program": "test_table.py",
-      "program": "dash_tables_example.py",
+      "module": "dash_spa.spa_table.table_example",
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
-      "env": {
-        // "DASH_DEBUG": "1",
-        // "FLASK_ENV": "test"
-      },
-      "justMyCode": true,
+      "justMyCode": false,
       "serverReadyAction": {
         "pattern": ".*Visit http://(.*)",
         "uriFormat": "http://%s",
         "action": "openExternally"
       }
     },
+
+    {
+      "name": "1c. table_example",
+      "type": "python",
+      "request": "launch",
+      "module": "components.table.table_example",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "serverReadyAction": {
+        "pattern": ".*Visit http://(.*)",
+        "uriFormat": "http://%s",
+        "action": "openExternally"
+      }
+    },
+
+
+
 
    {
       "name": "2. Python: Current File",
@@ -62,7 +72,7 @@
       }
     },
     {
-      "name": "3. Python: Module",
+      "name": "3. Python: Current Module",
       "type": "python",
       "request": "launch",
       "module": "${command:extension.commandvariable.file.relativeDirDots}.${fileBasenameNoExtension}",

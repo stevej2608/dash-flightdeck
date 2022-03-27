@@ -2,7 +2,7 @@ from typing import List, Dict, Any
 from dash import html, callback
 
 from dash_spa import prefix
-from .TablePaginator import TablePaginator
+from .TablePaginator import TablePaginator, PaginationState
 
 TableData = List[Dict[str, Any]]
 TableColumns = List[Dict[str, Any]]
@@ -18,7 +18,7 @@ class DataTable(html.Div):
 
         self.paginator = self.tablePaginator(len(data), page_size) if page_size else None
 
-        table = self.table(data, columns)
+        table = self.table(data, columns, page_size=page_size)
         table_container = self.tableContainer(table, self.paginator)
 
         super().__init__(table_container)
@@ -41,17 +41,17 @@ class DataTable(html.Div):
 
         return table_container
 
-    def table(self, data: TableData, columns: TableColumns, className='cell-table'):
+    def table(self, data: TableData, columns: TableColumns, page_size: int, className='cell-table'):
         thead = self.tableHead(columns)
-        tbody = self.tableBody(data)
+        tbody = self.tableBody(data, page_size=page_size)
         table = html.Table([thead, tbody], className=className, id = self.pid('table'))
 
         if self.paginator:
 
             @callback(table.output.children, self.paginator.value)
             def _update_cb(paginator):
-                page = paginator['current_page']
-                tbody = self.tableBody(data, page)
+                opt = PaginationState(paginator)
+                tbody = self.tableBody(data, opt.page, opt.page_size)
                 return [thead, tbody]
 
         return table
@@ -61,11 +61,11 @@ class DataTable(html.Div):
         row =  html.Tr([html.Th(col['name'], className="dash-header", style=style) for col in columns])
         return html.Thead(row)
 
-    def tableBody(self, data: TableData, page: int = 1):
+    def tableBody(self, data: TableData, page: int = 1, page_size: int = 10):
 
         if self.paginator:
-            low = (page -1) * self.paginator.page_size
-            high = (page) * self.paginator.page_size
+            low = (page -1) * page_size
+            high = (page) * page_size
             high = high if high < len(data) else len(data)
             data = data[low:high]
 

@@ -4,6 +4,30 @@ from dash.exceptions import PreventUpdate
 from dash_spa import prefix, isTriggered, component_id
 import math
 
+class PaginationState:
+    """Paginator status
+
+    Stored Values:
+        page (int): Current page value
+        page_size (int): Page size
+
+    """
+
+    def __init__(self, data:dict):
+        self.__dict__['data'] = data
+
+    def __getattr__(self, name):
+        if name in self.data:
+            return self.data[name]
+        raise AttributeError(f"Store has no attribute '{name}'")
+
+    def __setattr__(self, name, value):
+        if name in self.data:
+            self.data[name] = value
+        else:
+            raise AttributeError(f"Store has no attribute '{name}'")
+
+
 class TablePaginator(html.Div):
     """Classic Table Paginator
 
@@ -29,7 +53,7 @@ class TablePaginator(html.Div):
 
         self._page_size = page_size
         self.pages =  int(math.ceil(rows / page_size))
-        self.store = dcc.Store(id=pid('store'), data={'current_page': 1})
+        self.store = dcc.Store(id=pid('store'), data={'page': 1, 'page_size': page_size})
 
         # Create up/down buttons
 
@@ -69,7 +93,7 @@ class TablePaginator(html.Div):
 
         def _paginator_cb(firstPageButton, previousPageButton, nextPageButton, lastPageButton, submit, value, data):
             update = False
-            page = data['current_page']
+            page = data['page']
 
             if isTriggered(firstPage.input.n_clicks):
                 page = 1
@@ -97,7 +121,7 @@ class TablePaginator(html.Div):
 
             # Update the page value in the store
 
-            data['current_page'] = page
+            data['page'] = page
 
             # Update the input box & shadow with the new value
 
