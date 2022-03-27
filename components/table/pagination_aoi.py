@@ -110,7 +110,7 @@ class TableAIOPaginator(html.Ul):
 
 
     def select(self, page:int, adjacents=2) -> List[html.Li]:
-        """Return pagination chiled elements for given active page
+        """Return pagination child UI elements for given active page
 
         Args:
             page (int): The currently selected (active) page
@@ -147,7 +147,7 @@ class TableAIOPaginator(html.Ul):
 
             if page < 2 + (adjacents * 2):
 
-                # PREVIOUS 1 [2] 3 4 5 6 7 ... 19 20 NEXT
+                # eg, PREVIOUS 1 [2] 3 4 5 6 7 ... 19 20 NEXT
 
                 for i in range(1, 5 + (adjacents * 2)):
                     pagination += emit(i, i == page)
@@ -155,10 +155,10 @@ class TableAIOPaginator(html.Ul):
                 pagination += emit('...', disabled=True)
                 pagination += last_pages
 
-            elif lastpage - (adjacents * 2) > page and page > (adjacents * 2):
+            elif page < lastpage - (1 + adjacents * 2):
 
                 # We're in the middle hide some front and some back
-                # PREVIOUS 1 2 ... 5 6 [7] 8 9 ... 19 20 NEXT
+                # eg, PREVIOUS 1 2 ... 5 6 [7] 8 9 ... 19 20 NEXT
 
                 pagination += first_pages
                 pagination += emit('...', disabled=True)
@@ -171,12 +171,12 @@ class TableAIOPaginator(html.Ul):
             else:
 
                 # Must be close to end only hide early pages
-                # PREVIOUS 1 2 ... 14 15 16 17 [18] 19 20 NEXT
+                # eg, PREVIOUS 1 2 ... 14 15 16 17 [18] 19 20 NEXT
 
                 pagination += first_pages
                 pagination += emit('...', disabled=True)
 
-                for i in range(lastpage - (2 + (adjacents * 2)), lastpage + 1):
+                for i in range(lastpage - (3 + (adjacents * 2)), lastpage + 1):
                     pagination += emit(i, i == page)
 
         # Append the Next button
@@ -186,7 +186,8 @@ class TableAIOPaginator(html.Ul):
         if lastpage <= 1 :
             pagination = []
 
-        # Create a list of element that we want to trigger a callback when clicked
+        # Create a list of elements that we want to trigger a callback when
+        # clicked.
 
         selectable = [e for e in pagination if not ('active' in e.className or 'dissabled' in e.className)]
 
@@ -196,11 +197,20 @@ class TableAIOPaginator(html.Ul):
         return pagination
 
     def emit(self, page: str, active=False, disabled=False) -> html.Li:
+        """Return the html.Li markup for given page
+
+        Args:
+            page (str): The page number | Prev | Next | ellipses
+            active (bool, optional): True if the page is the active page. Defaults to False.
+            disabled (bool, optional): True of the page is not clickable. Defaults to False.
+
+        Returns:
+            html.Li: _description_
+        """
         element = html.Li([html.Span(page, className='page-link')], className='page-item')
         if disabled:
-            log.info('Dissabled - [%s]', page)
             element.className += ' dissabled'
         if active:
-            element.className += " active"
+            element.className += ' active'
 
         return element
