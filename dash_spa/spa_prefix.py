@@ -22,7 +22,7 @@ def isTriggered(component: DashDependency) -> bool:
     ctx = callback_context
     if not ctx.triggered: return False
 
-    if not 'id' in component:
+    if not hasattr(component,'id'):
         return False
 
     if isinstance(component.id, dict):

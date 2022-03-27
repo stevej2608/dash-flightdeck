@@ -1,5 +1,4 @@
 from typing import List
-from holoniq.utils import log
 from math import ceil
 from dash import html, callback, ALL
 from dash.exceptions import PreventUpdate
@@ -50,12 +49,29 @@ class TableAIOPaginator(html.Ul):
         return self.store.input.data
 
     def __init__(self, page = 1, adjacents = 2, page_size = 5, total_items=None, className: str = None, aio_id=None):
+
+
+        def select(page:int, adjacents=2):
+
+            pagination = self.select(page, adjacents)
+
+            # Create a list of elements that we want to trigger a callback when
+            # clicked.
+
+            selectable = [e for e in pagination if not ('active' in e.className or 'dissabled' in e.className)]
+
+            for idx, element in enumerate(selectable):
+                element.id = self.range_match.idx(idx)
+
+            return selectable
+
+
         pid = prefix(aio_id)
         self.range_match = match({'type': pid('li'), 'idx': ALL})
         self.lastpage = ceil(total_items / page_size)
         self.store = StoreAIO.create_store({'page': page, 'max': self.lastpage}, id=pid('store'))
 
-        pagination = self.select(page, adjacents)
+        pagination = self.selectable(page, adjacents)
 
         super().__init__(pagination, id=pid('TableAIOPaginator'), className=className)
 
@@ -88,7 +104,7 @@ class TableAIOPaginator(html.Ul):
                     page = selection
 
                 data['page'] = page
-                pagination = self.select(page, adjacents)
+                pagination = self.selectable(page, adjacents)
                 return data, pagination
 
             raise PreventUpdate
@@ -108,6 +124,29 @@ class TableAIOPaginator(html.Ul):
         """
         return element[0]['props']['children']
 
+
+    def selectable(self, page:int, adjacents=2) -> List[html.Li]:
+        """Create a list of elements that we want to trigger a callback when clicked
+
+        Args:
+            page (int): The currently selected (active) page
+            adjacents (int, optional): How many adjacent pages should be shown on each side. Defaults to 2.
+
+        Returns:
+            List[html.Li]: Pagination chiled elements
+        """
+
+        pagination = self.select(page, adjacents)
+
+        # Create a list of elements that we want to trigger a callback when
+        # clicked.
+
+        selectable = [e for e in pagination if not ('active' in e.className or 'dissabled' in e.className)]
+
+        for idx, element in enumerate(selectable):
+            element.id = self.range_match.idx(idx)
+
+        return selectable
 
     def select(self, page:int, adjacents=2) -> List[html.Li]:
         """Return pagination child UI elements for given active page
@@ -185,14 +224,6 @@ class TableAIOPaginator(html.Ul):
 
         if lastpage <= 1 :
             pagination = []
-
-        # Create a list of elements that we want to trigger a callback when
-        # clicked.
-
-        selectable = [e for e in pagination if not ('active' in e.className or 'dissabled' in e.className)]
-
-        for idx, element in enumerate(selectable):
-            element.id = self.range_match.idx(idx)
 
         return pagination
 
