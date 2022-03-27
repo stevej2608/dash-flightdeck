@@ -50,22 +50,6 @@ class TableAIOPaginator(html.Ul):
 
     def __init__(self, page = 1, adjacents = 2, page_size = 5, total_items=None, className: str = None, aio_id=None):
 
-
-        def select(page:int, adjacents=2):
-
-            pagination = self.select(page, adjacents)
-
-            # Create a list of elements that we want to trigger a callback when
-            # clicked.
-
-            selectable = [e for e in pagination if not ('active' in e.className or 'dissabled' in e.className)]
-
-            for idx, element in enumerate(selectable):
-                element.id = self.range_match.idx(idx)
-
-            return selectable
-
-
         pid = prefix(aio_id)
         self.range_match = match({'type': pid('li'), 'idx': ALL})
         self.lastpage = ceil(total_items / page_size)
@@ -126,14 +110,16 @@ class TableAIOPaginator(html.Ul):
 
 
     def selectable(self, page:int, adjacents=2) -> List[html.Li]:
-        """Create a list of elements that we want to trigger a callback when clicked
+        """Return pagination child UI elements for given active page. Add
+        Dash callback IDs to the child elements that we want to trigger a
+        callback when clicked
 
         Args:
             page (int): The currently selected (active) page
             adjacents (int, optional): How many adjacent pages should be shown on each side. Defaults to 2.
 
         Returns:
-            List[html.Li]: Pagination chiled elements
+            List[html.Li]: Pagination child elements
         """
 
         pagination = self.select(page, adjacents)
@@ -146,7 +132,7 @@ class TableAIOPaginator(html.Ul):
         for idx, element in enumerate(selectable):
             element.id = self.range_match.idx(idx)
 
-        return selectable
+        return pagination
 
     def select(self, page:int, adjacents=2) -> List[html.Li]:
         """Return pagination child UI elements for given active page
@@ -156,7 +142,7 @@ class TableAIOPaginator(html.Ul):
             adjacents (int, optional): How many adjacent pages should be shown on each side. Defaults to 2.
 
         Returns:
-            List[html.Li]: Pagination chiled elements
+            List[html.Li]: Pagination child elements
         """
 
         pagination = []

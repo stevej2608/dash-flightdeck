@@ -135,6 +135,15 @@ def prefix(pfx:str = None) -> Callable[[str], str]:
 
     Returns:
          ((str) -> str)
+
+
+    Example:
+
+    ```
+        pid = prefix('test-page')
+
+        btn = html.Button('Hello, id=pid('hello-btn'))
+    ```
     """
 
     def _prefix(pfx, id):
