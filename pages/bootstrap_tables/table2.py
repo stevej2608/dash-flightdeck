@@ -1,17 +1,19 @@
+from collections import OrderedDict
 import pandas as pd
-from dash import html, dcc
+from dash import html
 from dash_svg import Svg, Path
+from components.table import TableAIO
 
-TABLE_COLS = ["Country", "All", "All Change", "Travel & Local", "Travel & Local Change", "Widgets", "Widgets Change"]
+data = OrderedDict([
 
-TABLE_DATA = [
-    "United States,  106, 5, 	3,	=, 32, 3",
-    "Canada,         76,  17,   4,  =, 30, 3",
-    "United Kingdom, 147, 10,	5,	=, 34, 7",
-    "France,	     112, 3, 	5,  1, 34, 2",
-    "Japan,	         115, 12,	6,  1, 37, 5",
-    "Germany,	     220, 56,	7,  3, 30, 2"
-]
+    ('Country',['United States', 'Canada', 'United Kingdom', 'France', 'Japan', 'Germany']),
+    ('All',['106', '76', '147', '112', '115', '220']),
+    ('All Change',['5', '17', '10', '3', '12', '56']),
+    ('Travel & Local',['3', '4', '5', '5', '6', '7']),
+    ('Travel & Local Change',['=', '=', '=', '1', '1', '3']),
+    ('Widgets',['32', '30', '34', '34', '37', '30']),
+    ('Widgets Change',['3', '3', '7', '2', '5', '2']),
+    ])
 
 FLAGS = {
     "United States": '../../assets/img/flags/united-states-of-america.svg',
@@ -31,22 +33,7 @@ DOWN_ICON = Svg([
     ], className='icon icon-xs me-1', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
 
 
-def data2Dict():
-
-    # Convert TABLE_DATA CSV into dict of dicts. The returned primary dict has
-    # an entry for each column who's values are the row values for the column
-    # indexed on row number
-
-    data = {}
-    for col in TABLE_COLS: data[col] = {}
-
-    for irow, row in enumerate(TABLE_DATA):
-        for icol, value in enumerate(row.split(',')):
-            colName = TABLE_COLS[icol]
-            data[colName][irow] = value.strip()
-    return data
-
-df = pd.DataFrame.from_dict(data2Dict())
+df = pd.DataFrame.from_dict(data)
 
 def numberAndArrow(value):
 
@@ -64,58 +51,54 @@ def numberAndArrow(value):
         ], className='d-flex align-items-center')
     ], className=text_colour)
 
-def _tableHead():
-    return html.Thead([
-        html.Tr([
-            html.Th(df.columns[0], className='border-0 rounded-start'),
-            html.Th(df.columns[1], className='border-0'),
-            html.Th(df.columns[2], className='border-0'),
-            html.Th(df.columns[3], className='border-0'),
-            html.Th(df.columns[4], className='border-0'),
-            html.Th(df.columns[5], className='border-0'),
-            html.Th(df.columns[6], className='border-0 rounded-end')
+
+class TravelTable(TableAIO):
+
+    TABLE_CLASS_NAME = 'table table-centered table-nowrap mb-0 rounded'
+
+    def tableHead(self, columns):
+
+        names = [col['name'] for col in columns]
+
+        beg = html.Th(names[0], className='border-0 rounded-start')
+        mid = [html.Th(name, className='border-gray-200') for name in names[1:-1]]
+        end = html.Th(names[-1], className='border-0 rounded-end')
+
+        row = html.Tr([beg] + mid +[end])
+
+        return html.Thead(row, className='thead-light')
+
+    def tableRow(self, args):
+
+        country, all, change, tal, talCh, widgets, widgetsCh = args.values()
+
+        return  html.Tr([
+            html.Td([
+                html.A([
+                    html.Img(className='me-2 image image-small rounded-circle', alt='Image placeholder', src=FLAGS[country]),
+                    html.Div([
+                        html.Span(country, className='h6')
+                    ])
+                ], href='#', className='d-flex align-items-center')
+            ], className='border-0'),
+            html.Td(all, className='border-0 fw-bold'),
+            numberAndArrow(change),
+            html.Td(tal, className='border-0 fw-bold'),
+            numberAndArrow(talCh),
+            html.Td(widgets, className='border-0'),
+            numberAndArrow(widgetsCh),
+
         ])
-    ], className='thead-light')
-
-
-def _tableRow(country, all, change, tal, talCh, widgets, widgetsCh):
-    return  html.Tr([
-        html.Td([
-            html.A([
-                html.Img(className='me-2 image image-small rounded-circle', alt='Image placeholder', src=FLAGS[country]),
-                html.Div([
-                    html.Span(country, className='h6')
-                ])
-            ], href='#', className='d-flex align-items-center')
-        ], className='border-0'),
-        html.Td(all, className='border-0 fw-bold'),
-        numberAndArrow(change),
-        html.Td(tal, className='border-0 fw-bold'),
-        numberAndArrow(talCh),
-        html.Td(widgets, className='border-0'),
-        html.Td("32", className='border-0 fw-bold'),
-        numberAndArrow(widgetsCh),
-
-    ])
-
-
-def _tableBody():
-    rows = df.values.tolist()
-    return html.Tbody([
-        _tableRow(*args) for args in rows
-    ])
 
 
 def table2():
-    thead = _tableHead()
-    tbody = _tableBody()
+
+    table = TravelTable(
+    data=df.to_dict('records'),
+    columns=[{'id': c, 'name': c} for c in df.columns])
+
     return html.Div([
         html.Div([
-            html.Div([
-                html.Table([
-                    thead,
-                    tbody,
-                ], className='table table-centered table-nowrap mb-0 rounded')
-            ], className='table-responsive')
+            html.Div(table, className='table-responsive')
         ], className='card-body')
     ], className='card border-0 shadow')

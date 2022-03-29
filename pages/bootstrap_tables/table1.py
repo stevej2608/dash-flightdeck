@@ -1,6 +1,8 @@
+from collections import OrderedDict
 import pandas as pd
 from dash import html
 from dash_svg import Svg, Path
+from components.table import TableAIO
 
 EARTH_ICON =  Svg([
         Path(fillRule='evenodd', d='M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z', clipRule='evenodd')
@@ -39,35 +41,18 @@ icons = {
 }
 
 
-TABLE_COLS = ["#", "Traffic Source", "Source Type", "Category", " Global Rank", "Traffic Share", "Change"]
+data = OrderedDict([
+    ('#',['1', '2', '3', '4', '5']),
+    ('Traffic Source',['Direct', 'Google Search', 'youtube.com', 'yahoo.com', 'twitter.com']),
+    ('Source Type',['Direct', 'Search/Organic', 'Social', 'Referral', 'Social']),
+    ('Category',['-', '-', 'Arts and Entertainment', 'News and Media', 'Social Networks']),
+    ('Global Rank',['--', '--', '#2', '#11', '#4']),
+    ('Traffic Share',['51%', '18%', '18%', '8%', '4%']),
+    ('Change',['2.45%', '17.78%', '-', '-9.45%', '-']),
+    ])
 
-TABLE_DATA = [
-    "1,  Direct,        Direct,  	   -,	                   --,  51%, 2.45%",
-    "2,  Google Search, Search/Organic, -,	                   --,  18%, 17.78%",
-    "3,  youtube.com,   Social,	        Arts and Entertainment, #2,  18%, -",
-    "4,  yahoo.com,	    Referral,	    News and Media,	        #11, 8%,  -9.45%",
-    "5,  twitter.com,   Social,         Social Networks,	    #4,  4%,  -"
-]
 
-
-
-def data2Dict():
-
-    # Convert TABLE_DATA CSV into dict of dicts. The returned primary dict has
-    # an entry for each column who's values are the row values for the column
-    # indexed on row number
-
-    data = {}
-    for col in TABLE_COLS: data[col] = {}
-
-    for irow, row in enumerate(TABLE_DATA):
-        for icol, value in enumerate(row.split(',')):
-            colName = TABLE_COLS[icol]
-            data[colName][irow] = value.strip()
-    return data
-
-df = pd.DataFrame.from_dict(data2Dict())
-
+df = pd.DataFrame.from_dict(data)
 
 def progressBar(value):
     value = value[0:-1]
@@ -104,52 +89,49 @@ def trafficChange(value):
     ], className=text_colour)
 
 
-def _tableHead():
-    return html.Thead([
-        html.Tr([
-            html.Th(df.columns[0], className='border-0 rounded-start'),
-            html.Th(df.columns[1], className='border-0'),
-            html.Th(df.columns[2], className='border-0'),
-            html.Th(df.columns[3], className='border-0'),
-            html.Th(df.columns[4], className='border-0'),
-            html.Th(df.columns[5], className='border-0'),
-            html.Th(df.columns[6], className='border-0 rounded-end')
+class TrafficTable(TableAIO):
+
+    TABLE_CLASS_NAME = 'table table-centered table-nowrap mb-0 rounded'
+
+    def tableHead(self, columns):
+
+        names = [col['name'] for col in columns]
+
+        beg = html.Th(names[0], className='border-0 rounded-start')
+        mid = [html.Th(name, className='border-gray-200') for name in names[1:-1]]
+        end = html.Th(names[-1], className='border-0 rounded-end')
+
+        row = html.Tr([beg] + mid +[end])
+
+        return html.Thead(row, className='thead-light')
+
+    def tableRow(self, args):
+
+        cid, ts, st, cat, rank, share, change = args.values()
+
+        return html.Tr([
+            html.Td([
+                html.A(cid, href='#', className='text-primary fw-bold')
+            ]),
+            html.Td([
+                icons[ts],
+                ts
+            ], className='fw-bold d-flex align-items-center'),
+            html.Td(st),
+            html.Td(cat),
+            html.Td(rank),
+            progressBar(share),
+            trafficChange(change)
         ])
-    ], className='thead-light')
-
-def _tableRow(cid, ts, st, cat, rank, share, change):
-    return html.Tr([
-        html.Td([
-            html.A(cid, href='#', className='text-primary fw-bold')
-        ]),
-        html.Td([
-            icons[ts],
-            ts
-        ], className='fw-bold d-flex align-items-center'),
-        html.Td(st),
-        html.Td(cat),
-        html.Td(rank),
-        progressBar(share),
-        trafficChange(change)
-    ])
-
-def _tableBody():
-    rows = df.values.tolist()
-    return html.Tbody([
-        _tableRow(*args) for args in rows
-    ])
 
 def table1():
-    thead = _tableHead()
-    tbody = _tableBody()
+
+    table = TrafficTable(
+        data=df.to_dict('records'),
+        columns=[{'id': c, 'name': c} for c in df.columns])
+
     return html.Div([
         html.Div([
-            html.Div([
-                html.Table([
-                    thead,
-                    tbody,
-                ], className='table table-centered table-nowrap mb-0 rounded')
-            ], className='table-responsive')
+            html.Div(table, className='table-responsive')
         ], className='card-body')
     ], className='card border-0 shadow mb-4')
-
