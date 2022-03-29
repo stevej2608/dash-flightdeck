@@ -2,7 +2,7 @@ from typing import List, Dict, Any
 from dash import html, callback
 
 from dash_spa import prefix
-from .TablePaginator import TablePaginator, PaginationState
+from .TablePaginator import TablePaginator
 
 TableData = List[Dict[str, Any]]
 TableColumns = List[Dict[str, Any]]
@@ -49,9 +49,9 @@ class DataTable(html.Div):
         if self.paginator:
 
             @callback(table.output.children, self.paginator.value)
-            def _update_cb(paginator):
-                opt = PaginationState(paginator)
-                tbody = self.tableBody(data, opt.page, opt.page_size)
+            def _update_cb(paginator_state):
+                state = self.paginator.state(paginator_state)
+                tbody = self.tableBody(data, state.page, state.page_size)
                 return [thead, tbody]
 
         return table

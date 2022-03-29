@@ -4,29 +4,7 @@ from dash.exceptions import PreventUpdate
 from dash_spa import prefix, isTriggered, component_id
 import math
 
-class PaginationState:
-    """Paginator status
-
-    Stored Values:
-        page (int): Current page value
-        page_size (int): Page size
-
-    """
-
-    def __init__(self, data:dict):
-        self.__dict__['data'] = data
-
-    def __getattr__(self, name):
-        if name in self.data:
-            return self.data[name]
-        raise AttributeError(f"Store has no attribute '{name}'")
-
-    def __setattr__(self, name, value):
-        if name in self.data:
-            self.data[name] = value
-        else:
-            raise AttributeError(f"Store has no attribute '{name}'")
-
+from .PaginationState import PaginationState
 
 class TablePaginator(html.Div):
     """Classic Table Paginator
@@ -37,16 +15,8 @@ class TablePaginator(html.Div):
     """
 
     @property
-    def state(self):
-        return self.store.state.data
-
-    @property
     def value(self):
         return self.store.input.data
-
-    @property
-    def page_size(self):
-        return self._page_size
 
     def __init__(self, rows: int, page_size: int, id: str = None):
         pid = prefix(id)
@@ -146,6 +116,9 @@ class TablePaginator(html.Div):
             ]
 
         super().__init__(paginator, className="previous-next-container")
+
+    def state(self, state:dict) -> PaginationState:
+        return PaginationState(state)
 
     def Button(self, icon, className, pid):
         return html.Button(html.I(className=icon), className=className, id=pid(className))

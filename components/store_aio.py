@@ -11,3 +11,12 @@ class StoreAIO:
         store = dcc.Store(id=pid(), data=data)
         StoreAIO.container.children.append(store)
         return store
+
+
+class StoreState:
+    """Store state
+
+    """
+
+    def __init__(self, data:dict):
+        self.data = data

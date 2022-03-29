@@ -2,7 +2,6 @@ from dash import html, callback
 from dash.exceptions import PreventUpdate
 from dash_spa import prefix
 
-from .table_aio import Dict2Obj
 from .pagination_aoi import TableAIOPaginator
 
 class TableAIOPaginatorView(html.Div):
@@ -38,18 +37,20 @@ class TableAIOPaginatorView(html.Div):
 
         """
         pid = prefix(paginator.id)
-        s = Dict2Obj(paginator.store.data)
+        # s = Dict2Obj(paginator.store.data)
 
-        super().__init__(self.render_content(s.page, s.max), id=pid('TableAIOPaginatorView'), className=className)
+        state = paginator.state()
+
+        super().__init__(self.render_content(state.page, state.last_page), id=pid('TableAIOPaginatorView'), className=className)
 
         @callback(self.output.children, paginator.value)
         def update_view(data):
 
             if data is not None:
-                s = Dict2Obj(data)
-                return self.render_content(s.page, s.max)
+                state = paginator.state(data)
+                return self.render_content(state.page, state.last_page)
 
             raise PreventUpdate
 
-    def render_content(self, current, max):
-        return ["Showing page ",html.B(current)," out of ",html.B(max)," pages"]
+    def render_content(self, current, last_page):
+        return ["Showing page ",html.B(current)," out of ",html.B(last_page)," pages"]

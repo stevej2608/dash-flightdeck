@@ -3,6 +3,7 @@ from math import ceil
 from dash import html, callback, ALL
 from dash.exceptions import PreventUpdate
 from dash_spa import match, prefix
+from dash_spa.spa_table.PaginationState import PaginationState
 from components.store_aio import StoreAIO
 
 
@@ -41,10 +42,6 @@ class TableAIOPaginator(html.Ul):
     NEXT = 'Next'
 
     @property
-    def state(self):
-        return self.store.state.data
-
-    @property
     def value(self):
         return self.store.input.data
 
@@ -53,7 +50,7 @@ class TableAIOPaginator(html.Ul):
         pid = prefix(aio_id)
         self.range_match = match({'type': pid('li'), 'idx': ALL})
         self.lastpage = ceil(total_items / page_size)
-        self.store = StoreAIO.create_store({'page': page, 'max': self.lastpage}, id=pid('store'))
+        self.store = StoreAIO.create_store({'page': page, 'page_size': page_size, 'last_page': self.lastpage}, id=pid('store'))
 
         pagination = self.selectable(page, adjacents)
 
@@ -93,6 +90,9 @@ class TableAIOPaginator(html.Ul):
 
             raise PreventUpdate
 
+    def state(self, state:dict = None) -> PaginationState:
+        state = state if state else self.store.data
+        return PaginationState(state)
 
     def selection(self, element: html.Li) -> str:
         """Return the selected page|Previous|Next
