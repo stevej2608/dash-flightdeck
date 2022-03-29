@@ -85,7 +85,7 @@ class TableAIO(html.Div):
     def tablePaginator(self, page:int, page_size, total_items):
 
         paginator = TableAIOPaginator(page=page, page_size=page_size, total_items=total_items, className='pagination mb-0')
-        viewer = TableAIOPaginatorView(paginator, className='fw-normal small mt-4 mt-lg-0' )
+        viewer = TableAIOPaginatorView(paginator)
 
         class CompositePaginator(html.Div):
 

@@ -6,7 +6,7 @@ from .pagination_aoi import TableAIOPaginator
 
 class TableAIOPaginatorView(html.Div):
 
-    def __init__(self, paginator: TableAIOPaginator, className= None):
+    def __init__(self, paginator: TableAIOPaginator, className='fw-normal small mt-4 mt-lg-0'):
         """Manages and updates the view component of the associated
         TableAIOPaginator. The TableAIOPaginatorView callback is triggered when the
         store component value changes. The callback calls the supplied
@@ -30,15 +30,11 @@ class TableAIOPaginatorView(html.Div):
         Markup:
         ```
             <div class="fw-normal small mt-4 mt-lg-0">
-                Showing <b>4</b> out of <b>25</b> entries
+                Showing page <b>4</b> out of <b>25</b> pages
             </div>
         ```
-
-
         """
         pid = prefix(paginator.id)
-        # s = Dict2Obj(paginator.store.data)
-
         state = paginator.state()
 
         super().__init__(self.render_content(state.page, state.last_page), id=pid('TableAIOPaginatorView'), className=className)
