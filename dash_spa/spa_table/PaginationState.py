@@ -1,4 +1,4 @@
-from components.store_aio import StoreState
+from components.StoreState import StoreState
 
 class PaginationState(StoreState):
     """Paginator status
