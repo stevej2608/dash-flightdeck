@@ -1,7 +1,7 @@
 import dash
 from dash import Dash
 import dash_spa as spa
-from dash_spa.themes import VOLT
+from themes import VOLT
 from server import serve_app
 
 external_stylesheets = [
