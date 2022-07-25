@@ -1,83 +1,51 @@
 ### dash-flightdeck
 
-![](doc/img/flightdeck-scheenshot1.png)
+![](doc/img/flightdeck-1.png)
 
-Python/Dash based Dashboard Template based on
-beautiful [Volt](https://demo.themesberg.com/volt/) Bootstrap 5 Template
+Plotly/Dash based Dashboard Template based on beautiful [Volt](https://demo.themesberg.com/volt/) Bootstrap 5 Template
+
+**dash-flightdeck** Is 100% python. It demonstrates how a rich UI experience can be easily
+created using Dash/SPA components and patterns.
+
+**dash-flightdeck** Shows how easy it is to create great looking tables with optional search and pagination. Table cells
+can contain text and active components. Table, search and pagination component layout is completely flexible.
+
+![](./doc/img/tables-1.png)
+
+```
+class TrafficTable(BasicTable):
+
+    def tableRow(self, index, args):
+
+        cid, ts, st, cat, rank, share, change = args.values()
+
+        return html.Tr([
+            html.Td([
+                html.A(cid, href='#', className='text-primary fw-bold')
+            ]),
+            html.Td([
+                icons[ts],
+                ts
+            ], className='fw-bold d-flex align-items-center'),
+            html.Td(st),
+            html.Td(cat),
+            html.Td(rank),
+            progressBar(share),
+            self.numberAndArrow(change)
+        ])
+```
+
+![](./doc/img/tables-2.png)
 
 ### Usage
 
-	pip install -r requirements.txt
+    pip install -r requirements.txt
 
-	python usage.py
+    python app.py
 
 or
 
-  python waitress.py
-
-
-## Volt
-
-The volt distribution is in the folder *./volt* This is just used as a
-back reference and is not part of the running dashboard
-
-### Building CSS from SASS
-
-    npm install -g sass
-
-Bootstrap v5.1.3 was copied fro the NPM distribution
-to *volt\sass\bootstrap*. The bootstrap reference in volt.scss
-has been changed.
-
-Building volt.css from sass source
-
-    cd volt/sass
-    sass --no-source-map volt.scss ../css/volt.css
-
-    sass --no-source-map volt-tiny.scss ../css/volt-tiny.css
-
-## css2sass
-
-Converted from volt-min.css using [css2sass](https://css2sass.herokuapp.com/)
-
-I need to find a way to programmatically extract colours from the css and assign the to
-variables
-
-## volt_min.css
-
-To recreate volt_min.css
-
-    cd volt/pages
-    ./css-purge.sh
-    cp temp/volt.css ../../assets/css/volt_min.css
-
-
-## Redis
-
-Create a redis server, ssh into the docker host VM (ssh default)
-
-    ssh vscode@default
-
-Create a host network named `stj-bridge`:
-
-    docker network create -d bridge --subnet 172.172.0.0/24 --gateway 172.172.0.1 --ip-range 172.172.0.128/25 --attachable stj-bridge
-
-Create a redis server named `redis-server` on the host network `stj-bridge`
-
-    docker run --name redis-server --network stj-bridge --restart always -d redis --save 60 1 --loglevel warning
-
-In `./devcontainer/devcontainer.json` add the following line:
-
-```
-  "runArgs": [
-    ...
-    "--network=stj-bridge"
-  ],
-```
-
-Reload the VSCODE remote container, then confirm `redis-server` is accessible.
-
-    ping redis-server
+    python waitress_server.py
 
 ### Links
 

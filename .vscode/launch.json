@@ -5,79 +5,17 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "1a. usage.py",
+      "name": "1a. app.py",
       "type": "python",
       "request": "launch",
       "cwd": "${workspaceRoot}",
-      "program": "usage.py",
+      "program": "app.py",
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
       "env": {
         // "DASH_DEBUG": "1",
         // "FLASK_ENV": "test"
       },
-      "justMyCode": false,
-      "serverReadyAction": {
-        "pattern": ".*Visit http://(.*)",
-        "uriFormat": "http://%s",
-        "action": "openExternally"
-      }
-    },
-
-    {
-      "name": "1b. table_example (SPA)",
-      "type": "python",
-      "request": "launch",
-      "module": "dash_spa.spa_table.table_example",
-      "console": "internalConsole",
-      "internalConsoleOptions": "openOnSessionStart",
-      "justMyCode": false,
-      "serverReadyAction": {
-        "pattern": ".*Visit http://(.*)",
-        "uriFormat": "http://%s",
-        "action": "openExternally"
-      }
-    },
-
-    {
-      "name": "1c. table_example",
-      "type": "python",
-      "request": "launch",
-      "module": "components.table.table_example",
-      "console": "internalConsole",
-      "internalConsoleOptions": "openOnSessionStart",
-      "justMyCode": false,
-      "serverReadyAction": {
-        "pattern": ".*Visit http://(.*)",
-        "uriFormat": "http://%s",
-        "action": "openExternally"
-      }
-    },
-
-
-
-
-   {
-      "name": "2. Python: Current File",
-      "type": "python",
-      "request": "launch",
-      "program": "${file}",
-      "console": "internalConsole",
-      "internalConsoleOptions": "openOnSessionStart",
-      "justMyCode": false,
-      "serverReadyAction": {
-        "pattern": ".*Visit http://(.*)",
-        "uriFormat": "http://%s",
-        "action": "openExternally"
-      }
-    },
-    {
-      "name": "3. Python: Current Module",
-      "type": "python",
-      "request": "launch",
-      "module": "${command:extension.commandvariable.file.relativeDirDots}.${fileBasenameNoExtension}",
-      "console": "internalConsole",
-      "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false,
       "serverReadyAction": {
         "pattern": ".*Visit http://(.*)",
