@@ -1,17 +1,17 @@
 from dash import html
 
-from components.dropdown_button_aoi import DropdownButtonAIO, dropdownLink
-from icons.hero import DOCUMENT_ICON, MESSAGE_ICON, UPLOAD_ICON, FIRE_ICON_DANGER, CALENDER_ICON
+from dash_spa.components.dropdown_button_aoi import DropdownButtonAIO, dropdownLink
+from ..icons.hero import ICON
 
 def newButton():
     return DropdownButtonAIO([
-        dropdownLink("Document", DOCUMENT_ICON),
-        dropdownLink("Message", MESSAGE_ICON),
-        dropdownLink("Product", UPLOAD_ICON),
-        dropdownLink("My Plan", FIRE_ICON_DANGER),
+        dropdownLink("Document", ICON.DOCUMENT),
+        dropdownLink("Message", ICON.MESSAGE.ME2),
+        dropdownLink("Product", ICON.UPLOAD),
+        dropdownLink("My Plan", ICON.FIRE.ME2_DANGER),
     ], "New")
 
 def calenderButton():
     return  html.Button([
-        CALENDER_ICON
+        ICON.CALENDER
     ], type='button', className='btn btn-gray-800 d-inline-flex align-items-center me-2')

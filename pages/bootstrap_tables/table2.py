@@ -28,7 +28,7 @@ df = pd.DataFrame.from_dict(data)
 
 class TravelTable(BasicTable):
 
-    def tableRow(self, args):
+    def tableRow(self, index, args):
 
         country, all, change, tal, talCh, widgets, widgetsCh = args.values()
 
@@ -50,13 +50,11 @@ class TravelTable(BasicTable):
 
         ])
 
-
-def table2():
-
-    table = TravelTable(
+table = TravelTable(
     data=df.to_dict('records'),
     columns=[{'id': c, 'name': c} for c in df.columns])
 
+def table2():
     return html.Div([
         html.Div([
             html.Div(table, className='table-responsive')

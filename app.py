@@ -1,44 +1,51 @@
-import flask
+import dash
 from dash import Dash
-import dash_labs as dl
-from components.store_aio import StoreAIO
+import dash_spa as spa
+from dash_spa.themes import VOLT
+from server import serve_app
 
 external_stylesheets = [
     "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css",
-    "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css",
     "https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.4/chartist.min.css",
-    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.2.0/css/all.min.css"
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.2.0/css/all.min.css",
+    "https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css",
+    VOLT,
     ]
 
 external_scripts = [
-    # "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js",
+    "https://cdn.jsdelivr.net/npm/sweetalert2@11.4.20/dist/sweetalert2.all.min.js",
+    "https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"
     ]
 
+def create_dash():
 
-def create_app(layout, scripts=external_scripts, stylesheets=external_stylesheets, plugins=[dl.plugins.pages]):
-    # Server definition
+    plugins=[
+        spa.spa_session,
+        spa.spa_pages,
+        # spa.dash_logging
+        ]
 
-    server = flask.Flask(__name__)
-    app = Dash(__name__,
-            plugins=plugins,
-            external_stylesheets=stylesheets,
-            external_scripts=scripts, server=server)
-
-    if layout == dl.plugins.page_container:
-        dl.plugins.page_container.children.insert(0, StoreAIO.container)
-
-
-    # Allow pages to access the dash app instance, eg:
-    #
-    #  from flask import current_app
-    #
-    #  app = current_app.get_dash()
-
-    def get_dash():
-        return app
-
-    server.get_dash = get_dash
-
-    app.layout = layout
-
+    app = dash.Dash( __name__,
+        plugins=plugins,
+        prevent_initial_callbacks=True,
+        suppress_callback_exceptions=True,
+        external_scripts=external_scripts,
+        external_stylesheets=external_stylesheets)
     return app
+
+
+def create_app(dash_factory) -> Dash:
+    app = dash_factory()
+
+    def layout():
+        return  spa.page_container
+
+    app.layout = layout()
+    return app
+
+# python -m examples.flightdeck.app
+
+if __name__ == "__main__":
+    app = create_app(create_dash)
+    serve_app(app, debug=False, path="/pages/dashboard")

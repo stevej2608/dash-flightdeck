@@ -1,8 +1,9 @@
-from dash import html, dcc, register_page
-from dash_svg import Svg, Path
-from pages.components import background_img
+from dash import html, dcc
+from dash_spa import register_page
+from .common import background_img
+from .icons import ICON
 
-register_page(__name__, path="/pages/lock.html", title="Dash/Flightdeck - Lock")
+register_page(__name__, path="/pages/lock", title="Dash/Flightdeck - Lock", container='full_page')
 
 layout = html.Div([
     # NOTICE: You can use the _analytics.html partial to include production code specific code & trackers
@@ -10,12 +11,8 @@ layout = html.Div([
         # Section
         html.Section([
             html.Div([
-                dcc.Link([
-                    Svg([
-                        Path(fillRule='evenodd', d='M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z', clipRule='evenodd')
-                    ], className='icon icon-xs me-2', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg'),
-                    "Back to homepage"
-                ], href='dashboard.html', className='d-flex align-items-center justify-content-center mb-4'),
+                dcc.Link([ICON.ARROW_NARROW_LEFT, "Back to homepage"
+                ], href='dashboard', className='d-flex align-items-center justify-content-center mb-4'),
                 html.Div([
                     html.Div([
                         html.Div([
@@ -31,11 +28,7 @@ layout = html.Div([
                                 html.Div([
                                     html.Label("Your Password", htmlFor='password'),
                                     html.Div([
-                                        html.Span([
-                                            Svg([
-                                                Path(fillRule='evenodd', d='M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z', clipRule='evenodd')
-                                            ], className='icon icon-xs text-gray-600', fill='currentColor', viewBox='0 0 20 20', xmlns='http://www.w3.org/2000/svg')
-                                        ], className='input-group-text', id='basic-addon2'),
+                                        html.Span(ICON.LOCK_CLOSED, className='input-group-text', id='basic-addon2'),
                                         dcc.Input(type='password', placeholder='Password', className='form-control', id='password', required='')
                                     ], className='input-group')
                                 ], className='form-group mb-4'),

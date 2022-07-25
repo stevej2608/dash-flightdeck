@@ -1,14 +1,14 @@
 from dash import html
 
-from components.dropdown_button_aoi import DropdownButtonAIO, dropdownLink
-from icons.hero import CLIPBOARD_ICON, PRODUCTS_ICON, CUSTOMERS_ICON, ORDERS_ICON, CONSOLE_ICON, ALL_REPORTS_ICON
+from dash_spa.components.dropdown_button_aoi import DropdownButtonAIO, dropdownLink
+from ..icons.hero import ICON
 
 def reportsDropdown():
     return DropdownButtonAIO([
-        dropdownLink("Products", PRODUCTS_ICON,href='#'),
-        dropdownLink("Customers", CUSTOMERS_ICON, href='#'),
-        dropdownLink("Orders", ORDERS_ICON, href='#'),
-        dropdownLink("Console", CONSOLE_ICON, href='#'),
+        dropdownLink("Products", ICON.PRODUCTS,href='#'),
+        dropdownLink("Customers", ICON.CUSTOMERS, href='#'),
+        dropdownLink("Orders", ICON.ORDERS, href='#'),
+        dropdownLink("Console", ICON.CONSOLE, href='#'),
         html.Div(role='separator', className='dropdown-divider my-1'),
-        dropdownLink("All Reports", ALL_REPORTS_ICON, href='#')
-    ], "Reports", buttonIcon=CLIPBOARD_ICON, buttonColor="gray-800", downArrow=True)
+        dropdownLink("All Reports", ICON.ALL_REPORTS, href='#')
+    ], "Reports", buttonIcon=ICON.CLIPBOARD, buttonColor="gray-800", downArrow=True)

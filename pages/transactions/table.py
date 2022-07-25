@@ -1,9 +1,9 @@
 from collections import OrderedDict
 from dash import html
 import pandas as pd
-from components.dropdown_aio import DropdownAIO
-from components.table import TableAIO, TableAIOPaginator, TableAIOPaginatorView
-
+from dash_spa import prefix
+from dash_spa.components.dropdown_aio import DropdownAIO
+from dash_spa.components.table import TableAIO, TableContext, filter_str
 
 data = OrderedDict([
     ('#',['456478', '456423', '456420', '456421', '456420', '456479', '456478', '453673', '456468', '456478']),
@@ -23,18 +23,20 @@ def rows():
 
 df = pd.DataFrame(rows())
 
-
 class OrdersTable(TableAIO):
 
     TABLE_CLASS_NAME = 'card card-body border-0 shadow table-wrapper table-responsive'
 
-    def tableAction(self):
+    def tableAction(self, row):
+
+        pid = prefix('orders_table_row_action')
+
         button = DropdownAIO.Button([
             html.Span(html.Span(className='fas fa-ellipsis-h icon-dark'), className='icon icon-sm'),
             html.Span("Toggle Dropdown", className='visually-hidden')
-        ], className='btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0')
+        ], className='btn btn-link text-dark dropdown-toggle-split m-0 p-0')
 
-        # dropdown bottom-left. Ripped from the Volt transactons table using Firefox debug tools
+        # Action column dropdown bottom-left. Ripped from the Volt transactions table using Firefox debug tools
 
         style={"position": "absolute",
                 "inset": "0px 0px auto auto",
@@ -48,13 +50,13 @@ class OrdersTable(TableAIO):
             html.A([html.Span(className='fas fa-trash-alt me-2'), "Remove" ], className='dropdown-item text-danger rounded-bottom', href='#')
         ], className='dropdown-menu py-0', style=style)
 
-        return html.Div(DropdownAIO(button, container), className='btn-group')
+        return html.Div(DropdownAIO(button, container, id=pid(row)), className='btn-group')
 
 
-    def tableRow(self, args):
+    def tableRow(self, row_index, args):
 
         cid, product, issue_date, due_date, total, status = args.values()
-        action = self.tableAction()
+        action = self.tableAction(row_index)
 
         return html.Tr([
             html.Td(html.A(cid, href='#', className='fw-bold')),
@@ -66,32 +68,18 @@ class OrdersTable(TableAIO):
             html.Td(action)
         ])
 
-    def tablePaginator(self, page:int, page_size, total_items):
+def create_table(id):
 
-        paginator = TableAIOPaginator(page=page, page_size=page_size, total_items=total_items, className='pagination mb-0')
-        viewer = TableAIOPaginatorView(paginator)
+    state = TableContext.getState()
 
-        class CompositePaginator(html.Div):
+    df1 = filter_str(df, state.search_term)
 
-            @property
-            def value(self):
-                return self.paginator.store.input.data
-
-            def __init__(self, paginator, viewer):
-                self.paginator = paginator
-                children = [html.Nav(paginator), viewer]
-                super().__init__(children, className='card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between')
-
-            def state(self, state:dict = None):
-                return self.paginator.state(state)
-
-        return CompositePaginator(paginator, viewer)
-
-
-def table():
-    layout = OrdersTable(
-        data=df.to_dict('records'),
+    ordersTable = OrdersTable(
+        data=df1.to_dict('records'),
         columns=[{'id': c, 'name': c} for c in df.columns],
-        page_size=7
+        page = state.current_page,
+        page_size = state.page_size,
+        id=id
     )
-    return layout
+
+    return ordersTable
