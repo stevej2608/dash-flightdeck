@@ -1,1 +1,7 @@
+# -e ../dash-spa
 dash-spa>=0.1.0
+
+# Waitress server
+
+waitress>=2.1.1
+Paste>=3.5.0
