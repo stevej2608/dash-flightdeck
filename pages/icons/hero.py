@@ -1,8 +1,7 @@
 from dash import html
 from dash_svg import Svg, Path
 
-# heroicons: https://heroicons.dev/
-#            https://heroicons.com/
+# https://heroicons.com/
 
 class ICON:
     ARCHIVE = Svg([

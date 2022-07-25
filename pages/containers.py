@@ -9,7 +9,7 @@ from .common import sideBar, mobileNavBar
 
 def default_container(page, layout,  **_kwargs):
     """Default page content container. All pages are wrapped by this content unless
-    registered with container=None or container='some_other_container
+    registered with container=None or container='some_other_container'
 
     Args:
         layout (Component or callable): layout to be wrapped
@@ -50,16 +50,7 @@ spa.register_container(default_container)
 
 
 def full_page_container(page, layout,  **kwargs):
-    """Default page content container. All pages are wrapped by this content unless
-    registered with container=None or container='some_other_container
-
-    Args:
-        layout (Component or callable): layout to be wrapped
-
-    Returns:
-        layout wrapped by container markup
-    """
-
+    """Full page container"""
 
     try:
         content = layout(**kwargs) if callable(layout) else layout

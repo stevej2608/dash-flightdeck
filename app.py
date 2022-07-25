@@ -44,7 +44,7 @@ def create_app(dash_factory) -> Dash:
     app.layout = layout()
     return app
 
-# python -m examples.flightdeck.app
+# python app.py
 
 if __name__ == "__main__":
     app = create_app(create_dash)

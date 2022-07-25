@@ -2,13 +2,13 @@
 
 ![](doc/img/flightdeck-1.png)
 
-Plotly/Dash based Dashboard Template based on beautiful [Volt](https://demo.themesberg.com/volt/) Bootstrap 5 Template
+[Plotly/Dash] based clone of the n the beautiful [Volt](https://demo.themesberg.com/volt/) Bootstrap 5 dashboard template.
 
-**dash-flightdeck** Is 100% python. It demonstrates how a rich UI experience can be easily
-created using Dash/SPA components and patterns.
+**dash-flightdeck** Is 100% python, it demonstrates how a rich UI experience can be easily
+created using [Dash/SPA] components and patterns.
 
 **dash-flightdeck** Shows how easy it is to create great looking tables with optional search and pagination. Table cells
-can contain text and active components. Table, search and pagination component layout is completely flexible.
+can contain text and/or active Dash components. Table, search and pagination component layout is completely flexible.
 
 ![](./doc/img/tables-1.png)
 
@@ -47,10 +47,11 @@ or
 
     python waitress_server.py
 
-### Links
+* [Plotly/Dash]
+* [Volt]
+* [Dash/SPA]
 
-* [demo](https://demo.themesberg.com/volt/pages/dashboard/dashboard.html)
-* [docs](https://themesberg.com/docs/volt-bootstrap-5-dashboard/getting-started/quick-start/)
-* [Volt Bootstrap 5 Dashboard](https://demo.themesberg.com/volt/)
-* [github](https://github.com/themesberg/volt-bootstrap-5-dashboard)
-* [heroicons](https://heroicons.dev/)
+
+[Plotly/Dash]: https://dash.plot.ly/introduction
+[Volt]: https://demo.themesberg.com/volt/
+[Dash/SPA]: https://github.com/stevej2608/dash-spa
