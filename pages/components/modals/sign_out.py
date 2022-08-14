@@ -2,16 +2,19 @@ from dash import html, dcc
 from ...icons import ICON, FACEBOOK, TWITTER, GITHUB
 
 def sign_out():
+    MODAL_ID = 'modal-sign-out'
+    BTN_DATA = {"data-bs-toggle": "modal", "data-bs-target": f"#{MODAL_ID}"}
+    DISMISS = {"data-bs-dismiss": "modal"}
     return html.Div([
         # Button Modal
-        html.Button("Sign Up", type='button', className='btn btn-block btn-gray-800 mb-3'),
+        html.Button("Sign Up", type='button', className='btn btn-block btn-gray-800 mb-3', **BTN_DATA),
         # Modal Content
         html.Div([
             html.Div([
                 html.Div([
                     html.Div([
                         html.Div([
-                            html.Button(type='button', className='btn-close ms-auto'),
+                            html.Button(type='button', className='btn-close ms-auto', **DISMISS),
                             html.Div([
                                 html.H1("Create Account", className='mb-0 h4')
                             ], className='text-center text-md-center mb-4 mt-md-0'),
@@ -76,7 +79,7 @@ def sign_out():
                     ], className='modal-body p-0')
                 ], className='modal-content')
             ], className='modal-dialog modal-dialog-centered', role='document')
-        ], className='modal fade', id='modal-form-signup', role='dialog'),
+        ], className='modal fade', id=MODAL_ID, role='dialog'),
         # End of Modal Content
     ], className='col-lg-4')
 

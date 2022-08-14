@@ -2,15 +2,18 @@ from dash import html, dcc
 from ...icons import ICON
 
 def subscribe():
+    MODAL_ID = 'modal-subscribe'
+    BTN_DATA = {"data-bs-toggle": "modal", "data-bs-target": f"#{MODAL_ID}"}
+    DISMISS = {"data-bs-dismiss": "modal"}
     return html.Div([
         # Button Modal
-        html.Button("Subscribe", type='button', className='btn btn-block btn-gray-800 mb-3'),
+        html.Button("Subscribe", type='button', className='btn btn-block btn-gray-800 mb-3', **BTN_DATA),
         # Modal Content
         html.Div([
             html.Div([
                 html.Div([
                     html.Div([
-                        html.Button(type='button', className='btn-close btn-close-white text-white')
+                        html.Button(type='button', className='btn-close btn-close-white text-white', **DISMISS)
                     ], className='modal-header'),
                     html.Div([
                         html.Span(ICON.MAIL_OPEN, className='modal-icon'),
@@ -36,6 +39,6 @@ def subscribe():
                     ], className='modal-footer z-2 mx-auto text-center')
                 ], className='modal-content bg-dark text-white')
             ], className='modal-dialog modal-tertiary modal-dialog-centered modal-lg', role='document')
-        ], className='modal fade', id='modal-subscribe', role='dialog'),
+        ], className='modal fade', id=MODAL_ID, role='dialog'),
         # End of Modal Content
     ], className='col-lg-4')
