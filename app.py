@@ -1,6 +1,4 @@
-import dash
-from dash import Dash
-import dash_spa as spa
+from dash_spa import DashSPA, page_container
 from themes import VOLT
 from server import serve_app
 
@@ -20,14 +18,8 @@ external_scripts = [
 
 def create_dash():
 
-    plugins=[
-        spa.spa_session,
-        spa.spa_pages,
-        # spa.dash_logging
-        ]
 
-    app = dash.Dash( __name__,
-        plugins=plugins,
+    app = DashSPA( __name__,
         prevent_initial_callbacks=True,
         suppress_callback_exceptions=True,
         external_scripts=external_scripts,
@@ -35,13 +27,9 @@ def create_dash():
     return app
 
 
-def create_app(dash_factory) -> Dash:
+def create_app(dash_factory) -> DashSPA:
     app = dash_factory()
-
-    def layout():
-        return  spa.page_container
-
-    app.layout = layout()
+    app.layout = page_container
     return app
 
 # python app.py

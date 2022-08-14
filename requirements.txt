@@ -1,5 +1,5 @@
-# -e ../dash-spa
-dash-spa>=0.1.0
+-e ../dash-spa
+#dash-spa>=1.1.0
 
 # Waitress server
 

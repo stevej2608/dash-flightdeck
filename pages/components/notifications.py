@@ -1,7 +1,7 @@
 from dash import html
 from dash_spa import register_page, NOUPDATE
-from dash_spa.alert import Alert, SPA_ALERT
-from dash_spa.notyf import Notyf, SPA_NOTIFY
+from dash_spa.components import Alert, SPA_ALERT
+from dash_spa.components import Notyf, SPA_NOTIFY
 
 from ..common import breadCrumbs, banner, topNavBar, footer
 from ..icons import ICON
