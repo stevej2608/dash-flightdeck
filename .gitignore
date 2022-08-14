@@ -34,7 +34,7 @@ nosetests.xml
 /.pytest_cache
 
 /config/*
-!/config/default.json
+!/config/spa_config.ini
 /tmp
 /db.sqlite
 /tests/admin/test_db.sqlite
