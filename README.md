@@ -2,7 +2,7 @@
 
 ![](doc/img/flightdeck-1.png)
 
-[Plotly/Dash] based clone of the n the beautiful [Volt](https://demo.themesberg.com/volt/) Bootstrap 5 dashboard template.
+[Plotly/Dash] based clone of the the beautiful [Volt](https://demo.themesberg.com/volt/) Bootstrap 5 dashboard template.
 
 **dash-flightdeck** Is 100% python, it demonstrates how a rich UI experience can be easily
 created using [Dash/SPA] components and patterns.
