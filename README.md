@@ -5,7 +5,7 @@
 [Plotly/Dash] based clone of the the beautiful [Volt](https://demo.themesberg.com/volt/) Bootstrap 5 dashboard template.
 
 **dash-flightdeck** Is 100% python, it demonstrates how a rich UI experience can be easily
-created using [Dash/SPA] components and patterns.
+created using [DashSPA] components and patterns.
 
 **dash-flightdeck** Shows how easy it is to create great looking tables with optional search and pagination. Table cells
 can contain text and/or active Dash components. Table, search and pagination component layout is completely flexible.
@@ -49,9 +49,9 @@ or
 
 * [Plotly/Dash]
 * [Volt]
-* [Dash/SPA]
+* [DashSPA]
 
 
 [Plotly/Dash]: https://dash.plot.ly/introduction
 [Volt]: https://demo.themesberg.com/volt/
-[Dash/SPA]: https://github.com/stevej2608/dash-spa
+[DashSPA]: https://github.com/stevej2608/dash-spa
