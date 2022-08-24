@@ -30,6 +30,7 @@ def create_dash():
 def create_app(dash_factory) -> DashSPA:
     app = dash_factory()
     app.layout = page_container
+    app.server.config['SECRET_KEY'] = "A secret key"
     return app
 
 # python app.py
