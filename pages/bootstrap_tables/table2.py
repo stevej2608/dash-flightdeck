@@ -1,6 +1,7 @@
 from collections import OrderedDict
 import pandas as pd
 from dash import html
+from dash_spa.components import TableContext
 from .basic_table import BasicTable
 
 data = OrderedDict([
@@ -50,11 +51,13 @@ class TravelTable(BasicTable):
 
         ])
 
-table = TravelTable(
-    data=df.to_dict('records'),
-    columns=[{'id': c, 'name': c} for c in df.columns])
-
+@TableContext.Provider(id='bootstrap_table2')
 def table2():
+
+    table = TravelTable(
+        data=df.to_dict('records'),
+        columns=[{'id': c, 'name': c} for c in df.columns])
+
     return html.Div([
         html.Div([
             html.Div(table, className='table-responsive')

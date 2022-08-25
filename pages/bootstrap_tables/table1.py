@@ -1,6 +1,7 @@
 from collections import OrderedDict
 import pandas as pd
 from dash import html
+from dash_spa.components import TableContext
 from .basic_table import BasicTable
 from ..icons import ICON, TWITTER, YOUTUBE, GOOGLE, YAHOO
 
@@ -65,7 +66,7 @@ class TrafficTable(BasicTable):
             self.numberAndArrow(change)
         ])
 
-
+@TableContext.Provider(id='bootstrap_table1')
 def table1():
 
     table = TrafficTable(
