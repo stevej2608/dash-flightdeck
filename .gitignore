@@ -40,3 +40,4 @@ nosetests.xml
 /tests/admin/test_db.sqlite
 /.temp
 /volt/pages/temp
+/.devcontainer
