@@ -1,4 +1,6 @@
-dash-spa>=1.1.3
+dash-spa[diskcache]>=1.1.3
+pandas>=1.4.2
+dash-chartist>=0.0.2
 
 # Waitress server
 
