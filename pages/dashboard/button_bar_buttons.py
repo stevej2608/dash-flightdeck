@@ -1,10 +1,9 @@
-from dash_spa.components.dropdown_button_aoi import DropdownButtonAIO, dropdownLink
-
+from ..components.dropdown_button import DropdownButton, dropdownLink
 from ..icons.hero import ICON
 
 
 def newTasksButton():
-    return DropdownButtonAIO([
+    return DropdownButton([
         dropdownLink("Add User", ICON.USER_ADD),
         dropdownLink("Add Widget", ICON.WIDGET),
         dropdownLink("Upload Files", ICON.UPLOAD),
